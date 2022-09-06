@@ -10,7 +10,7 @@ public static class DependencyInjection
     {
         services.AddSwaggerGen();
         services.AddControllers();
-        
+
         services.AddMappings();
 
         services.AddSingleton<ProblemDetailsFactory, EnrootProblemDetailsFactory>();

@@ -67,7 +67,7 @@ public class EnrootProblemDetailsFactory : ProblemDetailsFactory
         return problemDetails;
     }
 
-    private void ApplyProblemDetailsDefaults(HttpContext httpContext, ProblemDetails problemDetails, int statusCode)
+    private static void ApplyProblemDetailsDefaults(HttpContext httpContext, ProblemDetails problemDetails, int statusCode)
     {
         problemDetails.Status ??= statusCode;
 
