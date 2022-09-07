@@ -28,8 +28,10 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)), SecurityAlgorithms.HmacSha256);
 
         var jtiClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
+        var userIdClaim = new Claim(JwtClaimNames.UserId, userId.ToString());
 
         claims.Add(jtiClaim);
+        claims.Add(userIdClaim);
 
         var securityToken = new JwtSecurityToken(
             issuer: issuer,

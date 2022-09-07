@@ -1,6 +1,7 @@
 ﻿using Enroot.Application.Authentication.Common;
 using Enroot.Application.Common.Interfaces.Authentication;
 using Enroot.Domain.Common.Authorization;
+using Enroot.Domain.Common.Enums;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.Entities;
 using ErrorOr;
@@ -39,7 +40,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         user = new User
         {
             Email = command.Email,
-            UserName = command.Username
+            UserName = command.Username,
+            RoleId = (int)EnrootRoles.User,
         };
 
         var result = await _userManager.CreateAsync(user, command.Password);
@@ -47,15 +49,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         if (!result.Succeeded)
         {
             // TODO: send error if not created
-        }
-
-        const string newUserRoleName = RoleNames.User;
-
-        var addToRoleResult = await _userManager.AddToRoleAsync(user, newUserRoleName);
-
-        if (!addToRoleResult.Succeeded)
-        {
-            // TODO: send error if not added
         }
 
         var claims = await _userManager.GetClaimsAsync(user);

@@ -21,12 +21,13 @@ public static class DependencyInjection
 
         services.AddDbContext<EnrootContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("Enroot"),
-                    builder => builder.MigrationsAssembly("Enroot.Infrastructure"));
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("Enroot"), builder => builder.MigrationsAssembly("Enroot.Infrastructure"));
             }
         );
 
-        services.AddIdentity<User, IdentityRole<int>>()
+        services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<EnrootContext>()
             .AddDefaultTokenProviders();
 

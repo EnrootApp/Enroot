@@ -10,6 +10,8 @@ public static partial class Errors
         public static Error EmailDuplicate =>
             Error.Conflict(code: "User.EmailDuplicate", description: "Email is already in use");
         public static Error UsernameDuplicate =>
-            Error.Conflict(code: "User.UsernameDuplicate", description: "Username is already in use");
+            Error.Conflict(code: "User.UsernameDuplicate", description: "UserName is already in use");
+        public static Error NotFoundById =>
+           Error.Conflict(code: "User.NotFoundById", description: "No user found with id specified");
     }
 }

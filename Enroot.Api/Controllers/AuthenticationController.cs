@@ -13,7 +13,7 @@ public class AuthenticationController : ApiController
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
 
-    public AuthenticationController(ISender mediator, IMapper mapper)
+    public AuthenticationController(ISender mediator, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) 
     {
         _mediator = mediator;
         _mapper = mapper;
