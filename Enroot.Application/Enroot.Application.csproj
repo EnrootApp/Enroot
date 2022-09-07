@@ -19,6 +19,8 @@
       <Folder Include="Authentication\Commands\Register\" />
       <Folder Include="Authentication\Common\" />
       <Folder Include="Authentication\Queries\Login\" />
+      <Folder Include="Authorizatrion\Commands\Register\" />
+      <Folder Include="Common\Behaviors\" />
     </ItemGroup>
 
 </Project>
