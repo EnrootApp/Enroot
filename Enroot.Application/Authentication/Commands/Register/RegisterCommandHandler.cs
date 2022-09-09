@@ -1,6 +1,5 @@
 ﻿using Enroot.Application.Authentication.Common;
 using Enroot.Application.Common.Interfaces.Authentication;
-using Enroot.Domain.Common.Authorization;
 using Enroot.Domain.Common.Enums;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.Entities;

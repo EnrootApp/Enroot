@@ -2,6 +2,7 @@
 using Enroot.Infrastructure.Authentication;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
 namespace Enroot.Api.Controllers;
@@ -45,6 +46,20 @@ public class ApiController : ControllerBase
 
     protected IActionResult Problem(IEnumerable<Error> errors)
     {
+        if (errors.All(error => error.Type == ErrorType.Validation))
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+
+            foreach (var error in errors)
+            {
+                modelStateDictionary.AddModelError(
+                    error.Code,
+                    error.Description);
+            }
+
+            return ValidationProblem(modelStateDictionary);
+        }
+
         HttpContext.Items[HttpContextItemKeys.Errors] = errors;
 
         var firstError = errors.First();

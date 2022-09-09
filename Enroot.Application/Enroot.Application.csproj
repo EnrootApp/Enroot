@@ -11,12 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.2.1" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
       <PackageReference Include="mediatr" Version="10.0.1" />
       <PackageReference Include="mediatr.extensions.microsoft.DependencyInjection" Version="10.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Authentication\Commands\Register\" />
       <Folder Include="Authentication\Common\" />
       <Folder Include="Authentication\Queries\Login\" />
       <Folder Include="Authorizatrion\Commands\Register\" />

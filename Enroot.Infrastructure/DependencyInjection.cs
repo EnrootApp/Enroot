@@ -33,10 +33,10 @@ public static class DependencyInjection
 
         services.Configure<IdentityOptions>(options =>
         {
-            options.Password.RequiredLength = 8;
-            options.Password.RequireDigit = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireDigit = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireNonAlphanumeric = false;
         });
 
         var jwtSettingsSection = configuration.GetSection(JwtSettings.SectionName);
@@ -59,11 +59,12 @@ public static class DependencyInjection
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
+                    ValidateLifetime = true,
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
                     ValidIssuer = jwtSettings.Issuer,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                 };
             })
             .AddGoogle(options =>
