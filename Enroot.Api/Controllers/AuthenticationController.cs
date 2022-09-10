@@ -4,6 +4,7 @@ using Enroot.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace Enroot.Api.Controllers;
 
@@ -13,7 +14,11 @@ public class AuthenticationController : ApiController
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
 
-    public AuthenticationController(ISender mediator, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) 
+    public AuthenticationController(
+        ISender mediator,
+        IMapper mapper,
+        IHttpContextAccessor httpContextAccessor,
+        IStringLocalizer<ApiController> localizer) : base(httpContextAccessor, localizer) 
     {
         _mediator = mediator;
         _mapper = mapper;

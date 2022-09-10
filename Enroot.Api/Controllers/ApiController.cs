@@ -3,6 +3,7 @@ using Enroot.Infrastructure.Authentication;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Enroot.Api.Controllers;
@@ -10,10 +11,12 @@ namespace Enroot.Api.Controllers;
 public class ApiController : ControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IStringLocalizer _localizer;
 
-    protected ApiController(IHttpContextAccessor httpContextAccessor)
+    protected ApiController(IHttpContextAccessor httpContextAccessor, IStringLocalizer localizer)
     {
         _httpContextAccessor = httpContextAccessor;
+        _localizer = localizer;
     }
 
     protected int? GetRequestUserId()
@@ -46,23 +49,29 @@ public class ApiController : ControllerBase
 
     protected IActionResult Problem(IEnumerable<Error> errors)
     {
-        if (errors.All(error => error.Type == ErrorType.Validation))
+        var localizedErrors = GetLocalizedErrors(errors);
+
+        if (localizedErrors.All(error => error.Type == ErrorType.Validation))
         {
             var modelStateDictionary = new ModelStateDictionary();
 
-            foreach (var error in errors)
+            foreach (var error in localizedErrors)
             {
                 modelStateDictionary.AddModelError(
                     error.Code,
                     error.Description);
             }
 
+            ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails(modelStateDictionary);
+
+            validationProblemDetails.Title = _localizer.GetString("Validation.General");
+
             return ValidationProblem(modelStateDictionary);
         }
 
-        HttpContext.Items[HttpContextItemKeys.Errors] = errors;
+        HttpContext.Items[HttpContextItemKeys.Errors] = localizedErrors;
 
-        var firstError = errors.First();
+        var firstError = localizedErrors.First();
 
         var statusCode = firstError.Type switch
         {
@@ -73,5 +82,15 @@ public class ApiController : ControllerBase
         };
 
         return Problem(statusCode: statusCode, title: firstError.Description);
+    }
+
+    private Error GetLocalizedError(Error error)
+    {
+        return Error.Custom(error.NumericType, error.Code, _localizer.GetString(error.Code));
+    }
+
+    private IEnumerable<Error> GetLocalizedErrors(IEnumerable<Error> errors)
+    {
+        return errors.ToList().ConvertAll(error => GetLocalizedError(error));
     }
 }

@@ -43,6 +43,11 @@ public static class DependencyInjection
 
         services.AddSingleton<ProblemDetailsFactory, EnrootProblemDetailsFactory>();
 
+        services.AddLocalization(options =>
+        {
+            options.ResourcesPath = "Resources";
+        });
+
         return services;
     }
 }

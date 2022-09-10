@@ -1,4 +1,5 @@
 using Enroot.Api;
+using Enroot.Api.Common.Localization;
 using Enroot.Application;
 using Enroot.Infrastructure;
 
@@ -19,5 +20,12 @@ app.MapControllers();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(Localization.SupportedCultures[0])
+    .AddSupportedCultures(Localization.SupportedCultures)
+    .AddSupportedUICultures(Localization.SupportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 app.Run();
