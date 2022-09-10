@@ -40,15 +40,8 @@ public class EnrootContext : IdentityDbContext<User, Role, int, IdentityUserClai
             .WithMany(e => e.Claims);
 
         modelBuilder.Entity<Role>().HasData(
-            new Role
-            {
-                Id = (int)EnrootRoles.Admin,
-            },
-            new Role
-            {
-                Id = (int)EnrootRoles.User,
-            }
-        );
+            new Role(EnrootRoles.Admin),
+            new Role(EnrootRoles.User));
 
         modelBuilder.Entity<RoleClaim>().HasData(
            new RoleClaim

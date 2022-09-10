@@ -20,7 +20,7 @@
     <ItemGroup>
       <Folder Include="Authentication\Common\" />
       <Folder Include="Authentication\Queries\Login\" />
-      <Folder Include="Authorizatrion\Commands\Register\" />
+      <Folder Include="Authorizatrion\Commands\" />
       <Folder Include="Common\Behaviors\" />
     </ItemGroup>
 

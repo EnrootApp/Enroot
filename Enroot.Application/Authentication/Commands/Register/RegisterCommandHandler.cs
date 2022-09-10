@@ -36,12 +36,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             return Errors.User.UsernameDuplicate;
         }
 
-        user = new User
-        {
-            Email = command.Email,
-            UserName = command.Username,
-            RoleId = (int)EnrootRoles.User,
-        };
+        user = User.Create(command.Email, command.Username, EnrootRoles.User);
 
         var result = await _userManager.CreateAsync(user, command.Password);
 
