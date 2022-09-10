@@ -1,7 +1,6 @@
-﻿using Enroot.Domain.Entities;
+﻿using Enroot.Domain.Common.Errors;
+using Enroot.Domain.Entities;
 using ErrorOr;
-using Enroot.Domain.Common.Errors;
-
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

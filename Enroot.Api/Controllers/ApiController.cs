@@ -66,7 +66,7 @@ public class ApiController : ControllerBase
 
             validationProblemDetails.Title = _localizer.GetString("Validation.General");
 
-            return ValidationProblem(modelStateDictionary);
+            return ValidationProblem(validationProblemDetails);
         }
 
         HttpContext.Items[HttpContextItemKeys.Errors] = localizedErrors;
