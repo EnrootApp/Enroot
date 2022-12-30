@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Enroot.Domain\Enroot.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="mediatr" Version="10.0.1" />
+      <PackageReference Include="mediatr.extensions.microsoft.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Authentication\Commands\Register\" />
+      <Folder Include="Authentication\Common\" />
+      <Folder Include="Authentication\Queries\Login\" />
+    </ItemGroup>
+
+</Project>

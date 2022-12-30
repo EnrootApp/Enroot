@@ -1,0 +1,9 @@
+{
+    "dataworkspace.excludedProjects": [
+        "Enroot/Enroot.sqlproj"
+    ],
+    "cSpell.words": [
+        "Mapster",
+        "Mediat"
+    ]
+}
