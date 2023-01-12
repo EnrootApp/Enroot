@@ -36,9 +36,9 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var securityToken = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
-            signingCredentials: signingCredentials,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(expiryHours));
+            expires: DateTime.UtcNow.AddHours(expiryHours),
+            signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(securityToken);
     }

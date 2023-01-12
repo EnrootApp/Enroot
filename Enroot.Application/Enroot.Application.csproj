@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -20,7 +20,7 @@
     <ItemGroup>
       <Folder Include="Authentication\Common\" />
       <Folder Include="Authentication\Queries\Login\" />
-      <Folder Include="Authorizatrion\Commands\" />
+      <Folder Include="Authorization\Commands\" />
       <Folder Include="Common\Behaviors\" />
     </ItemGroup>
 

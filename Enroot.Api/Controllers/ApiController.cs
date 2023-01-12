@@ -26,7 +26,7 @@ public class ApiController : ControllerBase
             return null;
         }
 
-        var userIdClaim = identity.Claims.Where(c => c.Type == JwtClaimNames.UserId).FirstOrDefault();
+        var userIdClaim = identity.Claims.FirstOrDefault(c => c.Type == JwtClaimNames.UserId);
 
         if (userIdClaim == null)
         {
@@ -62,9 +62,10 @@ public class ApiController : ControllerBase
                     error.Description);
             }
 
-            ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails(modelStateDictionary);
-
-            validationProblemDetails.Title = _localizer.GetString("Validation.General");
+            ValidationProblemDetails validationProblemDetails = new(modelStateDictionary)
+            {
+                Title = _localizer.GetString("Validation.General")
+            };
 
             return ValidationProblem(validationProblemDetails);
         }
@@ -91,6 +92,6 @@ public class ApiController : ControllerBase
 
     private IEnumerable<Error> GetLocalizedErrors(IEnumerable<Error> errors)
     {
-        return errors.ToList().ConvertAll(error => GetLocalizedError(error));
+        return errors.ToList().ConvertAll(GetLocalizedError);
     }
 }

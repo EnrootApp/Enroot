@@ -12,5 +12,7 @@ public static partial class Errors
             Error.Conflict(code: "User.UsernameDuplicate");
         public static Error NotFoundById =>
            Error.Conflict(code: "User.NotFoundById");
+        public static Error NotRegistered =>
+           Error.Unexpected(code: "User.NotRegistered");
     }
 }

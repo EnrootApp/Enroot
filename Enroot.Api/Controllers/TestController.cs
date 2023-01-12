@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Enroot.Api.Common.Authorization;
+using Enroot.Domain.Common.Enums;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
 namespace Enroot.Api.Controllers
@@ -6,11 +8,11 @@ namespace Enroot.Api.Controllers
     [Route("[controller]")]
     public class TestController : ApiController
     {
-
         public TestController(IHttpContextAccessor httpContextAccessor, IStringLocalizer<ApiController> localizer) : base(httpContextAccessor, localizer)
         {
         }
 
+        [RequiresPermission(Permission.AssignRoles)]
         [HttpGet]
         public IActionResult Test()
         {
