@@ -18,7 +18,7 @@ public class AuthenticationController : ApiController
         ISender mediator,
         IMapper mapper,
         IHttpContextAccessor httpContextAccessor,
-        IStringLocalizer<ApiController> localizer) : base(httpContextAccessor, localizer) 
+        IStringLocalizer<ApiController> localizer) : base(httpContextAccessor, localizer)
     {
         _mediator = mediator;
         _mapper = mapper;

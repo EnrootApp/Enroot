@@ -1,6 +1,6 @@
 ﻿namespace Enroot.Domain.Common.Enums
 {
-    public enum RolePermissions : int
+    public enum Permission : int
     {
         AssignRoles = 1,
     }

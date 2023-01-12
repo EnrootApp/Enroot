@@ -32,7 +32,7 @@ public static class DependencyInjection
                             Id="Bearer"
                         }
                     },
-                    new string[]{}
+                    Array.Empty<string>()
                 }
             });
         });
@@ -43,10 +43,7 @@ public static class DependencyInjection
 
         services.AddSingleton<ProblemDetailsFactory, EnrootProblemDetailsFactory>();
 
-        services.AddLocalization(options =>
-        {
-            options.ResourcesPath = "Resources";
-        });
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
 
         return services;
     }

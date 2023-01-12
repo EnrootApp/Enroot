@@ -1,5 +1,4 @@
 ﻿using Enroot.Application.Common.Interfaces.Authentication;
-using Enroot.Domain.Entities;
 using Enroot.Infrastructure.Authentication;
 using Enroot.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,7 +22,7 @@ public static class DependencyInjection
             {
                 options
                 .UseLazyLoadingProxies()
-                .UseSqlServer(configuration.GetConnectionString("Enroot"), builder => builder.MigrationsAssembly("Enroot.Infrastructure"));
+                .UseSqlServer(configuration.GetConnectionString("Enroot")!, builder => builder.MigrationsAssembly("Enroot.Infrastructure"));
             }
         );
 
@@ -45,7 +44,7 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(jwtSettingsSection);
         services.Configure<GoogleSettings>(googleSettingsSection);
 
-        var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+        var jwtSettings = jwtSettingsSection.Get<JwtSettings>()!;
         var googleSettings = googleSettingsSection.Get<GoogleSettings>();
 
         services.AddAuthentication(options =>
@@ -67,13 +66,13 @@ public static class DependencyInjection
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                 };
             })
-            .AddGoogle(options =>
-            {
-                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.ClientId = googleSettings.ClientId;
-                options.ClientSecret = googleSettings.ClientSecret;
-                options.CallbackPath = "/authentication/external/Google";
-            })
+            // .AddGoogle(options =>
+            // {
+            //     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //     options.ClientId = googleSettings.ClientId;
+            //     options.ClientSecret = googleSettings.ClientSecret;
+            //     options.CallbackPath = "/authentication/external/Google";
+            // })
             .AddCookie();
 
         return services;

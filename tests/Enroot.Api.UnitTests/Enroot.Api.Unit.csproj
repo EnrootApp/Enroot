@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
-	<UserSecretsId>8cd23df5-c864-4f3a-8c6b-6163effcfd0e</UserSecretsId>
+    <UserSecretsId>8cd23df5-c864-4f3a-8c6b-6163effcfd0e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,8 +27,8 @@
     <ProjectReference Include="..\..\Enroot.Infrastructure\Enroot.Infrastructure.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.1" />
-	</ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>

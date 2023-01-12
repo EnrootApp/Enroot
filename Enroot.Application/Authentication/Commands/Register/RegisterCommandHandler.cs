@@ -42,7 +42,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         if (!result.Succeeded)
         {
-            // TODO: send error if not created
+            return Errors.User.NotRegistered;
         }
 
         var claims = await _userManager.GetClaimsAsync(user);
