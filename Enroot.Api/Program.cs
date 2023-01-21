@@ -1,7 +1,9 @@
 using Enroot.Api;
 using Enroot.Api.Common.Localization;
 using Enroot.Application;
+using Enroot.Application.DomainEvents;
 using Enroot.Infrastructure;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,5 +29,7 @@ var localizationOptions = new RequestLocalizationOptions()
     .AddSupportedUICultures(Localization.SupportedCultures);
 
 app.UseRequestLocalization(localizationOptions);
+
+DomainEventsSender.Configure(app.Services.GetService<IMediator>()!);
 
 app.Run();

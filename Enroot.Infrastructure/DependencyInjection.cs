@@ -1,4 +1,5 @@
 ﻿using Enroot.Application.Common.Interfaces.Authentication;
+using Enroot.Domain.User;
 using Enroot.Infrastructure.Authentication;
 using Enroot.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,7 +27,7 @@ public static class DependencyInjection
             }
         );
 
-        services.AddIdentity<User, Role>()
+        services.AddIdentity<User, IdentityRole<int>>()
             .AddEntityFrameworkStores<EnrootContext>()
             .AddDefaultTokenProviders();
 

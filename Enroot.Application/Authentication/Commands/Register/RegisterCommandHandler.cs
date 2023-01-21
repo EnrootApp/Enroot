@@ -1,8 +1,8 @@
 ﻿using Enroot.Application.Authentication.Common;
 using Enroot.Application.Common.Interfaces.Authentication;
-using Enroot.Domain.Common.Enums;
 using Enroot.Domain.Common.Errors;
-using Enroot.Domain.Entities;
+using Enroot.Domain.User;
+using Enroot.Domain.User.ValueObjects;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +36,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             return Errors.User.UsernameDuplicate;
         }
 
-        user = User.Create(command.Email, command.Username, EnrootRoles.User);
+        user = User.Create(Email.Create(command.Email), Username.Create(command.Username));
 
         var result = await _userManager.CreateAsync(user, command.Password);
 
