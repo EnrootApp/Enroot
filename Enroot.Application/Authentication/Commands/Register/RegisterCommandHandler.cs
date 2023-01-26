@@ -1,5 +1,6 @@
 ﻿using Enroot.Application.Authentication.Common;
 using Enroot.Application.Common.Interfaces.Authentication;
+using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.User;
 using Enroot.Domain.User.ValueObjects;
@@ -11,44 +12,39 @@ namespace Enroot.Application.Authentication.Commands.Register;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
-    private readonly UserManager<User> _userManager;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IRepository<User, UserId> _userRepository;
 
-    public RegisterCommandHandler(UserManager<User> userManager, IJwtTokenGenerator jwtTokenGenerator)
+    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IPasswordHasher<User> passwordHasher, IRepository<User, UserId> userRepository)
     {
-        _userManager = userManager;
         _jwtTokenGenerator = jwtTokenGenerator;
+        _passwordHasher = passwordHasher;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(command.Email);
+        var user = await _userRepository.FindAsync(u => u.Email! == Email.Create(command.Email));
 
         if (user is not null)
         {
             return Errors.User.EmailDuplicate;
         }
 
-        user = await _userManager.FindByNameAsync(command.Username);
+        var passwordHash = _passwordHasher.HashPassword(null!, command.Password);
 
-        if (user is not null)
+        var createUserResult = User.CreateByEmail(Email.Create(command.Email), passwordHash);
+
+        if (createUserResult.IsError)
         {
-            return Errors.User.UsernameDuplicate;
+            return createUserResult.Errors;
         }
 
-        user = User.Create(Email.Create(command.Email), Username.Create(command.Username));
+        var persistedUser = await _userRepository.CreateAsync(createUserResult.Value);
 
-        var result = await _userManager.CreateAsync(user, command.Password);
+        var token = _jwtTokenGenerator.GenerateToken(persistedUser.Id);
 
-        if (!result.Succeeded)
-        {
-            return Errors.User.NotRegistered;
-        }
-
-        var claims = await _userManager.GetClaimsAsync(user);
-
-        var accessToken = _jwtTokenGenerator.GenerateToken(user.Id, claims);
-
-        return new AuthenticationResult(accessToken);
+        return new AuthenticationResult(token);
     }
 }

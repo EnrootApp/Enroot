@@ -1,6 +1,4 @@
-﻿using Enroot.Api.Common.Authorization;
-using Enroot.Domain.Common.Enums;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
 namespace Enroot.Api.Controllers
@@ -12,7 +10,6 @@ namespace Enroot.Api.Controllers
         {
         }
 
-        [RequiresPermission(Permission.AssignRoles)]
         [HttpGet]
         public IActionResult Test()
         {

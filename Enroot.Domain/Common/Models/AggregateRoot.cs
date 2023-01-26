@@ -6,4 +6,8 @@ where TId : notnull
     protected AggregateRoot(TId id) : base(id)
     {
     }
+
+    protected AggregateRoot()
+    {
+    }
 }

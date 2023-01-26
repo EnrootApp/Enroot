@@ -1,8 +1,9 @@
 ﻿using System.Security.Claims;
+using Enroot.Domain.User.ValueObjects;
 
 namespace Enroot.Application.Common.Interfaces.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(int userId, IList<Claim> claims);
+    string GenerateToken(UserId userId);
 }

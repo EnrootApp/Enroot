@@ -4,8 +4,12 @@ namespace Enroot.Domain.Common.Models;
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
 where TId : notnull
 {
-    public int DbId { get; }
+    public int DbId { get; private set; }
     public TId Id { get; protected set; }
+
+    protected Entity()
+    {
+    }
 
     protected Entity(TId id)
     {

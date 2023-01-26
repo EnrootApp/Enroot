@@ -1,9 +1,13 @@
+using System.Text.RegularExpressions;
 using Enroot.Domain.Common.Models;
 
 namespace Enroot.Domain.User.ValueObjects;
 
-public sealed class Email : ValueObject
+public sealed partial class Email : ValueObject
 {
+    [GeneratedRegex(@"^\S+@\S+\.\S+$", RegexOptions.CultureInvariant, matchTimeoutMilliseconds: 1000)]
+    private static partial Regex EmailValidator();
+
     public string Value { get; }
 
     private Email(string value)
@@ -18,7 +22,10 @@ public sealed class Email : ValueObject
             throw new ArgumentException($"'{nameof(email)}' cannot be null or whitespace.", nameof(email));
         }
 
-        // TODO: Email regex validation
+        if (!EmailValidator().IsMatch(email))
+        {
+            throw new ArgumentException($"'{nameof(email)}' is not a valid email.", nameof(email));
+        }
 
         return new(email);
     }

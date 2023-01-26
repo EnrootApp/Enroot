@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Enroot.Application.Authentication.Commands.Register;
 
-public record RegisterCommand(string Email, string Username, string Password) : IRequest<ErrorOr<AuthenticationResult>>;
+public record RegisterCommand(string Email, string Password) : IRequest<ErrorOr<AuthenticationResult>>;

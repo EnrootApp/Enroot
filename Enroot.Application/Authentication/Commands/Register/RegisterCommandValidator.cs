@@ -11,11 +11,6 @@ namespace Enroot.Application.Authentication.Commands.Register
                 .WithErrorCode("Validation.NotEmpty")
                 .EmailAddress()
                 .WithErrorCode("Validation.EmailInvalid");
-            RuleFor(c => c.Username)
-                .NotEmpty()
-                .WithErrorCode("Validation.NotEmpty")
-                .MinimumLength(2)
-                .WithErrorCode("Validation.UsernameInvalid");
             RuleFor(c => c.Password).
                 NotEmpty()
                 .WithErrorCode("Validation.NotEmpty")
