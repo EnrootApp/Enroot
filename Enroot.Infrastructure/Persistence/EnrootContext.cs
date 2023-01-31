@@ -1,14 +1,20 @@
-﻿using Enroot.Domain.Common.Enums;
-using Enroot.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Enroot.Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Enroot.Infrastructure.Persistence;
 
-public class EnrootContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, RoleClaim, IdentityUserToken<int>>
+public class EnrootContext : DbContext
 {
     public EnrootContext(DbContextOptions<EnrootContext> options) : base(options)
     {
+    }
+
+    public DbSet<User> Users { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(EnrootContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
     }
 }

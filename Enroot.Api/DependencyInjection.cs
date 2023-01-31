@@ -1,6 +1,7 @@
 ﻿using Enroot.Api.Common.Errors;
 using Enroot.Api.Mapping;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Enroot.Api;
@@ -41,7 +42,8 @@ public static class DependencyInjection
 
         services.AddMappings();
 
-        services.AddSingleton<ProblemDetailsFactory, EnrootProblemDetailsFactory>();
+        services.TryAddSingleton<ProblemDetailsFactory, EnrootProblemDetailsFactory>();
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddLocalization(options => options.ResourcesPath = "Resources");
 

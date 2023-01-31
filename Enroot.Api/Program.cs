@@ -2,11 +2,13 @@ using Enroot.Api;
 using Enroot.Api.Common.Localization;
 using Enroot.Application;
 using Enroot.Infrastructure;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddInfrastructure(builder.Configuration)
+    .AddPersistence(builder.Configuration)
     .AddPresentation()
     .AddApplication();
 
