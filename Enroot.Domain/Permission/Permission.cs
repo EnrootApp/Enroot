@@ -7,6 +7,8 @@ public sealed class Permission : AggregateRoot<PermissionId>
 {
     public string Description { get; }
 
+    private Permission() { }
+
     private Permission(PermissionId id, string description) : base(id)
     {
         Description = description;

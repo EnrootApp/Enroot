@@ -48,5 +48,12 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
                 id => id.Value,
                 value => TenantId.Create(value)
             );
+
+        builder
+            .Property(t => t.Name)
+            .HasConversion(
+                n => n.Value,
+                value => TenantName.Create(value).Value
+            );
     }
 }

@@ -7,7 +7,7 @@ namespace Enroot.Infrastructure.Persistence.Repositories;
 
 public class Repository<TAggregateRoot, TId> : IRepository<TAggregateRoot, TId>
 where TAggregateRoot : AggregateRoot<TId>
-where TId : notnull
+where TId : ValueObject
 {
     private readonly EnrootContext _context;
 
@@ -37,9 +37,14 @@ where TId : notnull
         return await _context.Set<TAggregateRoot>().AsQueryable().FirstOrDefaultAsync(predicate);
     }
 
+    public async Task<IEnumerable<TAggregateRoot>> GetAllAsync()
+    {
+        return await _context.Set<TAggregateRoot>().ToListAsync();
+    }
+
     public async Task<TAggregateRoot?> GetByIdAsync(TId id)
     {
-        return await _context.Set<TAggregateRoot>().FindAsync(new[] { id });
+        return await FindAsync(ag => ag.Id == id);
     }
 
     public async Task<TAggregateRoot> UpdateAsync(TAggregateRoot aggregateRoot)

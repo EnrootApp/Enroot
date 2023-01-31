@@ -1,23 +1,19 @@
 using Enroot.Domain.Common.Models;
+using Enroot.Domain.Permission.Enums;
 
 namespace Enroot.Domain.Role.ValueObjects;
 
 public sealed class RolePermissionId : ValueObject
 {
-    public int Value { get; }
+    public PermissionEnum Value { get; }
 
-    private RolePermissionId(int value)
+    private RolePermissionId(PermissionEnum value)
     {
         Value = value;
     }
 
-    public static RolePermissionId Create(int id)
+    public static RolePermissionId Create(PermissionEnum id)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentException($"'{nameof(id)}' cannot be less than 1.", nameof(id));
-        }
-
         return new RolePermissionId(id);
     }
 

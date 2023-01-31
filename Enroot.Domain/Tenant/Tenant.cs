@@ -1,6 +1,7 @@
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Tenant.ValueObjects;
+using ErrorOr;
 
 namespace Enroot.Domain.Tenant;
 
@@ -10,23 +11,25 @@ public sealed class Tenant : AggregateRoot<TenantId>
 
     public IReadOnlyList<AccountId> AccountIds => _accountIds.AsReadOnly();
 
-    public string Name { get; }
+    public TenantName Name { get; private set; }
 
-    private Tenant(TenantId id, string name) : base(id)
+    private Tenant() { }
+
+    private Tenant(TenantId id, TenantName name) : base(id)
     {
         Name = name;
     }
 
-    public static Tenant Create(TenantId id, string name)
+    public static ErrorOr<Tenant> Create(TenantId id, TenantName name)
     {
         if (id is null)
         {
             throw new ArgumentNullException(nameof(id));
         }
 
-        if (string.IsNullOrWhiteSpace(name))
+        if (name is null)
         {
-            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
+            throw new ArgumentNullException(nameof(id));
         }
 
         return new Tenant(id, name);

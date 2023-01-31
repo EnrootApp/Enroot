@@ -1,23 +1,19 @@
 using Enroot.Domain.Common.Models;
+using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Domain.Role.ValueObjects;
 
 public sealed class RoleId : ValueObject
 {
-    public int Value { get; }
+    public RoleEnum Value { get; }
 
-    private RoleId(int value)
+    private RoleId(RoleEnum value)
     {
         Value = value;
     }
 
-    public static RoleId Create(int id)
+    public static RoleId Create(RoleEnum id)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentException($"'{nameof(id)}' cannot be less than 1.", nameof(id));
-        }
-
         return new RoleId(id);
     }
 
