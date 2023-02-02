@@ -49,11 +49,4 @@ public class AuthenticationController : ApiController
             Problem
         );
     }
-
-    // TODO: add oAuth
-    [HttpPost("external/Google")]
-    public async Task<IActionResult> ExternalLogin([FromBody] GoogleAuthRequest externalAuth)
-    {
-        throw new NotImplementedException();
-    }
 }

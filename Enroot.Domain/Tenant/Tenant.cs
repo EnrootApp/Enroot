@@ -12,6 +12,7 @@ public sealed class Tenant : AggregateRoot<TenantId>
     public IReadOnlyList<AccountId> AccountIds => _accountIds.AsReadOnly();
 
     public TenantName Name { get; private set; }
+    public bool IsOpen { get; private set; }
 
     private Tenant() { }
 

@@ -56,5 +56,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
                 id => id.Value,
                 value => AccountId.Create(value)
             );
+
+        builder.HasIndex(a => new { a.TenantId, a.UserId }).IsUnique();
     }
 }

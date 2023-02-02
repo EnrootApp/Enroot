@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="ErrorOr" Version="1.2.1" />
       <PackageReference Include="FluentValidation" Version="11.2.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
       <PackageReference Include="mediatr" Version="11.1.0" />

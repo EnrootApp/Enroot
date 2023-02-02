@@ -1,8 +1,10 @@
+using Enroot.Domain.Account.Events;
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
+using ErrorOr;
 
 namespace Enroot.Domain.Account;
 
@@ -19,7 +21,7 @@ public sealed class Account : AggregateRoot<AccountId>
         UserId = userId;
     }
 
-    public static Account Create(UserId userId, TenantId tenantId, RoleId roleId)
+    public static ErrorOr<Account> Create(UserId userId, TenantId tenantId, RoleId roleId)
     {
         if (roleId is null)
         {
@@ -33,8 +35,10 @@ public sealed class Account : AggregateRoot<AccountId>
 
         var accountId = AccountId.CreateUnique();
 
-        // send domain event with created Id
+        var account = new Account(accountId, userId, tenantId, roleId);
 
-        return new(accountId, userId, tenantId, roleId);
+        account.AddDomainEvent(new AccountCreatedDomainEvent(userId, tenantId, accountId));
+
+        return account;
     }
 }

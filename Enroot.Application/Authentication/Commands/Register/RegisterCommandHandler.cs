@@ -2,8 +2,8 @@
 using Enroot.Application.Common.Interfaces.Authentication;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Common.Errors;
-using Enroot.Domain.User;
 using Enroot.Domain.User.ValueObjects;
+using Enroot.Domain.User;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
