@@ -30,11 +30,23 @@ public class TenantController : ApiController
     {
         var command = _mapper.Map<CreateTenantCommand>(request);
 
-        var serviceResult = await _mediator.Send(command);
+        var result = await _mediator.Send(command);
 
-        return serviceResult.Match(
+        return result.Match(
             value => Ok(_mapper.Map<CreateTenantResponse>(value)),
             Problem
         );
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetUserTenants([FromBody] CreateTenantRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpGet("open")]
+    public async Task<IActionResult> GetOpenTenants([FromBody] CreateTenantRequest request)
+    {
+        throw new NotImplementedException();
     }
 }

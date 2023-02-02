@@ -9,6 +9,7 @@ using Microsoft.Extensions.Localization;
 using Enroot.Domain.Permission.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Enroot.Application.Account.Commands.Create;
 
 namespace Enroot.Api.Controllers
 {
@@ -22,11 +23,13 @@ namespace Enroot.Api.Controllers
             _mediator = mediator;
         }
 
-        [Authorize]
-        [RequirePermission(PermissionEnum.ReviewTask)]
         [HttpGet]
         public async Task<IActionResult> Test()
         {
+            await _mediator.Send(new CreateAccountCommand(
+                Guid.Parse("61280235-adb4-4739-8667-3a5b0af94cf2"),
+                Guid.Parse("a1659be0-ae85-49bf-a8fd-00282b92a35e")
+            ));
             return Ok();
         }
     }

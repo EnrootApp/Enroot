@@ -1,5 +1,8 @@
 using System.ComponentModel;
 using System.Reflection;
+using Enroot.Domain.Common.Interfaces;
+using Enroot.Domain.Common.Models;
+using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Enroot.Infrastructure.Persistence.Common;
@@ -27,5 +30,25 @@ public static class Extensions
             return name;
 
         return ((DescriptionAttribute)descriptionAttributes[0]).Description;
+    }
+
+    public static async Task DispatchDomainEventsAsync<TId>(this IMediator mediator, EnrootContext ctx)
+    where TId : ValueObject
+    {
+        var domainEntities = ctx.ChangeTracker
+            .Entries<AggregateRoot<TId>>()
+            .Where(x => x.Entity.DomainEvents?.Any() == true);
+
+        var domainEvents = domainEntities
+            .SelectMany(x => x.Entity.DomainEvents)
+            .ToList();
+
+        domainEntities.ToList()
+            .ForEach(entity => entity.Entity.ClearDomainEvents());
+
+        var tasks = domainEvents
+            .Select((domainEvent) => Task.Run(() => mediator.Publish(domainEvent)));
+
+        await Task.WhenAll(tasks);
     }
 }

@@ -1,6 +1,5 @@
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Role.ValueObjects;
-using Enroot.Domain.Permission.ValueObjects;
 using Enroot.Domain.Permission.Enums;
 using ErrorOr;
 

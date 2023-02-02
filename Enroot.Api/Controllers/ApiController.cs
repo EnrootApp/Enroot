@@ -19,7 +19,7 @@ public class ApiController : ControllerBase
         _localizer = localizer;
     }
 
-    protected int? GetRequestUserId()
+    protected Guid? GetRequestUserId()
     {
         if (_httpContextAccessor.HttpContext?.User?.Identity is not ClaimsIdentity identity)
         {
@@ -33,18 +33,14 @@ public class ApiController : ControllerBase
             return null;
         }
 
-        int claimValue;
+        var parsed = Guid.TryParse(userIdClaim.Value, out Guid id);
 
-        try
-        {
-            claimValue = Convert.ToInt32(userIdClaim.Value);
-        }
-        catch
+        if (!parsed)
         {
             return null;
         }
 
-        return claimValue;
+        return id;
     }
 
     protected IActionResult Problem(IEnumerable<Error> errors)
