@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using Enroot.Domain.Common.Models;
+using Enroot.Domain.Common.Errors;
+using ErrorOr;
 
 namespace Enroot.Domain.User.ValueObjects;
 
@@ -15,19 +17,19 @@ public sealed partial class PhoneNumber : ValueObject
         Value = value;
     }
 
-    public static PhoneNumber Create(string phoneNumber)
+    public static ErrorOr<PhoneNumber> Create(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
         {
-            throw new ArgumentException($"'{nameof(phoneNumber)}' cannot be null or whitespace.", nameof(phoneNumber));
+            return Errors.User.PhoneInvalid;
         }
 
         if (!RegexValidator().IsMatch(phoneNumber))
         {
-            throw new ArgumentException($"'{nameof(phoneNumber)}' is not a valid phone number.", nameof(phoneNumber));
+            return Errors.User.PhoneInvalid;
         }
 
-        return new(phoneNumber);
+        return new PhoneNumber(phoneNumber);
     }
 
     public override IEnumerable<object> GetEqualityComponents()

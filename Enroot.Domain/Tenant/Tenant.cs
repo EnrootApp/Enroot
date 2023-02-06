@@ -1,6 +1,7 @@
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Tenant.ValueObjects;
+using Enroot.Domain.Common.Errors;
 using ErrorOr;
 
 namespace Enroot.Domain.Tenant;
@@ -25,29 +26,31 @@ public sealed class Tenant : AggregateRoot<TenantId>
     {
         if (id is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Tenant.NotFoundById;
         }
 
         if (name is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Tenant.NameInvalid;
         }
 
         return new Tenant(id, name);
     }
 
-    public void AddAccountId(AccountId id)
+    public ErrorOr<Tenant> AddAccountId(AccountId id)
     {
         if (id is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Account.NotFoundById;
         }
 
         if (_accountIds.Contains(id))
         {
-            throw new ArgumentException();
+            return Errors.Tenant.AccountExists;
         }
 
         _accountIds.Add(id);
+
+        return this;
     }
 }

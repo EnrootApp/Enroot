@@ -1,5 +1,7 @@
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Permission.ValueObjects;
+using Enroot.Domain.Common.Errors;
+using ErrorOr;
 
 namespace Enroot.Domain.Permission;
 
@@ -14,18 +16,18 @@ public sealed class Permission : AggregateRoot<PermissionId>
         Description = description;
     }
 
-    public static Permission Create(PermissionId id, string description)
+    public static ErrorOr<Permission> Create(PermissionId id, string description)
     {
         if (id is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Permission.NotFoundById;
         }
 
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new ArgumentException($"'{nameof(description)}' cannot be null or whitespace.", nameof(description));
+            return Errors.Permission.InvalidDescription;
         }
 
-        return new(id, description);
+        return new Permission(id, description);
     }
 }

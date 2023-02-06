@@ -7,6 +7,7 @@ using Enroot.Domain.User.ValueObjects;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Role.Enums;
+using Enroot.Domain.Common.Errors;
 
 namespace Enroot.Application.Account.Commands.Create;
 
@@ -28,8 +29,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
 
         if (account is not null)
         {
-            // TODO: Add error
-            throw new Exception();
+            return Errors.User.AccountExists;
         }
 
         var accountResult = Domain.Account.Account.Create(userId, tenantId, RoleId.Create(RoleEnum.Default));

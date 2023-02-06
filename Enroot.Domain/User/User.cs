@@ -1,6 +1,7 @@
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.User.ValueObjects;
 using Enroot.Domain.Account.ValueObjects;
+using Enroot.Domain.Common.Errors;
 using ErrorOr;
 
 namespace Enroot.Domain.User;
@@ -33,12 +34,12 @@ public sealed class User : AggregateRoot<UserId>
     {
         if (email is null)
         {
-            throw new ArgumentNullException(nameof(email));
+            return Errors.User.EmailInvalid;
         }
 
-        if (passwordHash is null)
+        if (string.IsNullOrWhiteSpace(passwordHash))
         {
-            throw new ArgumentNullException(nameof(passwordHash));
+            return Errors.User.EmailInvalid;
         }
 
         return new User(UserId.CreateUnique(), email, passwordHash);
@@ -48,29 +49,31 @@ public sealed class User : AggregateRoot<UserId>
     {
         if (phoneNumber is null)
         {
-            throw new ArgumentNullException(nameof(phoneNumber));
+            return Errors.User.PhoneInvalid;
         }
 
-        if (passwordHash is null)
+        if (string.IsNullOrWhiteSpace(passwordHash))
         {
-            throw new ArgumentNullException(nameof(passwordHash));
+            return Errors.User.EmailInvalid;
         }
 
         return new User(UserId.CreateUnique(), phoneNumber, passwordHash);
     }
 
-    public void AddAccountId(AccountId id)
+    public ErrorOr<User> AddAccountId(AccountId id)
     {
         if (id is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Account.NotFoundById;
         }
 
         if (_accountIds.Contains(id))
         {
-            throw new ArgumentException();
+            return Errors.User.AccountExists;
         }
 
         _accountIds.Add(id);
+
+        return this;
     }
 }

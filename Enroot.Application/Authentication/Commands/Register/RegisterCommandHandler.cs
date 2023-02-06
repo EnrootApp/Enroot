@@ -34,7 +34,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         var passwordHash = _passwordHasher.HashPassword(null!, command.Password);
 
-        var createUserResult = User.CreateByEmail(Email.Create(command.Email), passwordHash);
+        var emailResult = Email.Create(command.Email);
+
+        if (emailResult.IsError)
+        {
+            return emailResult.Errors;
+        }
+
+        var createUserResult = User.CreateByEmail(emailResult.Value, passwordHash);
 
         if (createUserResult.IsError)
         {

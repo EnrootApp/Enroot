@@ -46,6 +46,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
 
         builder.Ignore(t => t.DbId);
 
-        builder.SeedEnumValues((RoleEnum role) => Role.Create(RoleId.Create(role), role.GetEnumDescriptionOrName()));
+        builder.SeedEnumValues((RoleEnum role) => Role.Create(RoleId.Create(role), role.GetEnumDescriptionOrName()).Value);
     }
 }
