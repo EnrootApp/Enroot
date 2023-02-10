@@ -24,7 +24,7 @@ public sealed class Role : AggregateRoot<RoleId>
     {
         if (id is null)
         {
-            return Errors.Role.NotFoundById;
+            return Errors.Role.NotFound;
         }
 
         if (string.IsNullOrWhiteSpace(name))

@@ -6,9 +6,11 @@ public static partial class Errors
 {
     public static class Permission
     {
-        public static Error NotFoundById =>
-            Error.NotFound(code: "Permission.NotFoundById");
+        private const string _code = "Permission";
+
+        public static Error NotFound =>
+            Error.NotFound(_code, "NotFound");
         public static Error InvalidDescription =>
-            Error.Validation(code: "Permission.InvalidDescription");
+            Error.Validation(_code, "InvalidDescription");
     }
 }

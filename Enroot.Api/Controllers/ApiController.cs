@@ -1,22 +1,24 @@
-﻿using Enroot.Api.Common.Http;
+﻿using System.Reflection;
+using Enroot.Api.Common.Http;
 using Enroot.Infrastructure.Authentication;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace Enroot.Api.Controllers;
 
-public class ApiController : ControllerBase
+public abstract class ApiController : ControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IStringLocalizer _localizer;
+    private readonly IStringLocalizerFactory _localizerFactory;
 
-    protected ApiController(IHttpContextAccessor httpContextAccessor, IStringLocalizer localizer)
+    protected ApiController(IHttpContextAccessor httpContextAccessor, IStringLocalizerFactory localizerFactory)
     {
         _httpContextAccessor = httpContextAccessor;
-        _localizer = localizer;
+        _localizerFactory = localizerFactory;
     }
 
     protected Guid? GetRequestUserId()
@@ -58,9 +60,11 @@ public class ApiController : ControllerBase
                     error.Description);
             }
 
+            var localizer = _localizerFactory.Create("Validation", Assembly.GetExecutingAssembly().FullName!);
+
             ValidationProblemDetails validationProblemDetails = new(modelStateDictionary)
             {
-                Title = _localizer.GetString("Validation.General")
+                Title = localizer.GetString("General")
             };
 
             return ValidationProblem(validationProblemDetails);
@@ -78,12 +82,14 @@ public class ApiController : ControllerBase
             _ => StatusCodes.Status500InternalServerError
         };
 
-        return Problem(statusCode: statusCode, title: firstError.Description);
+        return Problem(detail: firstError.Description, statusCode: statusCode, title: firstError.Code);
     }
 
     private Error GetLocalizedError(Error error)
     {
-        return Error.Custom(error.NumericType, error.Code, _localizer.GetString(error.Code));
+        var localizer = _localizerFactory.Create(error.Code, Assembly.GetExecutingAssembly().FullName!);
+
+        return Error.Custom(error.NumericType, error.Code, localizer.GetString(error.Description));
     }
 
     private IEnumerable<Error> GetLocalizedErrors(IEnumerable<Error> errors)

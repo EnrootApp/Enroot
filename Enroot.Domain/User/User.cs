@@ -64,7 +64,7 @@ public sealed class User : AggregateRoot<UserId>
     {
         if (id is null)
         {
-            return Errors.Account.NotFoundById;
+            return Errors.Account.NotFound;
         }
 
         if (_accountIds.Contains(id))

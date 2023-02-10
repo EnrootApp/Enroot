@@ -20,7 +20,7 @@ public sealed class Permission : AggregateRoot<PermissionId>
     {
         if (id is null)
         {
-            return Errors.Permission.NotFoundById;
+            return Errors.Permission.NotFound;
         }
 
         if (string.IsNullOrWhiteSpace(description))

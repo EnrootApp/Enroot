@@ -26,17 +26,17 @@ public sealed class Account : AggregateRoot<AccountId>
     {
         if (roleId is null)
         {
-            return Errors.Role.NotFoundById;
+            return Errors.Role.NotFound;
         }
 
         if (userId is null)
         {
-            return Errors.User.NotFoundById;
+            return Errors.User.NotFound;
         }
 
         if (tenantId is null)
         {
-            return Errors.Tenant.NotFoundById;
+            return Errors.Tenant.NotFound;
         }
 
         var accountId = AccountId.CreateUnique();

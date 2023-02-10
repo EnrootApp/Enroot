@@ -26,7 +26,7 @@ public sealed class Tenant : AggregateRoot<TenantId>
     {
         if (id is null)
         {
-            return Errors.Tenant.NotFoundById;
+            return Errors.Tenant.NotFound;
         }
 
         if (name is null)
@@ -41,7 +41,7 @@ public sealed class Tenant : AggregateRoot<TenantId>
     {
         if (id is null)
         {
-            return Errors.Account.NotFoundById;
+            return Errors.Account.NotFound;
         }
 
         if (_accountIds.Contains(id))

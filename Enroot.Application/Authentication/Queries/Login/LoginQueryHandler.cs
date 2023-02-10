@@ -29,14 +29,14 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
         if (user is null)
         {
-            return Errors.Authentication.CredentialsInvalid;
+            return Errors.User.CredentialsInvalid;
         }
 
         var isPasswordWrong = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, query.Password) == PasswordVerificationResult.Failed;
 
         if (isPasswordWrong)
         {
-            return Errors.Authentication.CredentialsInvalid;
+            return Errors.User.CredentialsInvalid;
         }
 
         var accessToken = _jwtTokenGenerator.GenerateToken(user.Id);

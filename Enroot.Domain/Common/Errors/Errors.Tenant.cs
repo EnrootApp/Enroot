@@ -6,13 +6,15 @@ public static partial class Errors
 {
     public static class Tenant
     {
+        private const string _code = "Tenant";
+
         public static Error NameDuplicate =>
-            Error.Conflict(code: "Tenant.NameDuplicate");
+            Error.Conflict(_code, "NameDuplicate");
         public static Error NameInvalid =>
-            Error.Validation(code: "Tenant.NameInvalid");
-        public static Error NotFoundById =>
-            Error.NotFound(code: "Tenant.NotFoundById");
+            Error.Validation(_code, "NameInvalid");
+        public static Error NotFound =>
+            Error.NotFound(_code, "NotFound");
         public static Error AccountExists =>
-           Error.NotFound(code: "Tenant.AccountExists");
+           Error.Conflict(_code, "AccountExists");
     }
 }

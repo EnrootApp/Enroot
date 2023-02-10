@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Enroot.Domain.Common.Errors;
 
 namespace Enroot.Application.Authentication.Queries.Login
 {
@@ -10,7 +11,7 @@ namespace Enroot.Application.Authentication.Queries.Login
                 .NotEmpty()
                 .WithErrorCode("Validation.NotEmpty")
                 .EmailAddress()
-                .WithErrorCode("Validation.EmailInvalid");
+                .WithErrorCode(Errors.User.EmailInvalid.Code);
             RuleFor(c => c.Password)
                 .NotEmpty()
                 .WithErrorCode("Validation.NotEmpty");

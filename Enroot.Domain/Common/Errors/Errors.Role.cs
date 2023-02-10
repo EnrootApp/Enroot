@@ -6,11 +6,13 @@ public static partial class Errors
 {
     public static class Role
     {
-        public static Error NotFoundById =>
-            Error.NotFound(code: "Role.NotFoundById");
+        private const string _code = "Role";
+
+        public static Error NotFound =>
+            Error.NotFound(_code, "NotFound");
         public static Error InvalidName =>
-            Error.Validation(code: "Role.InvalidName");
+            Error.Validation(_code, "InvalidName");
         public static Error PermissionExists =>
-            Error.Conflict(code: "Role.PermissionExists");
+            Error.Conflict(_code, "PermissionExists");
     }
 }
