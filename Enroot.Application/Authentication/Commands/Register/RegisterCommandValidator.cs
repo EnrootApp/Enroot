@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Enroot.Domain.Common.Errors;
 
 namespace Enroot.Application.Authentication.Commands.Register
 {
@@ -10,14 +11,14 @@ namespace Enroot.Application.Authentication.Commands.Register
                 .NotEmpty()
                 .WithErrorCode("Validation.NotEmpty")
                 .EmailAddress()
-                .WithErrorCode("Validation.EmailInvalid");
+                .WithErrorCode(Errors.User.EmailInvalid.Code);
             RuleFor(c => c.Password).
                 NotEmpty()
                 .WithErrorCode("Validation.NotEmpty")
                 .MinimumLength(6)
-                .WithErrorCode("Validation.PasswordInvalid")
+                .WithErrorCode(Errors.User.PasswordInvalid.Code)
                 .Matches("[a-z]")
-                .WithErrorCode("Validation.PasswordInvalid");
+                .WithErrorCode(Errors.User.PasswordInvalid.Code);
         }
     }
 }

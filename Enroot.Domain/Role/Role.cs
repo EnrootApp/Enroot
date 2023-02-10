@@ -2,6 +2,7 @@ using Enroot.Domain.Common.Models;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Permission.Enums;
 using ErrorOr;
+using Enroot.Domain.Common.Errors;
 
 namespace Enroot.Domain.Role;
 
@@ -19,19 +20,19 @@ public sealed class Role : AggregateRoot<RoleId>
         Name = name;
     }
 
-    public static Role Create(RoleId id, string name)
+    public static ErrorOr<Role> Create(RoleId id, string name)
     {
         if (id is null)
         {
-            throw new ArgumentNullException(nameof(id));
+            return Errors.Role.NotFound;
         }
 
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
+            return Errors.Role.InvalidName;
         }
 
-        return new(id, name);
+        return new Role(id, name);
     }
 
     public ErrorOr<Role> AddPermission(PermissionEnum permission)
@@ -40,7 +41,7 @@ public sealed class Role : AggregateRoot<RoleId>
 
         if (_permissions.Contains(rolePermission))
         {
-            throw new ArgumentException($"'{nameof(permission)}' permission is already added.", nameof(permission));
+            return Errors.Role.PermissionExists;
         }
 
         _permissions.Add(rolePermission);

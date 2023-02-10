@@ -30,6 +30,6 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
 
         builder.Ignore(t => t.DbId);
 
-        builder.SeedEnumValues((PermissionEnum permission) => Permission.Create(PermissionId.Create(permission), permission.GetEnumDescriptionOrName()));
+        builder.SeedEnumValues((PermissionEnum permission) => Permission.Create(PermissionId.Create(permission), permission.GetEnumDescriptionOrName()).Value);
     }
 }

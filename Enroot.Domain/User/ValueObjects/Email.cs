@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using Enroot.Domain.Common.Models;
+using Enroot.Domain.Common.Errors;
+using ErrorOr;
 
 namespace Enroot.Domain.User.ValueObjects;
 
@@ -15,19 +17,19 @@ public sealed partial class Email : ValueObject
         Value = value;
     }
 
-    public static Email Create(string email)
+    public static ErrorOr<Email> Create(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            throw new ArgumentException($"'{nameof(email)}' cannot be null or whitespace.", nameof(email));
+            return Errors.User.EmailInvalid;
         }
 
         if (!EmailValidator().IsMatch(email))
         {
-            throw new ArgumentException($"'{nameof(email)}' is not a valid email.", nameof(email));
+            return Errors.User.EmailInvalid;
         }
 
-        return new(email);
+        return new Email(email);
     }
 
     public override IEnumerable<object> GetEqualityComponents()

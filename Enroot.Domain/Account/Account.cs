@@ -4,6 +4,7 @@ using Enroot.Domain.Common.Models;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
+using Enroot.Domain.Common.Errors;
 using ErrorOr;
 
 namespace Enroot.Domain.Account;
@@ -25,12 +26,17 @@ public sealed class Account : AggregateRoot<AccountId>
     {
         if (roleId is null)
         {
-            throw new ArgumentNullException(nameof(roleId));
+            return Errors.Role.NotFound;
+        }
+
+        if (userId is null)
+        {
+            return Errors.User.NotFound;
         }
 
         if (tenantId is null)
         {
-            throw new ArgumentNullException(nameof(tenantId));
+            return Errors.Tenant.NotFound;
         }
 
         var accountId = AccountId.CreateUnique();

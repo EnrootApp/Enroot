@@ -21,11 +21,21 @@ public class AccountCreatedDomainEventHandler : INotificationHandler<AccountCrea
     public async Task Handle(AccountCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
         var tenant = await _tenantRepository.GetByIdAsync(notification.TenantId);
-        tenant!.AddAccountId(notification.AccountId);
+        var tenantAddResult = tenant!.AddAccountId(notification.AccountId);
+        if (tenantAddResult.IsError)
+        {
+            throw new ApplicationException();
+        }
+
         await _tenantRepository.UpdateAsync(tenant);
 
         var user = await _userRepository.GetByIdAsync(notification.UserId);
-        user!.AddAccountId(notification.AccountId);
+        var userAddResult = user!.AddAccountId(notification.AccountId);
+        if (userAddResult.IsError)
+        {
+            throw new ApplicationException();
+        }
+
         await _userRepository.UpdateAsync(user);
     }
 }

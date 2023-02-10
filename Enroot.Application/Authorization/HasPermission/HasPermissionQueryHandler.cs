@@ -24,7 +24,7 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
         var account = await _accountRepository.GetByIdAsync(query.Id);
         if (account is null)
         {
-            return Errors.Account.NotFoundById;
+            return Errors.Account.NotFound;
         }
 
         var role = await _roleRepository.GetByIdAsync(account.RoleId);

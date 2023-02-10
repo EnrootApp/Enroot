@@ -12,10 +12,7 @@ public sealed class RolePermissionId : ValueObject
         Value = value;
     }
 
-    public static RolePermissionId Create(PermissionEnum id)
-    {
-        return new RolePermissionId(id);
-    }
+    public static RolePermissionId Create(PermissionEnum id) => new(id);
 
     public override IEnumerable<object> GetEqualityComponents()
     {

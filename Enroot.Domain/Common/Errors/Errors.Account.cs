@@ -6,7 +6,9 @@ public static partial class Errors
 {
     public static class Account
     {
-        public static Error NotFoundById =>
-           Error.Conflict(code: "Account.NotFoundById");
+        private const string _code = "Account";
+
+        public static Error NotFound =>
+           Error.NotFound(_code, "NotFound");
     }
 }

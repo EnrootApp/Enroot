@@ -6,13 +6,21 @@ public static partial class Errors
 {
     public static class User
     {
+        private const string _code = "User";
+
+        public static Error CredentialsInvalid =>
+            Error.Conflict(_code, "CredentialsInvalid");
         public static Error EmailDuplicate =>
-            Error.Conflict(code: "User.EmailDuplicate");
-        public static Error UsernameDuplicate =>
-            Error.Conflict(code: "User.UsernameDuplicate");
-        public static Error NotFoundById =>
-           Error.Conflict(code: "User.NotFoundById");
-        public static Error NotRegistered =>
-           Error.Unexpected(code: "User.NotRegistered");
+            Error.Conflict(_code, "EmailDuplicate");
+        public static Error NotFound =>
+           Error.NotFound(_code, "NotFound");
+        public static Error EmailInvalid =>
+            Error.Validation(_code, "EmailInvalid");
+        public static Error PhoneInvalid =>
+            Error.Validation(_code, "PhoneInvalid");
+        public static Error PasswordInvalid =>
+            Error.Validation(_code, "PasswordInvalid");
+        public static Error AccountExists =>
+            Error.Conflict(_code, "AccountExists");
     }
 }
