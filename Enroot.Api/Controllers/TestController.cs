@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Enroot.Domain.Common.Errors;
+using Microsoft.AspNetCore.Authorization;
+using Enroot.Infrastructure.Authorization;
+using Enroot.Domain.Permission.Enums;
 
 namespace Enroot.Api.Controllers
 {
@@ -15,11 +18,12 @@ namespace Enroot.Api.Controllers
             _mediator = mediator;
         }
 
-        [Area("Tenant")]
+        [Authorize(Roles = "System")]
+        [RequirePermission(PermissionEnum.CreateTask)]
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            return Problem(new[] { Errors.Tenant.AccountExists });
+            return Ok();
         }
     }
 }

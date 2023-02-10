@@ -25,7 +25,14 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(user => user.Email! == Email.Create(query.Email));
+        var emailResult = Email.Create(query.Email);
+
+        if (emailResult.IsError)
+        {
+            return emailResult.Errors;
+        }
+
+        var user = await _userRepository.FindAsync(user => user.Email! == emailResult.Value);
 
         if (user is null)
         {
@@ -39,7 +46,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
             return Errors.User.CredentialsInvalid;
         }
 
-        var accessToken = _jwtTokenGenerator.GenerateToken(user.Id);
+        var accessToken = _jwtTokenGenerator.GenerateToken(user);
 
         return new AuthenticationResult(accessToken);
     }

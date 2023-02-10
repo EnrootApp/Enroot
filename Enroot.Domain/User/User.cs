@@ -3,6 +3,7 @@ using Enroot.Domain.User.ValueObjects;
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
+using Enroot.Domain.User.Enums;
 
 namespace Enroot.Domain.User;
 
@@ -11,6 +12,7 @@ public sealed class User : AggregateRoot<UserId>
     public Email? Email { get; private set; }
     public PhoneNumber? PhoneNumber { get; private set; }
     public string PasswordHash { get; private set; }
+    public string Role { get; private set; }
 
     private readonly List<AccountId> _accountIds = new();
 
@@ -22,12 +24,14 @@ public sealed class User : AggregateRoot<UserId>
     {
         Email = email;
         PasswordHash = passwordHash;
+        Role = UserRoles.Default;
     }
 
     private User(UserId id, PhoneNumber phoneNumber, string passwordHash) : base(id)
     {
         PhoneNumber = phoneNumber;
         PasswordHash = passwordHash;
+        Role = UserRoles.Default;
     }
 
     public static ErrorOr<User> CreateByEmail(Email email, string passwordHash)

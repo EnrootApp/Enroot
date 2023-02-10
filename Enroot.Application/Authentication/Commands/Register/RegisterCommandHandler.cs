@@ -50,7 +50,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         var persistedUser = await _userRepository.CreateAsync(createUserResult.Value);
 
-        var token = _jwtTokenGenerator.GenerateToken(persistedUser.Id);
+        var token = _jwtTokenGenerator.GenerateToken(persistedUser);
 
         return new AuthenticationResult(token);
     }
