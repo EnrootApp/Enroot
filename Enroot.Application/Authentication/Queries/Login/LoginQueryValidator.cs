@@ -11,7 +11,7 @@ namespace Enroot.Application.Authentication.Queries.Login
                 .NotEmpty()
                 .WithErrorCode("Validation.NotEmpty")
                 .EmailAddress()
-                .WithErrorCode(Errors.User.EmailInvalid.Code);
+                .WithErrorCode(Errors.User.EmailInvalid.Description);
             RuleFor(c => c.Password)
                 .NotEmpty()
                 .WithErrorCode("Validation.NotEmpty");

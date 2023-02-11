@@ -35,7 +35,8 @@ namespace Enroot.Application.Common.Behaviors
 
             var errors = validationResult.Errors
                 .ConvertAll(validationError => Error.Validation(
-                    validationError.ErrorCode));
+                    validationError.ErrorCode,
+                    validationError.ErrorMessage));
 
             return (dynamic)errors;
         }
