@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Enroot.Application.Common.Interfaces.Authentication;
+using Enroot.Domain.User;
 using Enroot.Domain.User.ValueObjects;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +19,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _jwtSettings = jwtOptions.Value;
     }
 
-    public string GenerateToken(UserId userId)
+    public string GenerateToken(User user)
     {
         var jwtSecret = _jwtSettings.Secret;
         var issuer = _jwtSettings.Issuer;
@@ -31,10 +32,13 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var claims = new List<Claim>();
 
         var jtiClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
-        var userIdClaim = new Claim(JwtClaimNames.UserId, userId.Value.ToString()!);
+        var userIdClaim = new Claim(JwtClaimNames.UserId, user.Id.Value.ToString()!);
+
+        var roleClaim = new Claim(ClaimTypes.Role, user.Role);
 
         claims.Add(jtiClaim);
         claims.Add(userIdClaim);
+        claims.Add(roleClaim);
 
         var securityToken = new JwtSecurityToken(
             issuer: issuer,
