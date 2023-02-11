@@ -7,7 +7,7 @@ namespace Enroot.Domain.User.ValueObjects;
 
 public sealed partial class PhoneNumber : ValueObject
 {
-    [GeneratedRegex(@"^\\S+@\\S+\\.\\S+$", RegexOptions.CultureInvariant, matchTimeoutMilliseconds: 1000)]
+    [GeneratedRegex(@"^(29|25|44|33)(\d{3})(\d{2})(\d{2})$", RegexOptions.CultureInvariant, matchTimeoutMilliseconds: 1000)]
     private static partial Regex RegexValidator();
 
     public string Value { get; }
@@ -17,16 +17,16 @@ public sealed partial class PhoneNumber : ValueObject
         Value = value;
     }
 
-    public static ErrorOr<PhoneNumber> Create(string phoneNumber)
+    public static PhoneNumber Create(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
         {
-            return Errors.User.PhoneInvalid;
+            throw new DomainException(Errors.User.PhoneInvalid);
         }
 
         if (!RegexValidator().IsMatch(phoneNumber))
         {
-            return Errors.User.PhoneInvalid;
+            throw new DomainException(Errors.User.PhoneInvalid);
         }
 
         return new PhoneNumber(phoneNumber);

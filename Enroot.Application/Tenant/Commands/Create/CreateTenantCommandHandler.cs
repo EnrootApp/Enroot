@@ -18,14 +18,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
     public async Task<ErrorOr<TenantResult>> Handle(CreateTenantCommand command, CancellationToken cancellationToken)
     {
-        var commandTenantNameResult = TenantName.Create(command.Name);
-
-        if (commandTenantNameResult.IsError)
-        {
-            return commandTenantNameResult.Errors;
-        }
-
-        var commandTenantName = commandTenantNameResult.Value;
+        var commandTenantName = TenantName.Create(command.Name);
 
         var tenant = await _tenantRepository.FindAsync(t => t.Name == commandTenantName);
 

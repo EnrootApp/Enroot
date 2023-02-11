@@ -53,7 +53,7 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
             .Property(t => t.Name)
             .HasConversion(
                 n => n.Value,
-                value => TenantName.Create(value).Value
+                value => TenantName.Create(value)
             );
     }
 }

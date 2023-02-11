@@ -16,11 +16,11 @@ public sealed partial class TenantName : ValueObject
         Value = value;
     }
 
-    public static ErrorOr<TenantName> Create(string name)
+    public static TenantName Create(string name)
     {
         if (!NameValidator().IsMatch(name))
         {
-            return Errors.Tenant.NameInvalid;
+            throw new DomainException(Errors.Tenant.NameInvalid);
         }
 
         return new TenantName(name);

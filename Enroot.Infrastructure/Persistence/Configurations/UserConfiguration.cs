@@ -53,14 +53,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .Property(user => user.Email)
             .HasConversion(
                 email => email!.Value,
-                value => Email.Create(value).Value
+                value => Email.Create(value)
             );
 
         builder
             .Property(user => user.PhoneNumber)
             .HasConversion(
                 phoneNumber => phoneNumber!.Value,
-                value => PhoneNumber.Create(value).Value
+                value => PhoneNumber.Create(value)
             );
     }
 }
