@@ -6,9 +6,9 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Enroot.Application.Tenant.Queries.OpenTenants;
+namespace Enroot.Application.Tenant.Queries.Tenants;
 
-public class OpenTenantsQueryHandler : IRequestHandler<OpenTenantsQuery, ErrorOr<IEnumerable<TenantResult>>>
+public class OpenTenantsQueryHandler : IRequestHandler<TenantsQuery, ErrorOr<IEnumerable<TenantResult>>>
 {
     private readonly IRepository<Domain.Tenant.Tenant, TenantId> _tenantRepository;
 
@@ -17,7 +17,7 @@ public class OpenTenantsQueryHandler : IRequestHandler<OpenTenantsQuery, ErrorOr
         _tenantRepository = tenantRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<TenantResult>>> Handle(OpenTenantsQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<IEnumerable<TenantResult>>> Handle(TenantsQuery request, CancellationToken cancellationToken)
     {
         var tenants = await _tenantRepository.Filter(t => t.IsOpen).ToListAsync(cancellationToken);
 
