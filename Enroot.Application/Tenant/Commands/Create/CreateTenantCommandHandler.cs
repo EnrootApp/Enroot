@@ -36,6 +36,9 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
         var persistedTenant = await _tenantRepository.CreateAsync(createTenantResult.Value);
 
-        return new TenantResult(persistedTenant.Id, persistedTenant.Name, persistedTenant.AccountIds);
+        return new TenantResult(
+            persistedTenant.Id.Value,
+            persistedTenant.Name.Value,
+            persistedTenant.AccountIds.Select(id => id.Value));
     }
 }

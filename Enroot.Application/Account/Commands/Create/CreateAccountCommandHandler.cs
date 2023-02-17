@@ -41,6 +41,6 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
 
         var persistedAccount = await _accountRepository.CreateAsync(accountResult.Value);
 
-        return new AccountResult(persistedAccount.Id, persistedAccount.TenantId, persistedAccount.UserId);
+        return new AccountResult(persistedAccount.Id.Value, persistedAccount.TenantId.Value, persistedAccount.UserId.Value);
     }
 }

@@ -1,4 +1,6 @@
 using Enroot.Application.Authentication.Commands.Register;
+using Enroot.Application.Tenant.Common;
+using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
 using MapsterMapper;
 using MediatR;
@@ -39,14 +41,15 @@ public class TenantController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUserTenants([FromBody] CreateTenantRequest request)
+    public async Task<IActionResult> GetTenants([FromBody] GetTenantsRequest request)
     {
-        throw new NotImplementedException();
-    }
+        var query = _mapper.Map<TenantsQuery>(request);
 
-    [HttpGet("open")]
-    public async Task<IActionResult> GetOpenTenants([FromBody] CreateTenantRequest request)
-    {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            Ok,
+            Problem
+        );
     }
 }

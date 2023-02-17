@@ -7,7 +7,7 @@ namespace Enroot.Domain.Unit.Tests.UserAggregate;
 public class UserTests
 {
     [Fact]
-    public void AddAccountIdTest()
+    public void AddAccountId_Should_AddOnlyFirst()
     {
         var user = User.User.CreateByEmail(Email.Create("email@mail.com"), "abc");
 

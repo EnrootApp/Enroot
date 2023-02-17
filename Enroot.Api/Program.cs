@@ -30,3 +30,4 @@ var localizationOptions = new RequestLocalizationOptions()
 app.UseRequestLocalization(localizationOptions);
 
 app.Run();
+public partial class Program { }

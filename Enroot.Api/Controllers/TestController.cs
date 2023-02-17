@@ -5,6 +5,7 @@ using Enroot.Domain.Common.Errors;
 using Microsoft.AspNetCore.Authorization;
 using Enroot.Infrastructure.Authorization;
 using Enroot.Domain.Permission.Enums;
+using Enroot.Application.Tenant.Queries.Tenants;
 
 namespace Enroot.Api.Controllers
 {
@@ -18,12 +19,11 @@ namespace Enroot.Api.Controllers
             _mediator = mediator;
         }
 
-        [Authorize(Roles = "System")]
-        [RequirePermission(PermissionEnum.CreateTask)]
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            return Ok();
+            var result = await _mediator.Send(new TenantsQuery(Guid.Empty, 2, 3), CancellationToken.None);
+            return Ok(result.Value);
         }
     }
 }

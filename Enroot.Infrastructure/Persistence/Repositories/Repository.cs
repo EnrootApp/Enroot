@@ -41,9 +41,9 @@ where TId : ValueObject
         return await _context.Set<TAggregateRoot>().AsQueryable().FirstOrDefaultAsync(predicate);
     }
 
-    public async Task<IEnumerable<TAggregateRoot>> GetAllAsync()
+    public IQueryable<TAggregateRoot> GetAll()
     {
-        return await _context.Set<TAggregateRoot>().ToListAsync();
+        return _context.Set<TAggregateRoot>();
     }
 
     public IQueryable<TAggregateRoot> Filter(Expression<Func<TAggregateRoot, bool>> predicate)

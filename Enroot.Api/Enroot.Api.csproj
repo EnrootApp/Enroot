@@ -34,4 +34,8 @@
     <Folder Include="Common\Http\" />
     <Folder Include="Mapping\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="../tests/Enroot.Application.Unit/Enroot.Application.Unit.csproj" />
+  </ItemGroup>
 </Project>

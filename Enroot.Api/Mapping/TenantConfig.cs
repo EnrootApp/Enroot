@@ -1,5 +1,6 @@
 ﻿using Enroot.Application.Authentication.Commands.Register;
 using Enroot.Application.Tenant.Common;
+using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
 using Mapster;
 
@@ -11,8 +12,9 @@ public class TenantConfig : IRegister
     {
         config.NewConfig<CreateTenantRequest, CreateTenantCommand>();
 
-        config.NewConfig<TenantResult, CreateTenantResponse>()
-            .Map(dest => dest.Id, src => src.Id.Value)
-            .Map(dest => dest.Name, src => src.Name.Value);
+        config.NewConfig<TenantResult, CreateTenantResponse>();
+
+        config.NewConfig<GetTenantsRequest, TenantsQuery>()
+        .Map(dest => dest.IsParticipate, _ => false);
     }
 }
