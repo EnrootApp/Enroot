@@ -8,4 +8,6 @@ public enum RoleEnum
     TenantAdmin = 1,
     [Description("Default tenant role")]
     Default = 2,
+    [Description("Moderator role. Could review tasks")]
+    Moderator = 3,
 }
