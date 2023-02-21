@@ -191,4 +191,48 @@ public class TenantsQueryHandlerTests
 
         Assert.True(result.Value.Count() == limit);
     }
+
+    [Fact]
+    public async void Handle_Should_ReturnAll()
+    {
+        var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
+        var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
+
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+
+        tenant1.AddAccountId(account1.Id);
+        tenant2.AddAccountId(account2.Id);
+        tenant3.AddAccountId(account3.Id);
+        tenant4.AddAccountId(account4.Id);
+        tenant5.AddAccountId(account5.Id);
+
+        user.AddAccountId(account1.Id);
+        user.AddAccountId(account5.Id);
+
+        var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
+        var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account2, account3, account4, account5 });
+
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
+            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+
+        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+
+        var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
+
+        var result = await tenantQueryCommandHandler.Handle(new TenantsQuery(user.Id.Value), CancellationToken.None);
+
+        Assert.True(result.Value.Count() == tenants.Count());
+    }
 }
