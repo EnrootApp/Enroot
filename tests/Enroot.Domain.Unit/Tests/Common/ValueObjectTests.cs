@@ -8,8 +8,8 @@ public class ValueObjectTests
     [Fact]
     public void EqualityTest()
     {
-        ValueObject email = Email.Create("abc@mail.ru");
-        ValueObject secondEmail = Email.Create("abc@mail.ru");
+        ValueObject email = Email.Create("abc@mail.ru").Value;
+        ValueObject secondEmail = Email.Create("abc@mail.ru").Value;
 
         Assert.Equal(email, secondEmail);
     }

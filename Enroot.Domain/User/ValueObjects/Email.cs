@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Common.Errors;
+using ErrorOr;
 
 namespace Enroot.Domain.User.ValueObjects;
 
@@ -16,16 +17,16 @@ public sealed partial class Email : ValueObject
         Value = value;
     }
 
-    public static Email Create(string email)
+    public static ErrorOr<Email> Create(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            throw new DomainException(Errors.User.EmailInvalid);
+            return Errors.User.EmailInvalid;
         }
 
         if (!EmailValidator().IsMatch(email))
         {
-            throw new DomainException(Errors.User.EmailInvalid);
+            return Errors.User.EmailInvalid;
         }
 
         return new Email(email);

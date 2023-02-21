@@ -9,7 +9,7 @@ public class UserTests
     [Fact]
     public void AddAccountId_Should_AddOnlyFirst()
     {
-        var user = User.User.CreateByEmail(Email.Create("email@mail.com"), "abc");
+        var user = User.User.CreateByEmail(Email.Create("email@mail.com").Value, "abc");
 
         Assert.False(user.IsError);
 

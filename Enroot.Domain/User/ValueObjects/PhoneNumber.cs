@@ -17,16 +17,16 @@ public sealed partial class PhoneNumber : ValueObject
         Value = value;
     }
 
-    public static PhoneNumber Create(string phoneNumber)
+    public static ErrorOr<PhoneNumber> Create(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
         {
-            throw new DomainException(Errors.User.PhoneInvalid);
+            return Errors.User.PhoneInvalid;
         }
 
         if (!RegexValidator().IsMatch(phoneNumber))
         {
-            throw new DomainException(Errors.User.PhoneInvalid);
+            return Errors.User.PhoneInvalid;
         }
 
         return new PhoneNumber(phoneNumber);

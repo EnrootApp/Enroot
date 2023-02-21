@@ -27,7 +27,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
             return Errors.Tenant.NameDuplicate;
         }
 
-        var createTenantResult = Tenant.Create(TenantId.CreateUnique(), commandTenantName);
+        var createTenantResult = Tenant.Create(TenantId.CreateUnique(), commandTenantName.Value);
 
         if (createTenantResult.IsError)
         {

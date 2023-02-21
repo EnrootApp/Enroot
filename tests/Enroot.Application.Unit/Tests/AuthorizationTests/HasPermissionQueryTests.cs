@@ -23,15 +23,15 @@ public class HasPermissionQueryTests
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
         role.AddPermission(PermissionEnum.CreateTask);
 
-        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
         var account = AccountEntity.Create(user.Id, tenant.Id, role.Id).Value;
 
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role));
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account));
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
         var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTask);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 
@@ -45,15 +45,15 @@ public class HasPermissionQueryTests
     {
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
 
-        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
         var account = AccountEntity.Create(user.Id, tenant.Id, role.Id).Value;
 
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role));
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account));
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
 
         var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTask);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
@@ -69,15 +69,15 @@ public class HasPermissionQueryTests
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
         role.AddPermission(PermissionEnum.CreateTask);
 
-        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
         var account = AccountEntity.Create(user.Id, tenant.Id, role.Id).Value;
 
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role));
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account));
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
         var query = new HasPermissionQuery(account.Id, PermissionEnum.ReviewTask);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 

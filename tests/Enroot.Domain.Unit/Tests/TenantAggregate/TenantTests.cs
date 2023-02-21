@@ -10,7 +10,7 @@ public class TenantTests
     [Fact]
     public void Create_Should_ReturnSuccess()
     {
-        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great"));
+        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value);
 
         Assert.False(tenant.IsError);
     }
@@ -18,7 +18,7 @@ public class TenantTests
     [Fact]
     public void AddAccountId_Should_AddOnlyFirst()
     {
-        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great"));
+        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value);
 
         var accountId = AccountId.CreateUnique();
         tenant.Value.AddAccountId(accountId);
@@ -30,16 +30,16 @@ public class TenantTests
     [Fact]
     public void TenantName_Should_ThrowDomainException()
     {
-        Assert.Throws<DomainException>(() => TenantName.Create("ab"));
-        Assert.Throws<DomainException>(() => TenantName.Create("abc#"));
-        Assert.Throws<DomainException>(() => TenantName.Create("abc$"));
-        Assert.Throws<DomainException>(() => TenantName.Create("abc!"));
+        Assert.True(TenantName.Create("ab").IsError);
+        Assert.True(TenantName.Create("abc#").IsError);
+        Assert.True(TenantName.Create("abc$").IsError);
+        Assert.True(TenantName.Create("abc!").IsError);
     }
 
     [Fact]
     public void TenantName_Should_NotThrowDomainException()
     {
-        var tenantName = TenantName.Create("abc");
+        var tenantName = TenantName.Create("abc").Value;
         Assert.NotNull(tenantName);
     }
 }

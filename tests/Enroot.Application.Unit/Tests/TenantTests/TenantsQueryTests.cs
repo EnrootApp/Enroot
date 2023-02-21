@@ -22,13 +22,13 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
 
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
         var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
         var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
@@ -65,13 +65,13 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
 
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
         var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
         var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
@@ -111,13 +111,13 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
 
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
         var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
         var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
@@ -154,13 +154,13 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
 
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
         var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
         var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
@@ -198,13 +198,13 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name")).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2")).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3")).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4")).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5")).Value;
+        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
+        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
+        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
+        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
+        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
 
-        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru"), "abc").Value;
+        var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
         var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
         var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
