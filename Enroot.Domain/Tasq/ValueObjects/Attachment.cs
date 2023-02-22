@@ -11,6 +11,10 @@ public sealed class Attachment : ValueObject
     public string BlobUrl { get; }
     public string Name { get; }
 
+    private Attachment()
+    {
+    }
+
     private Attachment(string name, string blobUrl)
     {
         Name = name;

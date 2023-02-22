@@ -6,6 +6,7 @@
         "Hmac",
         "Mapster",
         "Mediat",
-        "Tasq"
+        "Tasq",
+        "Tasqs"
     ]
 }

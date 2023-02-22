@@ -46,8 +46,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
            );
 
         builder.HasOne<Tenant>().WithMany().HasPrincipalKey(t => t.Id);
-        builder.HasOne<User>().WithMany().HasPrincipalKey(t => t.Id);
-        builder.HasOne<Role>().WithMany().HasPrincipalKey(t => t.Id);
+        builder.HasOne<User>().WithMany().HasPrincipalKey(u => u.Id);
+        builder.HasOne<Role>().WithMany().HasPrincipalKey(r => r.Id);
 
         builder
             .Property(t => t.Id)
