@@ -26,29 +26,17 @@ public class RequirePermissionAttribute : Attribute, IAsyncAuthorizationFilter
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        var parsed = Guid.TryParse(context.HttpContext.Request.Headers["TenantId"].ToString(), out Guid tenantGuid);
+        var accountIdClaim = context.HttpContext.User.FindFirst(EnrootClaimNames.AccountId);
 
-        if (!parsed)
+        if (accountIdClaim is null)
         {
             context.Result = new ForbidResult();
             return;
         }
 
-        var tenantId = TenantId.Create(tenantGuid);
+        var accountId = AccountId.Create(Guid.Parse(accountIdClaim.Value));
 
-        var claim = context.HttpContext.User.Claims.First(c => c.Type == JwtClaimNames.UserId);
-        var userId = UserId.Create(Guid.Parse(claim.Value));
-
-        var accountRepository = context.HttpContext.RequestServices.GetService<IRepository<Account, AccountId>>();
-        var account = await accountRepository!.FindAsync(a => a.TenantId == tenantId && a.UserId == userId);
-
-        if (account is null)
-        {
-            context.Result = new ForbidResult();
-            return;
-        }
-
-        var query = new HasPermissionQuery(account.Id, _permission);
+        var query = new HasPermissionQuery(accountId, _permission);
 
         var mediator = context.HttpContext.RequestServices.GetService<ISender>();
 

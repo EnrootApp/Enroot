@@ -2,6 +2,7 @@ using Enroot.Application.Authentication.Commands.Register;
 using Enroot.Application.Tenant.Common;
 using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
+using Enroot.Domain.User.Enums;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,7 @@ public class TenantController : ApiController
     }
 
     [HttpPost]
+    [Authorize(UserRoles.SystemAdmin)]
     public async Task<IActionResult> CreateAsync([FromBody] CreateTenantRequest request)
     {
         var command = _mapper.Map<CreateTenantCommand>(request);

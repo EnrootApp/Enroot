@@ -48,6 +48,10 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                ai => ai!.Value,
                value => TenantId.Create(value)
            );
+
+        builder
+           .Property(a => a.Description)
+           .HasMaxLength(1000);
     }
 
     private static void ConfigureAssignmentTable(EntityTypeBuilder<Tasq> builder)

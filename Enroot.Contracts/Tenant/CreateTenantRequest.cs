@@ -1,6 +1,3 @@
 namespace Enroot.Contracts.Tenant;
 
-public class CreateTenantRequest
-{
-    public string Name { get; init; } = default!;
-}
+public record CreateTenantRequest(string Name);

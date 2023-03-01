@@ -31,6 +31,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
             {
                 new { Value= PermissionEnum.CreateTask, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
                 new { Value=PermissionEnum.ReviewTask, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
+                new { Value=PermissionEnum.CreateAccount, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
 
                 new { Value=PermissionEnum.ReviewTask, RoleId=RoleId.Create(RoleEnum.Moderator) },
             });

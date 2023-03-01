@@ -25,7 +25,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        var email = Email.Create(query.Email);
+        var email = Email.Create(query.Email).Value;
 
         var user = await _userRepository.FindAsync(user => user.Email! == email);
 

@@ -10,6 +10,7 @@ using System.Text;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Enroot.Infrastructure;
 
@@ -17,6 +18,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IClaimsTransformation, ClaimsTransformer>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         var jwtSettingsSection = configuration.GetSection(JwtSettings.SectionName);
         var googleSettingsSection = configuration.GetSection(GoogleSettings.SectionName);

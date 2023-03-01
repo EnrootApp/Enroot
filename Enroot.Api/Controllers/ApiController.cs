@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Enroot.Api.Controllers;
 
@@ -23,12 +24,22 @@ public abstract class ApiController : ControllerBase
 
     protected Guid? GetRequestUserId()
     {
+        return GetIdClaim(ClaimTypes.NameIdentifier);
+    }
+
+    protected Guid? GetRequestAccountId()
+    {
+        return GetIdClaim(EnrootClaimNames.AccountId);
+    }
+
+    protected Guid? GetIdClaim(string claim)
+    {
         if (_httpContextAccessor.HttpContext?.User?.Identity is not ClaimsIdentity identity)
         {
             return null;
         }
 
-        var userIdClaim = identity.Claims.FirstOrDefault(c => c.Type == JwtClaimNames.UserId);
+        var userIdClaim = identity.Claims.FirstOrDefault(c => c.Type == claim);
 
         if (userIdClaim == null)
         {

@@ -32,7 +32,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var claims = new List<Claim>();
 
         var jtiClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
-        var userIdClaim = new Claim(JwtClaimNames.UserId, user.Id.Value.ToString()!);
+        var userIdClaim = new Claim(ClaimTypes.NameIdentifier, user.Id.Value.ToString()!);
 
         var roleClaim = new Claim(ClaimTypes.Role, user.Role);
 

@@ -25,7 +25,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
-        var email = Email.Create(command.Email);
+        var email = Email.Create(command.Email).Value;
 
         var user = await _userRepository.FindAsync(u => u.Email! == email);
 
@@ -36,7 +36,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         var passwordHash = _passwordHasher.HashPassword(null!, command.Password);
 
-        var createUserResult = User.CreateByEmail(email.Value, passwordHash);
+        var createUserResult = User.CreateByEmail(email, passwordHash);
 
         if (createUserResult.IsError)
         {

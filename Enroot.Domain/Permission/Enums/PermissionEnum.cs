@@ -8,4 +8,6 @@ public enum PermissionEnum
     CreateTask = 1,
     [Description("Permission that allows task reviewing")]
     ReviewTask = 2,
+    [Description("Permission that allows to create accounts")]
+    CreateAccount = 3,
 }
