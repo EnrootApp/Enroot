@@ -27,9 +27,9 @@ public abstract class ApiController : ControllerBase
         return GetIdClaim(ClaimTypes.NameIdentifier);
     }
 
-    protected Guid? GetRequestAccountId()
+    protected Guid GetRequestAccountId()
     {
-        return GetIdClaim(EnrootClaimNames.AccountId);
+        return GetIdClaim(EnrootClaimNames.AccountId)!.Value;
     }
 
     protected Guid? GetIdClaim(string claim)

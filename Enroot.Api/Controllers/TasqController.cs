@@ -7,6 +7,7 @@ using MapsterMapper;
 using MediatR;
 using Enroot.Contracts.Tasq;
 using Enroot.Domain.Account.ValueObjects;
+using Enroot.Application.Tasq.Commands.Assign;
 
 namespace Enroot.Api.Controllers
 {
@@ -32,14 +33,25 @@ namespace Enroot.Api.Controllers
         {
             var creatorIdGuid = GetRequestAccountId();
 
-            if (!creatorIdGuid.HasValue)
-            {
-                return Forbid();
-            }
-
-            var creatorId = AccountId.Create(creatorIdGuid.Value);
+            var creatorId = AccountId.Create(creatorIdGuid);
 
             var command = _mapper.Map<CreateTasqCommand>(request);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPost("/assign")]
+        [RequirePermission(PermissionEnum.CreateTask)]
+        public async Task<IActionResult> Assign(AssignTasqRequest request)
+        {
+            var assignerId = GetRequestAccountId();
+
+            var command = new AssignTasqCommand(assignerId, request.AssigneeId, request.TasqId);
 
             var result = await _mediator.Send(command);
 
