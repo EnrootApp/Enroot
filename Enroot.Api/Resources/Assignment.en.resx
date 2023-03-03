@@ -122,32 +122,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AttachmentUrlInvalid" xml:space="preserve">
-    <value>Attachment url is invalid</value>
-    <comment/>
-  </data>
-  <data name="AttachmentNameInvalid" xml:space="preserve">
-    <value>Attachment name is invalid</value>
-    <comment/>
-  </data>
   <data name="NotFound" xml:space="preserve">
-    <value>Task not found</value>
-    <comment/>
-  </data>
-  <data name="AlreadyCompleted" xml:space="preserve">
-    <value>Task is closed</value>
-    <comment/>
-  </data>
-  <data name="AlreadyAssigned" xml:space="preserve">
-    <value>Task is already assigned to the employee</value>
-    <comment/>
-  </data>
-  <data name="NotOnReview" xml:space="preserve">
-    <value>Task is not not review</value>
-    <comment/>
-  </data>
-  <data name="TitleInvalid" xml:space="preserve">
-    <value>Title must not be empty or contain more than 255 characters</value>
+    <value>Assignment not found</value>
     <comment/>
   </data>
 </root>

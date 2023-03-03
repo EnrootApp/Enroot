@@ -1,11 +1,7 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Enroot.Domain.Common.Errors;
-using Microsoft.AspNetCore.Authorization;
-using Enroot.Infrastructure.Authorization;
-using Enroot.Domain.Permission.Enums;
 using Enroot.Application.Tenant.Queries.Tenants;
+using MediatR;
 
 namespace Enroot.Api.Controllers
 {

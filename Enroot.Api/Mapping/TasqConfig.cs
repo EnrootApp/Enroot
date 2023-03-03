@@ -20,7 +20,7 @@ public class TasqConfig : IRegister
         config.NewConfig<Tasq, TasqResult>()
             .Map(dest => dest.Assignments, src => src.Assignments)
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value)
-            .Map(dest => dest.TenantId, src => src.TenantId.Value)
-            .Map(dest => dest.Description, src => src.Description);
+            .Map(dest => dest.Description, src => src.Description)
+            .Map(dest => dest.Title, src => src.Title);
     }
 }

@@ -25,12 +25,12 @@ public sealed class Attachment : ValueObject
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > _maxNameLength)
         {
-            return Errors.Tasq.AttachmentNameInvalid;
+            return Errors.Attachment.NameInvalid;
         }
 
         if (string.IsNullOrWhiteSpace(blobUrl))
         {
-            return Errors.Tasq.AttachmentUrlInvalid;
+            return Errors.Attachment.UrlInvalid;
         }
 
         return new Attachment(name, blobUrl);

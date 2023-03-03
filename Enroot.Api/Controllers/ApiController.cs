@@ -5,9 +5,7 @@ using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Localization;
-using System.Globalization;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Enroot.Api.Controllers;
 
@@ -30,6 +28,14 @@ public abstract class ApiController : ControllerBase
     protected Guid GetRequestAccountId()
     {
         return GetIdClaim(EnrootClaimNames.AccountId)!.Value;
+    }
+
+    protected Guid GetTenantId()
+    {
+        // TODO add tenantId filter;
+        var tenantIdHeader = _httpContextAccessor.HttpContext!.Request.Headers["TenantId"];
+
+        return Guid.Parse(tenantIdHeader!);
     }
 
     protected Guid? GetIdClaim(string claim)

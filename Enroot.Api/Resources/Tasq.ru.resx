@@ -122,10 +122,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AssignmentNotFound" xml:space="preserve">
-    <value>Назначений не найдено</value>
-    <comment/>
-  </data>
   <data name="AttachmentUrlInvalid" xml:space="preserve">
     <value>Некорректная ссылка на прикрепленный файл</value>
     <comment/>
@@ -148,6 +144,10 @@
   </data>
   <data name="NotOnReview" xml:space="preserve">
     <value>Задача не на проверке</value>
+    <comment/>
+  </data>
+  <data name="TitleInvalid" xml:space="preserve">
+    <value>Заголовок не может быть пустым или длиннее 255 символов </value>
     <comment/>
   </data>
 </root>

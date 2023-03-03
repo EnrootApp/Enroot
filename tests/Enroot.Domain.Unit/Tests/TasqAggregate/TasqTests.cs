@@ -10,7 +10,7 @@ public class TasqTests
     [Fact]
     public void Create_Should_ReturnTenantNotFound()
     {
-        var tasq = TasqEntity.Create(null, AccountId.CreateUnique(), string.Empty);
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title");
 
         Assert.True(tasq.IsError && tasq.Errors.Contains(Domain.Common.Errors.Errors.Tenant.NotFound));
     }
@@ -18,7 +18,7 @@ public class TasqTests
     [Fact]
     public void Create_Should_ReturnAccountNotFound()
     {
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), null, string.Empty);
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title");
 
         Assert.True(tasq.IsError && tasq.Errors.Contains(Domain.Common.Errors.Errors.Account.NotFound));
     }
@@ -26,7 +26,7 @@ public class TasqTests
     [Fact]
     public void Create_Should_ReturnTasq()
     {
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty);
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title");
 
         Assert.False(tasq.IsError);
     }
@@ -34,7 +34,7 @@ public class TasqTests
     [Fact]
     public void AddAssignment_Should_Add()
     {
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty).Value;
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title").Value;
         var assignment = Assignment.Create(AccountId.CreateUnique(), AccountId.CreateUnique()).Value;
 
         var result = tasq.AddAssignment(assignment);
@@ -46,7 +46,7 @@ public class TasqTests
     {
         var assigneeGuid = Guid.NewGuid();
 
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty).Value;
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title").Value;
         var assignment1 = Assignment.Create(AccountId.CreateUnique(), AccountId.Create(assigneeGuid)).Value;
         var assignment2 = Assignment.Create(AccountId.CreateUnique(), AccountId.Create(assigneeGuid)).Value;
 

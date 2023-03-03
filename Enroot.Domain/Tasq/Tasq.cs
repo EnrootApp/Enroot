@@ -18,17 +18,19 @@ public sealed class Tasq : AggregateRoot<TasqId>
 
     public TenantId TenantId { get; private set; }
     public AccountId CreatorId { get; private set; }
+    public string Title { get; private set; }
     public string? Description { get; private set; }
 
     private Tasq() { }
-    private Tasq(TenantId tenantId, AccountId creatorId, string? description)
+    private Tasq(TenantId tenantId, AccountId creatorId, string? description, string title)
     {
         TenantId = tenantId;
         CreatorId = creatorId;
         Description = description;
+        Title = title;
     }
 
-    public static ErrorOr<Tasq> Create(TenantId tenantId, AccountId creatorId, string? description)
+    public static ErrorOr<Tasq> Create(TenantId tenantId, AccountId creatorId, string? description, string title)
     {
         if (tenantId is null)
         {
@@ -40,7 +42,12 @@ public sealed class Tasq : AggregateRoot<TasqId>
             return Errors.Account.NotFound;
         }
 
-        return new Tasq(tenantId, creatorId, description);
+        if (string.IsNullOrWhiteSpace(title) || title.Length > 255)
+        {
+            return Errors.Tasq.NotFound;
+        }
+
+        return new Tasq(tenantId, creatorId, description, title);
     }
 
     public ErrorOr<Tasq> AddAssignment(Assignment assignment)

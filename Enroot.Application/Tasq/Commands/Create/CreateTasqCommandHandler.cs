@@ -36,7 +36,7 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
             return Errors.Account.NotFound;
         }
 
-        var tasq = TasqEntity.Create(account.TenantId, account.Id, request.Description);
+        var tasq = TasqEntity.Create(account.TenantId, account.Id, request.Description, request.Title);
 
         if (tasq.IsError)
         {
@@ -47,6 +47,11 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
 
         var assignments = _mapper.Map<IEnumerable<AssignmentResult>>(result.Assignments);
 
-        return new TasqResult(result.CreatorId.Value, result.TenantId.Value, result.Description, assignments);
+        return new TasqResult(
+            result.CreatorId.Value,
+            result.TenantId.Value,
+            result.Description,
+            result.Title,
+            assignments);
     }
 }

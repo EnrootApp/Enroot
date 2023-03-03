@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Enroot.Application.Tasq.Commands.Assign;
 using Enroot.Application.Tasq.Commands.Create;
+using Enroot.Application.Tasq.Queries.GetTasqs;
+using Enroot.Contracts.Tasq;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Infrastructure.Authorization;
 using MapsterMapper;
 using MediatR;
-using Enroot.Contracts.Tasq;
-using Enroot.Domain.Account.ValueObjects;
-using Enroot.Application.Tasq.Commands.Assign;
 
 namespace Enroot.Api.Controllers
 {
@@ -27,15 +27,35 @@ namespace Enroot.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [RequirePermission(PermissionEnum.CreateTask)]
+        public async Task<IActionResult> Get(GetTasqsRequest request)
+        {
+            var tenantId = GetTenantId();
+
+            var query = new GetTasqsQuery(
+                tenantId,
+                request.Title,
+                request.CreatorId,
+                request.Statuses,
+                request.Skip,
+                request.Take);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                value => Ok(_mapper.Map<IEnumerable<TasqResponse>>(value)),
+                Problem
+            );
+        }
+
         [HttpPost]
         [RequirePermission(PermissionEnum.CreateTask)]
         public async Task<IActionResult> Create(CreateTasqRequest request)
         {
             var creatorIdGuid = GetRequestAccountId();
 
-            var creatorId = AccountId.Create(creatorIdGuid);
-
-            var command = _mapper.Map<CreateTasqCommand>(request);
+            var command = new CreateTasqCommand(creatorIdGuid, request.Description, request.Title);
 
             var result = await _mediator.Send(command);
 

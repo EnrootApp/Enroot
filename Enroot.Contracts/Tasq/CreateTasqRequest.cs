@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.Tasq;
 
-public record CreateTasqRequest(string? Description);
+public record CreateTasqRequest(string? Description, string Title);

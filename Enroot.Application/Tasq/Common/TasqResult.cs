@@ -1,7 +1,8 @@
 namespace Enroot.Application.Tasq.Common;
 
 public record TasqResult(
+    Guid Id,
     Guid CreatorId,
-    Guid TenantId,
     string? Description,
+    string Title,
     IEnumerable<AssignmentResult> Assignments);
