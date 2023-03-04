@@ -8,6 +8,8 @@ using Enroot.Domain.Permission.Enums;
 using Enroot.Infrastructure.Authorization;
 using MapsterMapper;
 using MediatR;
+using Enroot.Application.Tasq.Commands.Start;
+using Enroot.Application.Tasq.Commands.Complete;
 
 namespace Enroot.Api.Controllers
 {
@@ -72,6 +74,36 @@ namespace Enroot.Api.Controllers
             var assignerId = GetRequestAccountId();
 
             var command = new AssignTasqCommand(assignerId, request.AssigneeId, request.TasqId);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPost("/start")]
+        public async Task<IActionResult> Start(StartTasqRequest request)
+        {
+            var assigneeId = GetRequestAccountId();
+
+            var command = new StartTasqCommand(assigneeId, request.TasqId);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPost("/complete")]
+        public async Task<IActionResult> Complete(CompleteTasqRequest request)
+        {
+            var assigneeId = GetRequestAccountId();
+
+            var command = _mapper.Map<CompleteTasqCommand>(request);
 
             var result = await _mediator.Send(command);
 

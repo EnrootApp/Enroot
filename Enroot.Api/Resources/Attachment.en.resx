@@ -130,4 +130,8 @@
     <value>Attachment name is invalid</value>
     <comment/>
   </data>
+  <data name="UploadFail" xml:space="preserve">
+    <value>Attachment upload failed</value>
+    <comment/>
+  </data>
 </root>

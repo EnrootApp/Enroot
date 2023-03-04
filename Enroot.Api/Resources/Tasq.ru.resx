@@ -150,4 +150,8 @@
     <value>Заголовок не может быть пустым или длиннее 255 символов </value>
     <comment/>
   </data>
+  <data name="HasStarted" xml:space="preserve">
+    <value>Задача была начата</value>
+    <comment/>
+  </data>
 </root>

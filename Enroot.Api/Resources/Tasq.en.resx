@@ -150,4 +150,8 @@
     <value>Title must not be empty or contain more than 255 characters</value>
     <comment/>
   </data>
+  <data name="HasStarted" xml:space="preserve">
+    <value>The task has been already started</value>
+    <comment/>
+  </data>
 </root>

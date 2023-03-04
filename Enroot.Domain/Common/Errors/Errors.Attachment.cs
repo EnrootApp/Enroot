@@ -9,8 +9,10 @@ public static partial class Errors
         private const string _code = "Attachment";
 
         public static Error UrlInvalid =>
-            Error.Conflict(_code, "UrlInvalid");
+            Error.Validation(_code, "UrlInvalid");
         public static Error NameInvalid =>
-            Error.Conflict(_code, "NameInvalid");
+            Error.Validation(_code, "NameInvalid");
+        public static Error UploadFail =>
+            Error.Unexpected(_code, "UploadFail");
     }
 }

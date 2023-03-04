@@ -1,3 +1,4 @@
+using Enroot.Application.Tasq.Commands.Complete;
 using Enroot.Application.Tasq.Common;
 using Enroot.Contracts.Tasq;
 using Enroot.Domain.Tasq;
@@ -22,5 +23,8 @@ public class TasqConfig : IRegister
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Title, src => src.Title);
+
+        config.NewConfig<CompleteTasqRequest, CompleteTasqCommand>();
+        config.NewConfig<AttachmentRequest, CreateAttachmentModel>();
     }
 }

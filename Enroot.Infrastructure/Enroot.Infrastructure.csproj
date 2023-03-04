@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Backblaze.Agent" Version="1.0.1" />
       <PackageReference Include="mapster" Version="7.3.0" />
       <PackageReference Include="mapster.dependencyinjection" Version="1.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.2.0" />

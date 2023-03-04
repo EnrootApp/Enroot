@@ -11,6 +11,8 @@ using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Enroot.Application.Services;
+using Enroot.Infrastructure.Services;
 
 namespace Enroot.Infrastructure;
 
@@ -51,6 +53,13 @@ public static class DependencyInjection
             .AddCookie();
 
         services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
+
+        services.AddBackblazeAgent(options =>
+        {
+            options.KeyId = configuration["CloudStorage:KeyId"];
+            options.ApplicationKey = configuration["CloudStorage:AppKey"];
+        });
+        services.AddScoped<ICloudStorage, CloudStorage>();
 
         return services;
     }

@@ -1,6 +1,5 @@
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Models;
-using Enroot.Domain.Tasq.Enums;
 using Enroot.Domain.Tasq.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
@@ -63,6 +62,12 @@ public sealed class Assignment : Entity<AssignmentId>
         }
 
         Status = result.Value;
+        return this;
+    }
+
+    public ErrorOr<Assignment> AddAttachment(Attachment attachment)
+    {
+        _attachments.Add(attachment);
         return this;
     }
 }

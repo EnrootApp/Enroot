@@ -12,14 +12,13 @@ namespace Enroot.Domain.Tasq;
 public sealed class Tasq : AggregateRoot<TasqId>
 {
     private readonly List<Assignment> _assignments = new();
-
     public IReadOnlyList<Assignment> Assignments => _assignments.AsReadOnly();
-    public bool IsCompleted => _assignments.Any(a => a.Status is DoneStatus);
 
     public TenantId TenantId { get; private set; }
     public AccountId CreatorId { get; private set; }
     public string Title { get; private set; }
     public string? Description { get; private set; }
+    public bool IsCompleted => _assignments.Any(a => a.Status is DoneStatus);
 
     private Tasq() { }
     private Tasq(TenantId tenantId, AccountId creatorId, string? description, string title)

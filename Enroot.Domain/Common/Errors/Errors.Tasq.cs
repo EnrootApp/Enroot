@@ -13,6 +13,8 @@ public static partial class Errors
             Error.Conflict(_code, "AlreadyCompleted");
         public static Error NotOnReview =>
             Error.Conflict(_code, "NotOnReview");
+        public static Error HasStarted =>
+            Error.Conflict(_code, "HasStarted");
         public static Error AlreadyAssigned =>
             Error.Conflict(_code, "AlreadyAssigned");
         public static Error NotFound =>

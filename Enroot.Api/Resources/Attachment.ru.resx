@@ -130,4 +130,8 @@
     <value>Некорректное имя закрепленного файла</value>
     <comment/>
   </data>
+  <data name="UploadFail" xml:space="preserve">
+    <value>Не удалось загрузить прикрепленный файл</value>
+    <comment/>
+  </data>
 </root>
