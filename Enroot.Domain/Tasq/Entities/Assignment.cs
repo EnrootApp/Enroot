@@ -11,10 +11,12 @@ public sealed class Assignment : Entity<AssignmentId>
 {
     private readonly List<Attachment> _attachments = new();
 
+    public string? FeedbackMessage { get; private set; }
     public AccountId AssignerId { get; private set; }
     public AccountId AssigneeId { get; private set; }
     public StatusBase Status { get; private set; }
     public IReadOnlyList<Attachment> Attachments => _attachments.AsReadOnly();
+
 
     private Assignment() { }
     private Assignment(AccountId assignerId, AccountId assigneeId, StatusBase status)
@@ -52,7 +54,7 @@ public sealed class Assignment : Entity<AssignmentId>
         return this;
     }
 
-    public ErrorOr<Assignment> RejectStage()
+    public ErrorOr<Assignment> RejectStage(string feedbackMessage)
     {
         var result = Status.Reject();
 
@@ -61,6 +63,7 @@ public sealed class Assignment : Entity<AssignmentId>
             return result.FirstError;
         }
 
+        FeedbackMessage = feedbackMessage;
         Status = result.Value;
         return this;
     }

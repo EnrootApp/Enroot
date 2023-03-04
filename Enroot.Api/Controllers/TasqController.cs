@@ -10,6 +10,8 @@ using MapsterMapper;
 using MediatR;
 using Enroot.Application.Tasq.Commands.Start;
 using Enroot.Application.Tasq.Commands.Complete;
+using Enroot.Application.Tasq.Commands.Approve;
+using Enroot.Application.Tasq.Commands.Reject;
 
 namespace Enroot.Api.Controllers
 {
@@ -84,11 +86,11 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("/start")]
-        public async Task<IActionResult> Start(StartTasqRequest request)
+        public async Task<IActionResult> Start(StartAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
 
-            var command = new StartTasqCommand(assigneeId, request.TasqId);
+            var command = new StartAssignmentCommand(assigneeId, request.TasqId);
 
             var result = await _mediator.Send(command);
 
@@ -99,11 +101,43 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("/complete")]
-        public async Task<IActionResult> Complete(CompleteTasqRequest request)
+        public async Task<IActionResult> Complete(CompleteAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
 
-            var command = _mapper.Map<CompleteTasqCommand>(request);
+            var command = _mapper.Map<CompleteAssignmentCommand>(request);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPost("/reject")]
+        [RequirePermission(PermissionEnum.ReviewTask)]
+        public async Task<IActionResult> Reject(RejectAssignmentRequest request)
+        {
+            var reviewerId = GetRequestAccountId();
+
+            var command = new RejectAssignmentCommand(reviewerId, request.AssignmentId, request.RejectMessage);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPost("/approve")]
+        [RequirePermission(PermissionEnum.ReviewTask)]
+        public async Task<IActionResult> Approve(ApproveAssignmentRequest request)
+        {
+            var reviewerId = GetRequestAccountId();
+
+            var command = new ApproveAssignmentCommand(reviewerId, request.AssignmentId);
 
             var result = await _mediator.Send(command);
 

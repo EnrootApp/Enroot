@@ -18,7 +18,6 @@ public abstract class StatusBase : ValueObject
             Status.ToDo => new ToDoStatus(),
             Status.InProgress => new InProgressStatus(),
             Status.AwaitingReview => new AwaitingReviewStatus(),
-            Status.OnReview => new OnReviewStatus(),
             Status.Done => new DoneStatus(),
             Status.Rejected => new RejectedStatus(),
             Status.Cancelled => new CancelledStatus(),

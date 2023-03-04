@@ -10,7 +10,7 @@ public class TasqTests
     [Fact]
     public void Create_Should_ReturnTenantNotFound()
     {
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title");
+        var tasq = TasqEntity.Create(null, AccountId.CreateUnique(), string.Empty, "Title");
 
         Assert.True(tasq.IsError && tasq.Errors.Contains(Domain.Common.Errors.Errors.Tenant.NotFound));
     }
@@ -18,7 +18,7 @@ public class TasqTests
     [Fact]
     public void Create_Should_ReturnAccountNotFound()
     {
-        var tasq = TasqEntity.Create(TenantId.CreateUnique(), AccountId.CreateUnique(), string.Empty, "Title");
+        var tasq = TasqEntity.Create(TenantId.CreateUnique(), null, string.Empty, "Title");
 
         Assert.True(tasq.IsError && tasq.Errors.Contains(Domain.Common.Errors.Errors.Account.NotFound));
     }

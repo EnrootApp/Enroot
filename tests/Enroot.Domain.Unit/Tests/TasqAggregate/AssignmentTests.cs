@@ -31,8 +31,8 @@ public class AssignmentTests
         var assignment = Assignment.Create(AccountId.CreateUnique(), AccountId.CreateUnique()).Value;
         assignment.CompleteStage(); // todo -> in progress
         assignment.CompleteStage(); // in progress -> awaiting review
-        assignment.RejectStage(); // awaiting review -> cancelled
-        var result = assignment.RejectStage(); // cancelled -> error
+        assignment.RejectStage("looser"); // awaiting review -> cancelled
+        var result = assignment.RejectStage("looser"); // cancelled -> error
         Assert.True(result.IsError);
     }
 }

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Enroot.Application.Tasq.Commands.Complete;
 
-public record CompleteTasqCommand(
+public record CompleteAssignmentCommand(
     Guid AssigneeId,
     Guid TasqId,
     IEnumerable<CreateAttachmentModel> Attachments) : IRequest<ErrorOr<TasqResult>>;

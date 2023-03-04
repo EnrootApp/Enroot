@@ -15,14 +15,14 @@ using TasqEntity = Enroot.Domain.Tasq.Tasq;
 
 namespace Enroot.Application.Tasq.Commands.Complete;
 
-public class CompleteTasqCommandHandler : IRequestHandler<CompleteTasqCommand, ErrorOr<TasqResult>>
+public class CompleteAssignmentCommandHandler : IRequestHandler<CompleteAssignmentCommand, ErrorOr<TasqResult>>
 {
     private readonly IRepository<AccountEntity, AccountId> _accountRepository;
     private readonly IRepository<TasqEntity, TasqId> _tasqRepository;
     private readonly ICloudStorage _storage;
     private readonly IMapper _mapper;
 
-    public CompleteTasqCommandHandler(
+    public CompleteAssignmentCommandHandler(
         IRepository<AccountEntity, AccountId> accountRepository,
         IRepository<TasqEntity, TasqId> tasqRepository, IMapper mapper, ICloudStorage storage)
     {
@@ -32,7 +32,7 @@ public class CompleteTasqCommandHandler : IRequestHandler<CompleteTasqCommand, E
         _storage = storage;
     }
 
-    public async Task<ErrorOr<TasqResult>> Handle(CompleteTasqCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<TasqResult>> Handle(CompleteAssignmentCommand request, CancellationToken cancellationToken)
     {
         var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId));
 
@@ -81,7 +81,11 @@ public class CompleteTasqCommandHandler : IRequestHandler<CompleteTasqCommand, E
             assignment.AddAttachment(uploadedAttachment.Value);
         }
 
-        assignment.Status.Complete();
+        var stageResult = assignment.CompleteStage();
+        if (stageResult.IsError)
+        {
+            return ErrorOr<TasqResult>.From(stageResult.Errors);
+        }
 
         await _tasqRepository.UpdateAsync(tasq);
 

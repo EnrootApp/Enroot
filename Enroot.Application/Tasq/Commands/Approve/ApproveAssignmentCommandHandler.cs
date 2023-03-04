@@ -12,15 +12,15 @@ using MediatR;
 using AccountEntity = Enroot.Domain.Account.Account;
 using TasqEntity = Enroot.Domain.Tasq.Tasq;
 
-namespace Enroot.Application.Tasq.Commands.Start;
+namespace Enroot.Application.Tasq.Commands.Approve;
 
-public class StartTasqCommandHandler : IRequestHandler<StartTasqCommand, ErrorOr<TasqResult>>
+public class ApproveAssignmentCommandHandler : IRequestHandler<ApproveAssignmentCommand, ErrorOr<TasqResult>>
 {
     private readonly IRepository<AccountEntity, AccountId> _accountRepository;
     private readonly IRepository<TasqEntity, TasqId> _tasqRepository;
     private readonly IMapper _mapper;
 
-    public StartTasqCommandHandler(
+    public ApproveAssignmentCommandHandler(
         IRepository<AccountEntity, AccountId> accountRepository,
         IRepository<TasqEntity, TasqId> tasqRepository, IMapper mapper)
     {
@@ -29,37 +29,30 @@ public class StartTasqCommandHandler : IRequestHandler<StartTasqCommand, ErrorOr
         _mapper = mapper;
     }
 
-    public async Task<ErrorOr<TasqResult>> Handle(StartTasqCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<TasqResult>> Handle(ApproveAssignmentCommand request, CancellationToken cancellationToken)
     {
-        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId));
+        var assignmentId = AssignmentId.Create(request.AssignmentId);
+        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId));
 
         if (tasq is null)
         {
             return Errors.Tasq.NotFound;
         }
 
-        var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssigneeId));
+        var reviewer = await _accountRepository.GetByIdAsync(AccountId.Create(request.ReviewerId));
 
-        if (assignee is null)
+        if (reviewer is null)
         {
             return Errors.Account.NotFound;
         }
 
-        var assignments = tasq.Assignments.Where(a => a.AssigneeId == assignee.Id);
+        var assignment = tasq.Assignments.First(a => a.Id == assignmentId);
 
-        if (!assignments.Any())
+        var stageResult = assignment.CompleteStage();
+        if (stageResult.IsError)
         {
-            return Errors.Assignment.NotFound;
+            return ErrorOr<TasqResult>.From(stageResult.Errors);
         }
-
-        var assignment = assignments.FirstOrDefault(a => a.Status is ToDoStatus);
-
-        if (assignment is null)
-        {
-            return Errors.Tasq.HasStarted;
-        }
-
-        assignment.Status.Complete();
 
         await _tasqRepository.UpdateAsync(tasq);
 

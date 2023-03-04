@@ -11,10 +11,10 @@ public sealed class AwaitingReviewStatus : StatusBase, INotCompletedStatus
     }
     public override ErrorOr<StatusBase> Complete()
     {
-        return new OnReviewStatus();
+        return new DoneStatus();
     }
     public override ErrorOr<StatusBase> Reject()
     {
-        return new CancelledStatus();
+        return new RejectedStatus();
     }
 }

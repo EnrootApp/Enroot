@@ -24,7 +24,7 @@ public class TasqConfig : IRegister
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Title, src => src.Title);
 
-        config.NewConfig<CompleteTasqRequest, CompleteTasqCommand>();
+        config.NewConfig<CompleteAssignmentRequest, CompleteAssignmentCommand>();
         config.NewConfig<AttachmentRequest, CreateAttachmentModel>();
     }
 }
