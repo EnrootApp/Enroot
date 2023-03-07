@@ -25,7 +25,11 @@ public class TenantsQueryHandler : IRequestHandler<TenantsQuery, ErrorOr<IEnumer
 
     public async Task<ErrorOr<IEnumerable<TenantResult>>> Handle(TenantsQuery request, CancellationToken cancellationToken)
     {
-        var userTenantIds = _accountRepository.Filter(a => a.UserId == UserId.Create(request.UserId)).Select(a => a.TenantId);
+        var userId = UserId.Create(request.UserId);
+
+        var userTenantIds = _accountRepository
+            .Filter(a => a.UserId == userId)
+            .Select(a => a.TenantId);
 
         var tenantsQuery = _tenantRepository.GetAll().Where(t => userTenantIds.Contains(t.Id));
 

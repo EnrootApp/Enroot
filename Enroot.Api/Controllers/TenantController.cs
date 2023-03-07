@@ -42,9 +42,11 @@ public class TenantController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTenants([FromBody] GetTenantsRequest request)
+    public async Task<IActionResult> GetTenants(GetTenantsRequest request)
     {
-        var query = _mapper.Map<TenantsQuery>(request);
+        var requestorUserId = GetRequestUserId()!.Value;
+
+        var query = new TenantsQuery(requestorUserId, request.Offset, request.Take, request.Name);
 
         var result = await _mediator.Send(query);
 
