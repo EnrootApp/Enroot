@@ -9,6 +9,7 @@ using MediatR;
 using Enroot.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Enroot.Application.Account.Commands.Create;
+using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Application.User.Commands.Invite;
 
@@ -59,7 +60,7 @@ public class InviteUserCommandHandler : IRequestHandler<InviteUserCommand, Error
             emailBody = _localizer["InviteNewUserBody"];
         }
 
-        var createAccountCommand = new CreateAccountCommand(user.Id.Value, command.TenantId);
+        var createAccountCommand = new CreateAccountCommand(user.Id.Value, command.TenantId, (int)RoleEnum.Default);
         var result = await _mediator.Send(createAccountCommand, cancellationToken);
 
         if (result.IsError)

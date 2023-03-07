@@ -15,7 +15,6 @@ namespace Enroot.Api.Controllers
         private readonly ISender _mediator;
         private readonly IMapper _mapper;
 
-
         public UserController(
             IHttpContextAccessor httpContextAccessor,
             IStringLocalizerFactory localizer,
@@ -26,9 +25,9 @@ namespace Enroot.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/invite")]
+        [HttpPost("invite")]
         [RequirePermission(PermissionEnum.CreateAccount)]
-        public async Task<IActionResult> CreateAsync([FromBody] InviteUserRequest request)
+        public async Task<IActionResult> InviteAsync([FromBody] InviteUserRequest request)
         {
             var command = _mapper.Map<InviteUserCommand>(request);
 

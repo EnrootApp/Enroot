@@ -69,7 +69,7 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("/assign")]
+        [HttpPost("assign")]
         [RequirePermission(PermissionEnum.CreateTask)]
         public async Task<IActionResult> Assign(AssignTasqRequest request)
         {
@@ -85,7 +85,7 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("/start")]
+        [HttpPost("start")]
         public async Task<IActionResult> Start(StartAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
@@ -100,7 +100,7 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("/complete")]
+        [HttpPost("complete")]
         public async Task<IActionResult> Complete(CompleteAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
@@ -115,7 +115,7 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("/reject")]
+        [HttpPost("reject")]
         [RequirePermission(PermissionEnum.ReviewTask)]
         public async Task<IActionResult> Reject(RejectAssignmentRequest request)
         {
@@ -131,7 +131,7 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("/approve")]
+        [HttpPost("approve")]
         [RequirePermission(PermissionEnum.ReviewTask)]
         public async Task<IActionResult> Approve(ApproveAssignmentRequest request)
         {

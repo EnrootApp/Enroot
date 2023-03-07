@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Enroot.Application.Account.Commands.Create;
 
-public record CreateAccountCommand(Guid UserId, Guid TenantId) : IRequest<ErrorOr<AccountResult>>;
+public record CreateAccountCommand(Guid UserId, Guid TenantId, int Role) : IRequest<ErrorOr<AccountResult>>;

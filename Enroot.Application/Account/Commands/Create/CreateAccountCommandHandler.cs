@@ -32,7 +32,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
             return Errors.User.AccountExists;
         }
 
-        var accountResult = Domain.Account.Account.Create(userId, tenantId, RoleId.Create(RoleEnum.Default));
+        var accountResult = Domain.Account.Account.Create(userId, tenantId, RoleId.Create((RoleEnum)command.Role));
 
         if (accountResult.IsError)
         {
