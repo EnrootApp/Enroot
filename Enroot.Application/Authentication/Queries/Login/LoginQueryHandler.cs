@@ -3,7 +3,7 @@ using Enroot.Application.Common.Interfaces.Authentication;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.User.ValueObjects;
-using Enroot.Domain.User;
+using UserEntity = Enroot.Domain.User.User;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +13,10 @@ namespace Enroot.Application.Authentication.Queries.Login;
 public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly IRepository<User, UserId> _userRepository;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IRepository<UserEntity, UserId> _userRepository;
+    private readonly IPasswordHasher<UserEntity> _passwordHasher;
 
-    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IRepository<User, UserId> userRepository, IPasswordHasher<User> passwordHasher)
+    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IRepository<UserEntity, UserId> userRepository, IPasswordHasher<UserEntity> passwordHasher)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;

@@ -1,8 +1,8 @@
-﻿using Enroot.Domain.User;
+﻿using UserEntity = Enroot.Domain.User.User;
 
 namespace Enroot.Application.Common.Interfaces.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(User user);
+    string GenerateToken(UserEntity user);
 }

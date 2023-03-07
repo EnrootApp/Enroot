@@ -1,7 +1,7 @@
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Account.Events;
 using Enroot.Domain.Tenant.ValueObjects;
-using Enroot.Domain.User;
+using UserEntity = Enroot.Domain.User.User;
 using Enroot.Domain.User.ValueObjects;
 using MediatR;
 
@@ -10,9 +10,11 @@ namespace Enroot.Application.Account.EventHandlers;
 public class AccountCreatedDomainEventHandler : INotificationHandler<AccountCreatedDomainEvent>
 {
     private readonly IRepository<Domain.Tenant.Tenant, TenantId> _tenantRepository;
-    private readonly IRepository<User, UserId> _userRepository;
+    private readonly IRepository<UserEntity, UserId> _userRepository;
 
-    public AccountCreatedDomainEventHandler(IRepository<Domain.Tenant.Tenant, TenantId> tenantRepository, IRepository<User, UserId> userRepository)
+    public AccountCreatedDomainEventHandler(
+        IRepository<Domain.Tenant.Tenant, TenantId> tenantRepository,
+        IRepository<UserEntity, UserId> userRepository)
     {
         _tenantRepository = tenantRepository;
         _userRepository = userRepository;

@@ -49,6 +49,6 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
                 value => TenantId.Create(value)
             );
 
-        builder.OwnsOne(t => t.Name, t => t.Property(tn => tn.Value).HasColumnName("Name"));
+        builder.OwnsOne(x => x.Name).Property(t => t.Value).HasColumnName("Name");
     }
 }

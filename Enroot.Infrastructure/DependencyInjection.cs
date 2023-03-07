@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Enroot.Application.Services;
 using Enroot.Infrastructure.Services;
+using Enroot.Infrastructure.Utils;
+using Enroot.Domain.User.Enums;
 
 namespace Enroot.Infrastructure;
 
@@ -52,6 +54,12 @@ public static class DependencyInjection
             })
             .AddCookie();
 
+        services.AddAuthorization(options =>
+            {
+                options.AddPolicy(UserRoles.SystemAdmin,
+                    authBuilder => authBuilder.RequireRole(UserRoles.SystemAdmin));
+            });
+
         services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
 
         services.AddBackblazeAgent(options =>
@@ -60,6 +68,11 @@ public static class DependencyInjection
             options.ApplicationKey = configuration["CloudStorage:AppKey"];
         });
         services.AddScoped<ICloudStorage, CloudStorage>();
+
+        var emailConfig = configuration.GetSection("EmailConfig");
+        services.Configure<EmailConfig>(emailConfig);
+
+        services.AddScoped<IEmailSender, EmailSender>();
 
         return services;
     }

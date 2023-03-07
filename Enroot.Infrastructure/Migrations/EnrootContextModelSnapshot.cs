@@ -73,6 +73,10 @@ namespace Enroot.Infrastructure.Migrations
                         new
                         {
                             Id = 2
+                        },
+                        new
+                        {
+                            Id = 3
                         });
                 });
 
@@ -112,7 +116,8 @@ namespace Enroot.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -120,6 +125,10 @@ namespace Enroot.Infrastructure.Migrations
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DbId");
 
@@ -230,6 +239,11 @@ namespace Enroot.Infrastructure.Migrations
                                 },
                                 new
                                 {
+                                    Value = 3,
+                                    RoleId = 1
+                                },
+                                new
+                                {
                                     Value = 2,
                                     RoleId = 3
                                 });
@@ -253,6 +267,9 @@ namespace Enroot.Infrastructure.Migrations
 
                             b1.Property<Guid>("AssignerId")
                                 .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("FeedbackMessage")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier")
@@ -313,20 +330,12 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     b.OwnsOne("Enroot.Domain.Tenant.ValueObjects.TenantName", "Name", b1 =>
                         {
-                            b1.Property<int>("TenantDbId")
-                                .HasColumnType("int");
-
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("TenantDbId");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.ToTable("Tenants");
 
-                            b1.WithOwner()
-                                .HasForeignKey("TenantDbId");
                         });
 
                     b.OwnsMany("Enroot.Domain.Account.ValueObjects.AccountId", "AccountIds", b1 =>

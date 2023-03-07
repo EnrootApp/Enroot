@@ -3,7 +3,7 @@ using Enroot.Application.Common.Interfaces.Authentication;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.User.ValueObjects;
-using Enroot.Domain.User;
+using UserEntity = Enroot.Domain.User.User;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +13,13 @@ namespace Enroot.Application.Authentication.Commands.Register;
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly IRepository<User, UserId> _userRepository;
+    private readonly IPasswordHasher<UserEntity> _passwordHasher;
+    private readonly IRepository<UserEntity, UserId> _userRepository;
 
-    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IPasswordHasher<User> passwordHasher, IRepository<User, UserId> userRepository)
+    public RegisterCommandHandler(
+        IJwtTokenGenerator jwtTokenGenerator,
+        IPasswordHasher<UserEntity> passwordHasher,
+        IRepository<UserEntity, UserId> userRepository)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _passwordHasher = passwordHasher;
@@ -36,7 +39,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         var passwordHash = _passwordHasher.HashPassword(null!, command.Password);
 
-        var createUserResult = User.CreateByEmail(email, passwordHash);
+        var createUserResult = UserEntity.CreateByEmail(email, passwordHash);
 
         if (createUserResult.IsError)
         {

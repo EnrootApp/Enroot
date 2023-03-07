@@ -17,6 +17,7 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
     <PackageReference Include="mediatr" Version="11.1.0" />
     <PackageReference Include="mediatr.extensions.microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>

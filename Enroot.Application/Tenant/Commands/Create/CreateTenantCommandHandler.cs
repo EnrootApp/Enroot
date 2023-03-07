@@ -18,16 +18,16 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
     public async Task<ErrorOr<TenantResult>> Handle(CreateTenantCommand command, CancellationToken cancellationToken)
     {
-        var commandTenantName = TenantName.Create(command.Name);
+        var commandTenantName = TenantName.Create(command.Name).Value;
 
-        var tenant = await _tenantRepository.FindAsync(t => t.Name == commandTenantName);
+        var tenant = await _tenantRepository.FindAsync(t => t.Name.Value.ToUpper() == commandTenantName.Value.ToUpper());
 
         if (tenant is not null)
         {
             return Errors.Tenant.NameDuplicate;
         }
 
-        var createTenantResult = Tenant.Create(TenantId.CreateUnique(), commandTenantName.Value);
+        var createTenantResult = Tenant.Create(TenantId.CreateUnique(), commandTenantName);
 
         if (createTenantResult.IsError)
         {
