@@ -4,11 +4,13 @@ using Enroot.Domain.Permission.Enums;
 using Enroot.Infrastructure.Authorization;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
 namespace Enroot.Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class UserController : ApiController
     {
@@ -29,7 +31,7 @@ namespace Enroot.Api.Controllers
         [RequirePermission(PermissionEnum.CreateAccount)]
         public async Task<IActionResult> InviteAsync([FromBody] InviteUserRequest request)
         {
-            var command = _mapper.Map<InviteUserCommand>(request);
+            var command = new InviteUserCommand(request.Email, GetTenantId());
 
             var result = await _mediator.Send(command);
 

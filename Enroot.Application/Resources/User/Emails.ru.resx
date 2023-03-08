@@ -131,7 +131,7 @@
     <comment/>
   </data>
     <data name="InviteNewUserSubject" xml:space="preserve">
-    <value>Вас пригласили в {0}.</value>
+    <value>Вы были приглашены на платформе Enroot</value>
     <comment/>
   </data>
     <data name="InviteBody" xml:space="preserve">

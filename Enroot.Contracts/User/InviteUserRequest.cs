@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.User;
 
-public record InviteUserRequest(string Email, Guid TenantId);
+public record InviteUserRequest(string Email);
