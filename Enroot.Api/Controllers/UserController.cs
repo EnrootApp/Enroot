@@ -1,3 +1,4 @@
+using Enroot.Application.User.Commands.ChangePassword;
 using Enroot.Application.User.Commands.Invite;
 using Enroot.Contracts.User;
 using Enroot.Domain.Permission.Enums;
@@ -32,6 +33,19 @@ namespace Enroot.Api.Controllers
         public async Task<IActionResult> InviteAsync([FromBody] InviteUserRequest request)
         {
             var command = new InviteUserCommand(request.Email, GetTenantId());
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequest request)
+        {
+            var command = new ChangePasswordCommand(GetRequestUserId(), request.OldPassword, request.NewPassword);
 
             var result = await _mediator.Send(command);
 

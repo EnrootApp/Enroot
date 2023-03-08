@@ -20,9 +20,9 @@ public abstract class ApiController : ControllerBase
         _localizerFactory = localizerFactory;
     }
 
-    protected Guid? GetRequestUserId()
+    protected Guid GetRequestUserId()
     {
-        return GetIdClaim(ClaimTypes.NameIdentifier);
+        return GetIdClaim(ClaimTypes.NameIdentifier)!.Value;
     }
 
     protected Guid GetRequestAccountId()

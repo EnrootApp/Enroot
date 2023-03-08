@@ -11,7 +11,7 @@ public sealed class User : AggregateRoot<UserId>
 {
     public Email? Email { get; private set; }
     public PhoneNumber? PhoneNumber { get; private set; }
-    public string PasswordHash { get; private set; }
+    public string PasswordHash { get; set; }
     public string Role { get; private set; }
 
     private readonly List<AccountId> _accountIds = new();

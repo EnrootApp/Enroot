@@ -44,7 +44,7 @@ public class TenantController : ApiController
     [HttpGet]
     public async Task<IActionResult> GetTenants(GetTenantsRequest request)
     {
-        var requestorUserId = GetRequestUserId()!.Value;
+        var requestorUserId = GetRequestUserId();
 
         var query = new TenantsQuery(requestorUserId, request.Offset, request.Take, request.Name);
 
