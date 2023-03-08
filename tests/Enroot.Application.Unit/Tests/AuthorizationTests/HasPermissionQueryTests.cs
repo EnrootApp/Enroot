@@ -20,8 +20,8 @@ public class HasPermissionQueryTests
     [Fact]
     public async Task Handle_Should_Authorize()
     {
-        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
-        role.AddPermission(PermissionEnum.CreateTask);
+        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
+        role.AddPermission(PermissionEnum.CreateTasq);
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
@@ -32,7 +32,7 @@ public class HasPermissionQueryTests
 
         roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
         accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
-        var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTask);
+        var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 
         var result = await queryHandler.Handle(query, CancellationToken.None);
@@ -43,7 +43,7 @@ public class HasPermissionQueryTests
     [Fact]
     public async Task Handle_Should_Unauthorize()
     {
-        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
+        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
@@ -55,7 +55,7 @@ public class HasPermissionQueryTests
         roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
         accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
 
-        var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTask);
+        var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 
         var result = await queryHandler.Handle(query, CancellationToken.None);
@@ -66,8 +66,8 @@ public class HasPermissionQueryTests
     [Fact]
     public async Task Handle_Should_Unauthorize_WhenLackOfPermission()
     {
-        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator), "any description").Value;
-        role.AddPermission(PermissionEnum.CreateTask);
+        var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
+        role.AddPermission(PermissionEnum.CreateTasq);
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
@@ -78,7 +78,7 @@ public class HasPermissionQueryTests
 
         roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
         accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
-        var query = new HasPermissionQuery(account.Id, PermissionEnum.ReviewTask);
+        var query = new HasPermissionQuery(account.Id, PermissionEnum.ReviewTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 
         var result = await queryHandler.Handle(query, CancellationToken.None);

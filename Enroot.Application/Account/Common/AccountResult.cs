@@ -1,3 +1,3 @@
 namespace Enroot.Application.Account.Common;
 
-public record AccountResult(Guid AccountId, Guid Id, Guid UserId);
+public record AccountResult(Guid TenantId, Guid Id, Guid UserId, int RoleId);

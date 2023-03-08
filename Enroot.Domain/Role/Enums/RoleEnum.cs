@@ -10,4 +10,6 @@ public enum RoleEnum
     Default = 2,
     [Description("Moderator role. Could review tasks")]
     Moderator = 3,
+    [Description("Role of account, that was deactivated for the tenant")]
+    Deactivated = 4,
 }

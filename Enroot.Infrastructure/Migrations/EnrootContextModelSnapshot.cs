@@ -77,6 +77,10 @@ namespace Enroot.Infrastructure.Migrations
                         new
                         {
                             Id = 3
+                        },
+                        new
+                        {
+                            Id = 4
                         });
                 });
 
@@ -101,6 +105,10 @@ namespace Enroot.Infrastructure.Migrations
                         new
                         {
                             Id = 3
+                        },
+                        new
+                        {
+                            Id = 4
                         });
                 });
 
@@ -246,6 +254,11 @@ namespace Enroot.Infrastructure.Migrations
                                 {
                                     Value = 2,
                                     RoleId = 3
+                                },
+                                new
+                                {
+                                    Value = 4,
+                                    RoleId = 2
                                 });
                         });
 
@@ -330,12 +343,20 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     b.OwnsOne("Enroot.Domain.Tenant.ValueObjects.TenantName", "Name", b1 =>
                         {
+                            b1.Property<int>("TenantDbId")
+                                .HasColumnType("int");
+
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("TenantDbId");
 
                             b1.ToTable("Tenants");
 
+                            b1.WithOwner()
+                                .HasForeignKey("TenantDbId");
                         });
 
                     b.OwnsMany("Enroot.Domain.Account.ValueObjects.AccountId", "AccountIds", b1 =>

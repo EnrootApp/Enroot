@@ -1,6 +1,10 @@
 using Enroot.Application.Account.Commands.Create;
+using Enroot.Application.Account.Commands.SetRole;
 using Enroot.Contracts.Account;
+using Enroot.Domain.Permission.Enums;
 using Enroot.Domain.User.Enums;
+using Enroot.Infrastructure.Authorization;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +38,21 @@ namespace Enroot.Api.Controllers
             var result = await _mediator.Send(command);
 
             return result.Match(
-                Ok,
+                value => Ok(value.Adapt<AccountResponse>()),
+                Problem
+            );
+        }
+
+        [HttpPost("role")]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> SetRole([FromBody] SetRoleRequest request)
+        {
+            var command = _mapper.Map<SetRoleCommand>(request);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(value.Adapt<AccountResponse>()),
                 Problem
             );
         }

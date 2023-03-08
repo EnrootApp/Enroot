@@ -32,7 +32,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet]
-        [RequirePermission(PermissionEnum.CreateTask)]
+        [RequirePermission(PermissionEnum.CreateTasq)]
         public async Task<IActionResult> Get(GetTasqsRequest request)
         {
             var tenantId = GetTenantId();
@@ -54,7 +54,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost]
-        [RequirePermission(PermissionEnum.CreateTask)]
+        [RequirePermission(PermissionEnum.CreateTasq)]
         public async Task<IActionResult> Create(CreateTasqRequest request)
         {
             var creatorIdGuid = GetRequestAccountId();
@@ -70,7 +70,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("assign")]
-        [RequirePermission(PermissionEnum.CreateTask)]
+        [RequirePermission(PermissionEnum.CreateTasq)]
         public async Task<IActionResult> Assign(AssignTasqRequest request)
         {
             var assignerId = GetRequestAccountId();
@@ -86,6 +86,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("start")]
+        [RequirePermission(PermissionEnum.CompleteTasq)]
         public async Task<IActionResult> Start(StartAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
@@ -101,6 +102,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("complete")]
+        [RequirePermission(PermissionEnum.CompleteTasq)]
         public async Task<IActionResult> Complete(CompleteAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
@@ -116,7 +118,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("reject")]
-        [RequirePermission(PermissionEnum.ReviewTask)]
+        [RequirePermission(PermissionEnum.ReviewTasq)]
         public async Task<IActionResult> Reject(RejectAssignmentRequest request)
         {
             var reviewerId = GetRequestAccountId();
@@ -132,7 +134,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("approve")]
-        [RequirePermission(PermissionEnum.ReviewTask)]
+        [RequirePermission(PermissionEnum.ReviewTasq)]
         public async Task<IActionResult> Approve(ApproveAssignmentRequest request)
         {
             var reviewerId = GetRequestAccountId();

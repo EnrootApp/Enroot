@@ -27,13 +27,19 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
 
             rpb.HasKey(nameof(PermissionId.Value), nameof(RoleId));
 
+            var tenantAdminRole = RoleId.Create(RoleEnum.TenantAdmin).Value;
+            var moderatorRole = RoleId.Create(RoleEnum.Moderator).Value;
+            var defaultRole = RoleId.Create(RoleEnum.Default).Value;
+
             rpb.HasData(new object[]
             {
-                new { Value= PermissionEnum.CreateTask, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
-                new { Value=PermissionEnum.ReviewTask, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
-                new { Value=PermissionEnum.CreateAccount, RoleId=RoleId.Create(RoleEnum.TenantAdmin) },
+                new { Value= PermissionEnum.CreateTasq, RoleId=tenantAdminRole },
+                new { Value=PermissionEnum.ReviewTasq, RoleId=tenantAdminRole },
+                new { Value=PermissionEnum.CreateAccount, RoleId=tenantAdminRole },
 
-                new { Value=PermissionEnum.ReviewTask, RoleId=RoleId.Create(RoleEnum.Moderator) },
+                new { Value=PermissionEnum.ReviewTasq, RoleId=moderatorRole },
+
+                new { Value=PermissionEnum.CompleteTasq, RoleId=defaultRole },
             });
         });
 
@@ -51,11 +57,11 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
             .ValueGeneratedNever()
             .HasConversion(
                 id => (int)id.Value,
-                value => RoleId.Create((RoleEnum)value)
+                value => RoleId.Create((RoleEnum)value).Value
             );
 
         builder.Ignore(t => t.DbId);
 
-        builder.SeedEnumValues((RoleEnum role) => Role.Create(RoleId.Create(role), role.GetEnumDescriptionOrName()).Value);
+        builder.SeedEnumValues((RoleEnum role) => Role.Create(RoleId.Create(role).Value, role.GetEnumDescriptionOrName()).Value);
     }
 }

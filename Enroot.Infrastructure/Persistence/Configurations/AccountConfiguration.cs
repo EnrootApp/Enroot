@@ -42,7 +42,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
            .Property(a => a.RoleId)
            .HasConversion(
                ri => ri!.Value,
-               value => RoleId.Create(value)
+               value => RoleId.Create(value).Value
            );
 
         builder.HasOne<Tenant>().WithMany().HasPrincipalKey(t => t.Id);

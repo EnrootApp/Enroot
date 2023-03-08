@@ -5,9 +5,11 @@ namespace Enroot.Domain.Permission.Enums;
 public enum PermissionEnum
 {
     [Description("Permission that allows task creating")]
-    CreateTask = 1,
+    CreateTasq = 1,
     [Description("Permission that allows task reviewing")]
-    ReviewTask = 2,
+    ReviewTasq = 2,
     [Description("Permission that allows to create accounts")]
     CreateAccount = 3,
+    [Description("Permission that allows to do tasqs")]
+    CompleteTasq = 4
 }

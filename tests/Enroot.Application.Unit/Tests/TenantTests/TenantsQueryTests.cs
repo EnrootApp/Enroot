@@ -30,8 +30,8 @@ public class TenantsQueryHandlerTests
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
-        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default).Value).Value;
 
         tenant1.AddAccountId(account1.Id);
         tenant5.AddAccountId(account5.Id);
@@ -73,11 +73,11 @@ public class TenantsQueryHandlerTests
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
-        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default).Value).Value;
 
         tenant1.AddAccountId(account1.Id);
         tenant2.AddAccountId(account2.Id);
@@ -119,8 +119,8 @@ public class TenantsQueryHandlerTests
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
-        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default).Value).Value;
 
         tenant1.AddAccountId(account1.Id);
         tenant5.AddAccountId(account5.Id);
@@ -162,11 +162,11 @@ public class TenantsQueryHandlerTests
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
-        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default).Value).Value;
 
         tenant1.AddAccountId(account1.Id);
         tenant2.AddAccountId(account2.Id);
@@ -206,11 +206,11 @@ public class TenantsQueryHandlerTests
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
-        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default)).Value;
-        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default)).Value;
+        var account1 = AccountEntity.Create(user.Id, tenant1.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account2 = AccountEntity.Create(user.Id, tenant2.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account3 = AccountEntity.Create(user.Id, tenant3.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account4 = AccountEntity.Create(user.Id, tenant4.Id, RoleId.Create(RoleEnum.Default).Value).Value;
+        var account5 = AccountEntity.Create(user.Id, tenant5.Id, RoleId.Create(RoleEnum.Default).Value).Value;
 
         tenant1.AddAccountId(account1.Id);
         tenant2.AddAccountId(account2.Id);

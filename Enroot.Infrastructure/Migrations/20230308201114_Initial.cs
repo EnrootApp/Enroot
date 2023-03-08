@@ -58,7 +58,7 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     DbId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameValue = table.Column<string>(name: "Name_Value", type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsOpen = table.Column<bool>(type: "bit", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -230,7 +230,8 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     1,
                     2,
-                    3
+                    3,
+                    4
                 });
 
             migrationBuilder.InsertData(
@@ -240,7 +241,8 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     1,
                     2,
-                    3
+                    3,
+                    4
                 });
 
             migrationBuilder.InsertData(
@@ -251,7 +253,8 @@ namespace Enroot.Infrastructure.Migrations
                     { 1, 1 },
                     { 1, 2 },
                     { 3, 2 },
-                    { 1, 3 }
+                    { 1, 3 },
+                    { 2, 4 }
                 });
 
             migrationBuilder.CreateIndex(

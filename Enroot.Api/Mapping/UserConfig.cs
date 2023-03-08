@@ -16,11 +16,10 @@ public class UserConfig : IRegister
     }
     public void Register(TypeAdapterConfig config)
     {
-        config.ForType<AccountId, Guid>().MapWith(a => a.Value);
+        config.ForType<UserId, Guid>().MapWith(a => a.Value);
 
         config.NewConfig<UserEntity, UserResult>()
-        .PreserveReference(true)
             .Map(dest => dest.Email, src => src.Email!.Value, srcCond => srcCond.Email != null)
-            .Map(dest => dest.AccountIds, src => src.AccountIds.Adapt<Guid[]>());
+            .Map(dest => dest.AccountIds, src => src.AccountIds.Adapt<IEnumerable<Guid>>());
     }
 }

@@ -6,12 +6,13 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
+using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Domain.Account;
 
 public sealed class Account : AggregateRoot<AccountId>
 {
-    public RoleId RoleId { get; }
+    public RoleId RoleId { get; private set; }
     public TenantId TenantId { get; }
     public UserId UserId { get; }
 
@@ -46,5 +47,12 @@ public sealed class Account : AggregateRoot<AccountId>
         account.AddDomainEvent(new AccountCreatedDomainEvent(userId, tenantId, accountId));
 
         return account;
+    }
+
+    public ErrorOr<Account> SetRole(RoleId role)
+    {
+        RoleId = role;
+
+        return this;
     }
 }

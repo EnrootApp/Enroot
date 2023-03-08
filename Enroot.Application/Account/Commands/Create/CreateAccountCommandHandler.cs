@@ -8,6 +8,7 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Role.Enums;
 using Enroot.Domain.Common.Errors;
+using Mapster;
 
 namespace Enroot.Application.Account.Commands.Create;
 
@@ -32,7 +33,14 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
             return Errors.User.AccountExists;
         }
 
-        var accountResult = Domain.Account.Account.Create(userId, tenantId, RoleId.Create((RoleEnum)command.Role));
+        var roleIdResult = RoleId.Create((RoleEnum)command.Role);
+
+        if (roleIdResult.IsError)
+        {
+            return roleIdResult.Errors;
+        }
+
+        var accountResult = Domain.Account.Account.Create(userId, tenantId, roleIdResult.Value);
 
         if (accountResult.IsError)
         {
@@ -41,6 +49,6 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
 
         var persistedAccount = await _accountRepository.CreateAsync(accountResult.Value);
 
-        return new AccountResult(persistedAccount.Id.Value, persistedAccount.TenantId.Value, persistedAccount.UserId.Value);
+        return persistedAccount.Adapt<AccountResult>();
     }
 }
