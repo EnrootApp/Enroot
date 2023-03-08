@@ -1,8 +1,11 @@
 using Enroot.Application.User.Commands.ChangePassword;
 using Enroot.Application.User.Commands.Invite;
+using Enroot.Application.User.Commands.ResetPassword;
+using Enroot.Application.User.Queries.ResetPasswordEmail;
 using Enroot.Contracts.User;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Infrastructure.Authorization;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -46,6 +49,33 @@ namespace Enroot.Api.Controllers
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequest request)
         {
             var command = new ChangePasswordCommand(GetRequestUserId(), request.OldPassword, request.NewPassword);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpGet("resetPasswordEmail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordEmail(string email)
+        {
+            var command = new ResetPasswordEmailQuery(email);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
+        {
+            var command = request.Adapt<ResetPasswordCommand>();
 
             var result = await _mediator.Send(command);
 

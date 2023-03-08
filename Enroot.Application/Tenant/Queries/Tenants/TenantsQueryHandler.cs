@@ -27,11 +27,16 @@ public class TenantsQueryHandler : IRequestHandler<TenantsQuery, ErrorOr<IEnumer
     {
         var userId = UserId.Create(request.UserId);
 
-        var userTenantIds = _accountRepository
-            .Filter(a => a.UserId == userId)
-            .Select(a => a.TenantId);
+        var tenantsQuery = _tenantRepository.GetAll();
 
-        var tenantsQuery = _tenantRepository.GetAll().Where(t => userTenantIds.Contains(t.Id));
+        if (request.IsParticipate)
+        {
+            var userTenantIds = _accountRepository
+                .Filter(a => a.UserId == userId)
+                .Select(a => a.TenantId);
+
+            tenantsQuery = tenantsQuery.Where(t => userTenantIds.Contains(t.Id));
+        }
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {

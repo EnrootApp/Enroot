@@ -9,4 +9,4 @@ public record TenantsQuery(
     int Offset = 0,
     int Limit = 20,
     string? Name = "",
-    bool IsParticipate = false) : IRequest<ErrorOr<IEnumerable<TenantResult>>>;
+    bool IsParticipate = true) : IRequest<ErrorOr<IEnumerable<TenantResult>>>;

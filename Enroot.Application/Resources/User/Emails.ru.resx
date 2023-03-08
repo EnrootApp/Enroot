@@ -142,4 +142,12 @@
     <value>Вас пригласили в {0}. Используйте текущий адрес электронной почты и следующий пароль: {1}, чтобы войти.</value>
     <comment/>
   </data>
+    <data name="ResetPasswordSubject" xml:space="preserve">
+    <value>Сброс пароля</value>
+    <comment/>
+  </data>
+    <data name="ResetPasswordBody" xml:space="preserve">
+    <value>Используйте следующий код для сброса пароля: {0}.</value>
+    <comment/>
+  </data>
 </root>

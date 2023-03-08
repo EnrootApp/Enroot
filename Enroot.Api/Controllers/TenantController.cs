@@ -41,6 +41,22 @@ public class TenantController : ApiController
         );
     }
 
+    [HttpGet("admin")]
+    [Authorize(UserRoles.SystemAdmin)]
+    public async Task<IActionResult> GetAdminTenants(GetTenantsRequest request)
+    {
+        var requestorUserId = GetRequestUserId();
+
+        var query = new TenantsQuery(requestorUserId, request.Offset, request.Take, request.Name, false);
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            Ok,
+            Problem
+        );
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetTenants(GetTenantsRequest request)
     {

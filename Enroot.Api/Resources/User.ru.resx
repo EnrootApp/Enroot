@@ -142,4 +142,8 @@
     <value>Пароль не должен быть короче 6 символов</value>
     <comment/>
   </data>
+  <data name="ResetPasswordCodeInvalid" xml:space="preserve">
+    <value>Неверный код для восстановления пароля</value>
+    <comment/>
+  </data>
 </root>

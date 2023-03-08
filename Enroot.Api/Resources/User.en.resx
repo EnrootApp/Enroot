@@ -142,4 +142,8 @@
     <value>Password must be at least 6 characters long</value>
     <comment/>
   </data>
+  <data name="ResetPasswordCodeInvalid" xml:space="preserve">
+    <value>Reset password code is not correct</value>
+    <comment/>
+  </data>
 </root>
