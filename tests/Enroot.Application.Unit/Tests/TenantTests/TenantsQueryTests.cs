@@ -187,7 +187,7 @@ public class TenantsQueryHandlerTests
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 
-        var result = await tenantQueryCommandHandler.Handle(new TenantsQuery(user.Id.Value, Limit: limit), CancellationToken.None);
+        var result = await tenantQueryCommandHandler.Handle(new TenantsQuery(user.Id.Value, Take: limit), CancellationToken.None);
 
         Assert.True(result.Value.Count() == limit);
     }

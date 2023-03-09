@@ -6,7 +6,7 @@ using ErrorOr;
 using MediatR;
 using Enroot.Domain.Role;
 
-namespace Enroot.Application.Authentication.Queries.Login;
+namespace Enroot.Application.Authorization.HasPermission;
 
 public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, ErrorOr<bool>>
 {
@@ -27,9 +27,14 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
             return Errors.Account.NotFound;
         }
 
-        var role = await _roleRepository.GetByIdAsync(account.RoleId);
         var permission = RolePermissionId.Create(query.Permission);
+        if (permission.IsError)
+        {
+            return Errors.Permission.NotFound;
+        }
 
-        return role!.Permissions.Contains(permission);
+        var role = await _roleRepository.GetByIdAsync(account.RoleId);
+
+        return role!.Permissions.Contains(permission.Value);
     }
 }

@@ -33,7 +33,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
             return Errors.User.AccountExists;
         }
 
-        var roleIdResult = RoleId.Create((RoleEnum)command.Role);
+        var roleIdResult = RoleId.Create((RoleEnum)command.RoleId);
 
         if (roleIdResult.IsError)
         {

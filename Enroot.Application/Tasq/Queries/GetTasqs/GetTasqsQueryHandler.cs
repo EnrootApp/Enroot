@@ -7,6 +7,7 @@ using Enroot.Domain.Tasq.ValueObjects;
 using Enroot.Domain.Tasq.ValueObjects.Statuses;
 using Enroot.Domain.Tenant.ValueObjects;
 using ErrorOr;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,10 @@ namespace Enroot.Application.Tasq.Queries.GetTasqs;
 public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<IEnumerable<TasqResult>>>
 {
     private readonly IRepository<TasqEntity, TasqId> _tasqRepository;
-    private readonly IMapper _mapper;
 
-    public GetTasqsQueryHandler(IRepository<TasqEntity, TasqId> tasqRepository, IMapper mapper)
+    public GetTasqsQueryHandler(IRepository<TasqEntity, TasqId> tasqRepository)
     {
         _tasqRepository = tasqRepository;
-        _mapper = mapper;
     }
 
     public async Task<ErrorOr<IEnumerable<TasqResult>>> Handle(GetTasqsQuery request, CancellationToken cancellationToken)

@@ -1,11 +1,6 @@
-using System.Net;
-using Enroot.Application.Authentication.Queries.Login;
-using Enroot.Application.Common.Interfaces.Persistence;
-using Enroot.Domain.Account;
+using Enroot.Application.Authorization.HasPermission;
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Permission.Enums;
-using Enroot.Domain.Tenant.ValueObjects;
-using Enroot.Domain.User.ValueObjects;
 using Enroot.Infrastructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

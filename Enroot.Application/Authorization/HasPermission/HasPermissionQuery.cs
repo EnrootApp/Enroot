@@ -3,7 +3,7 @@ using Enroot.Domain.Permission.Enums;
 using ErrorOr;
 using MediatR;
 
-namespace Enroot.Application.Authentication.Queries.Login;
+namespace Enroot.Application.Authorization.HasPermission;
 
 public record HasPermissionQuery(
     AccountId Id,

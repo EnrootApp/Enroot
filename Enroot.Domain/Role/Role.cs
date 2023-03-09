@@ -35,16 +35,14 @@ public sealed class Role : AggregateRoot<RoleId>
         return new Role(id, name);
     }
 
-    public ErrorOr<Role> AddPermission(PermissionEnum permission)
+    public ErrorOr<Role> AddPermission(RolePermissionId permission)
     {
-        var rolePermission = RolePermissionId.Create(permission);
-
-        if (_permissions.Contains(rolePermission))
+        if (_permissions.Contains(permission))
         {
             return Errors.Role.PermissionExists;
         }
 
-        _permissions.Add(rolePermission);
+        _permissions.Add(permission);
 
         return this;
     }

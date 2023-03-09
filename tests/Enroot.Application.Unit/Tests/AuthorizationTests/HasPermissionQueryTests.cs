@@ -12,6 +12,7 @@ using Enroot.Domain.Permission.Enums;
 using Moq;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Account.ValueObjects;
+using Enroot.Application.Authorization.HasPermission;
 
 namespace Enroot.Application.Unit.Tests.AuthorizationTests;
 
@@ -21,7 +22,9 @@ public class HasPermissionQueryTests
     public async Task Handle_Should_Authorize()
     {
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
-        role.AddPermission(PermissionEnum.CreateTasq);
+        var permissionId = RolePermissionId.Create(PermissionEnum.CreateTasq).Value;
+
+        role.AddPermission(permissionId);
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
@@ -67,7 +70,9 @@ public class HasPermissionQueryTests
     public async Task Handle_Should_Unauthorize_WhenLackOfPermission()
     {
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
-        role.AddPermission(PermissionEnum.CreateTasq);
+
+        var permissionId = RolePermissionId.Create(PermissionEnum.CreateTasq).Value;
+        role.AddPermission(permissionId);
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;

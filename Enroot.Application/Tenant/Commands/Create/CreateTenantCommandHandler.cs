@@ -1,17 +1,18 @@
-using Enroot.Application.Authentication.Commands.Register;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Application.Tenant.Common;
-using Enroot.Domain.Tenant;
+using TenantEntity = Enroot.Domain.Tenant.Tenant;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 
+namespace Enroot.Application.Tenant.Commands.Create;
+
 public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, ErrorOr<TenantResult>>
 {
-    private readonly IRepository<Tenant, TenantId> _tenantRepository;
+    private readonly IRepository<TenantEntity, TenantId> _tenantRepository;
 
-    public CreateTenantCommandHandler(IRepository<Tenant, TenantId> tenantRepository)
+    public CreateTenantCommandHandler(IRepository<TenantEntity, TenantId> tenantRepository)
     {
         _tenantRepository = tenantRepository;
     }
@@ -27,7 +28,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
             return Errors.Tenant.NameDuplicate;
         }
 
-        var createTenantResult = Tenant.Create(TenantId.CreateUnique(), commandTenantName);
+        var createTenantResult = TenantEntity.Create(TenantId.CreateUnique(), commandTenantName);
 
         if (createTenantResult.IsError)
         {

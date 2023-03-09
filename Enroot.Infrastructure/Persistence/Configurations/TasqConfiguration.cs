@@ -52,6 +52,10 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
         builder
            .Property(a => a.Description)
            .HasMaxLength(1000);
+
+        builder
+          .Property(a => a.Title)
+          .HasMaxLength(100);
     }
 
     private static void ConfigureAssignmentTable(EntityTypeBuilder<Tasq> builder)
@@ -95,6 +99,10 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                    ai => ai!.Value,
                    value => StatusBase.Create(value)
                );
+
+            assignmentsBuilder
+              .Property(a => a.FeedbackMessage)
+              .HasMaxLength(255);
 
             assignmentsBuilder.OwnsMany(a => a.Attachments, attachmentBuilder =>
             {
