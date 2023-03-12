@@ -1,5 +1,6 @@
 using Enroot.Domain.Common.Models;
 using Enroot.Domain.Permission.Enums;
+using ErrorOr;
 
 namespace Enroot.Domain.Permission.ValueObjects;
 
@@ -12,7 +13,15 @@ public sealed class PermissionId : ValueObject
         Value = value;
     }
 
-    public static PermissionId Create(PermissionEnum id) => new(id);
+    public static ErrorOr<PermissionId> Create(PermissionEnum id)
+    {
+        if (!Enum.IsDefined(typeof(PermissionEnum), id))
+        {
+            return Common.Errors.Errors.Permission.NotFound;
+        }
+
+        return new PermissionId(id);
+    }
 
     public override IEnumerable<object> GetEqualityComponents()
     {

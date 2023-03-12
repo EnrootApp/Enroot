@@ -5,6 +5,7 @@ using Enroot.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 using Enroot.Domain.Role;
+using Enroot.Domain.Permission.ValueObjects;
 
 namespace Enroot.Application.Authorization.HasPermission;
 
@@ -27,7 +28,7 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
             return Errors.Account.NotFound;
         }
 
-        var permission = RolePermissionId.Create(query.Permission);
+        var permission = PermissionId.Create(query.Permission);
         if (permission.IsError)
         {
             return Errors.Permission.NotFound;

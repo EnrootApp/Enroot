@@ -3,15 +3,16 @@ using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Permission.Enums;
 using ErrorOr;
 using Enroot.Domain.Common.Errors;
+using Enroot.Domain.Permission.ValueObjects;
 
 namespace Enroot.Domain.Role;
 
 public sealed class Role : AggregateRoot<RoleId>
 {
-    private readonly List<RolePermissionId> _permissions = new();
+    private readonly List<PermissionId> _permissions = new();
 
     public string Name { get; }
-    public IReadOnlyList<RolePermissionId> Permissions => _permissions.AsReadOnly();
+    public IReadOnlyList<PermissionId> Permissions => _permissions.AsReadOnly();
 
     private Role() { }
 
@@ -35,7 +36,7 @@ public sealed class Role : AggregateRoot<RoleId>
         return new Role(id, name);
     }
 
-    public ErrorOr<Role> AddPermission(RolePermissionId permission)
+    public ErrorOr<Role> AddPermission(PermissionId permission)
     {
         if (_permissions.Contains(permission))
         {

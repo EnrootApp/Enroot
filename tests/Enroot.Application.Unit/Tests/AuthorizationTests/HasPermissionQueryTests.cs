@@ -1,18 +1,19 @@
 using Enroot.Domain.Tenant.ValueObjects;
+
 using TenantEntity = Enroot.Domain.Tenant.Tenant;
 using UserEntity = Enroot.Domain.User.User;
 using AccountEntity = Enroot.Domain.Account.Account;
 using RoleEntity = Enroot.Domain.Role.Role;
-
-using Enroot.Domain.User.ValueObjects;
-using Enroot.Domain.Role.ValueObjects;
-using Enroot.Domain.Role.Enums;
 using Enroot.Application.Authentication.Queries.Login;
-using Enroot.Domain.Permission.Enums;
-using Moq;
+using Enroot.Application.Authorization.HasPermission;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Account.ValueObjects;
-using Enroot.Application.Authorization.HasPermission;
+using Enroot.Domain.Permission.Enums;
+using Enroot.Domain.Role.Enums;
+using Enroot.Domain.Role.ValueObjects;
+using Enroot.Domain.User.ValueObjects;
+using Moq;
+using Enroot.Domain.Permission.ValueObjects;
 
 namespace Enroot.Application.Unit.Tests.AuthorizationTests;
 
@@ -22,7 +23,7 @@ public class HasPermissionQueryTests
     public async Task Handle_Should_Authorize()
     {
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
-        var permissionId = RolePermissionId.Create(PermissionEnum.CreateTasq).Value;
+        var permissionId = PermissionId.Create(PermissionEnum.CreateTasq).Value;
 
         role.AddPermission(permissionId);
 
@@ -71,7 +72,7 @@ public class HasPermissionQueryTests
     {
         var role = RoleEntity.Create(RoleId.Create(RoleEnum.Moderator).Value, "any description").Value;
 
-        var permissionId = RolePermissionId.Create(PermissionEnum.CreateTasq).Value;
+        var permissionId = PermissionId.Create(PermissionEnum.CreateTasq).Value;
         role.AddPermission(permissionId);
 
         var tenant = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;

@@ -1,4 +1,3 @@
-using Tasq = Enroot.Domain.Tasq.Tasq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Enroot.Domain.Tasq.ValueObjects;
@@ -6,6 +5,9 @@ using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Tasq.Entities;
 using Enroot.Domain.Tasq.ValueObjects.Statuses;
 using Enroot.Domain.Tenant.ValueObjects;
+using Enroot.Domain.Tenant;
+using Enroot.Domain.Account;
+using Enroot.Domain.Tasq;
 
 namespace Enroot.Infrastructure.Persistence.Configurations;
 
@@ -56,6 +58,9 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
         builder
           .Property(a => a.Title)
           .HasMaxLength(100);
+
+        builder.HasOne<Tenant>().WithMany().HasForeignKey(t => t.TenantId).HasPrincipalKey(t => t.Id);
+        builder.HasOne<Account>().WithMany().HasForeignKey(t => t.CreatorId).HasPrincipalKey(a => a.Id);
     }
 
     private static void ConfigureAssignmentTable(EntityTypeBuilder<Tasq> builder)
@@ -92,6 +97,9 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                    ai => ai!.Value,
                    value => AccountId.Create(value)
                );
+
+            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssigneeId).HasPrincipalKey(a => a.Id);
+            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssignerId).HasPrincipalKey(a => a.Id);
 
             assignmentsBuilder
                .Property(a => a.Status)

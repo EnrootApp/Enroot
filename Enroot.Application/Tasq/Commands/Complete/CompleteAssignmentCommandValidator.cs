@@ -11,6 +11,13 @@ public class CompleteAssignmentCommandValidator : AbstractValidator<CompleteAssi
         RuleFor(c => c.TasqId)
            .NotEmpty();
         RuleFor(c => c.Attachments)
-            .NotNull();
+            .NotNull()
+            .ForEach(a => a.NotNull())
+            .ForEach(a =>
+                a.ChildRules(
+                    a => a.RuleFor(a => a.Name)
+                        .MaximumLength(64)
+                )
+            );
     }
 }

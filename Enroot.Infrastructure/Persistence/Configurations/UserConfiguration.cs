@@ -1,3 +1,4 @@
+using Enroot.Domain.Account;
 using Enroot.Domain.User;
 using Enroot.Domain.User.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             accountIdBuilder.ToTable("UserAccountIds");
 
             accountIdBuilder.WithOwner().HasForeignKey(nameof(UserId));
-
             accountIdBuilder.HasKey("Id");
 
-            accountIdBuilder.Property(accountId => accountId.Value)
-            .ValueGeneratedNever()
-            .HasColumnName("AccountId");
+            accountIdBuilder
+                .Property(accountId => accountId.Value)
+                .ValueGeneratedNever()
+                .HasColumnName("AccountId");
+
+            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId");
         });
 
         builder.Metadata.FindNavigation(nameof(User.AccountIds))!.SetPropertyAccessMode(PropertyAccessMode.Field);

@@ -1,18 +1,19 @@
 using Enroot.Domain.Common.Models;
+using Enroot.Domain.Permission.ValueObjects;
 using Enroot.Domain.Role.ValueObjects;
 
 namespace Enroot.Domain.Role.Entities;
 
-public sealed class RolePermission : Entity<RolePermissionId>
+public sealed class RolePermission : Entity<PermissionId>
 {
     public string Description { get; }
 
-    private RolePermission(RolePermissionId id, string description) : base(id)
+    private RolePermission(PermissionId id, string description) : base(id)
     {
         Description = description;
     }
 
-    public static RolePermission Create(RolePermissionId id, string description)
+    public static RolePermission Create(PermissionId id, string description)
     {
         if (id is null)
         {

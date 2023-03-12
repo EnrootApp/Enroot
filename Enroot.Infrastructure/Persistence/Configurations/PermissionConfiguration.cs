@@ -25,11 +25,11 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
             .ValueGeneratedNever()
             .HasConversion(
                 id => (int)id.Value,
-                value => PermissionId.Create((PermissionEnum)value)
+                value => PermissionId.Create((PermissionEnum)value).Value
             );
 
         builder.Ignore(t => t.DbId);
 
-        builder.SeedEnumValues((PermissionEnum permission) => Permission.Create(PermissionId.Create(permission), permission.GetEnumDescriptionOrName()).Value);
+        builder.SeedEnumValues((PermissionEnum permission) => Permission.Create(PermissionId.Create(permission).Value, permission.GetEnumDescriptionOrName()).Value);
     }
 }
