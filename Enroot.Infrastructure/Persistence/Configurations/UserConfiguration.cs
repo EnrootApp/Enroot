@@ -28,7 +28,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .ValueGeneratedNever()
                 .HasColumnName("AccountId");
 
-            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId");
+            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId").OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Metadata.FindNavigation(nameof(User.AccountIds))!.SetPropertyAccessMode(PropertyAccessMode.Field);

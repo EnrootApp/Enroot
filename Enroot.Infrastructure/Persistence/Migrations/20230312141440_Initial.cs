@@ -141,14 +141,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         name: "FK_Tasqs_Accounts_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tasqs_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -166,8 +164,7 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         name: "FK_TenantAccountIds_Accounts_Id",
                         column: x => x.Id,
                         principalTable: "Accounts",
-                        principalColumn: "DbId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "DbId");
                     table.ForeignKey(
                         name: "FK_TenantAccountIds_Tenants_TenantId",
                         column: x => x.TenantId,
@@ -191,8 +188,7 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         name: "FK_UserAccountIds_Accounts_Id",
                         column: x => x.Id,
                         principalTable: "Accounts",
-                        principalColumn: "DbId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "DbId");
                     table.ForeignKey(
                         name: "FK_UserAccountIds_Users_UserId",
                         column: x => x.UserId,
@@ -221,14 +217,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         name: "FK_Assignments_Accounts_AssigneeId",
                         column: x => x.AssigneeId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Assignments_Accounts_AssignerId",
                         column: x => x.AssignerId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Assignments_Tasqs_TasqId",
                         column: x => x.TasqId,

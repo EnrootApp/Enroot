@@ -28,7 +28,7 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
             .ValueGeneratedNever()
             .HasColumnName("AccountId");
 
-            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId");
+            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId").OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Metadata.FindNavigation(nameof(Tenant.AccountIds))!.SetPropertyAccessMode(PropertyAccessMode.Field);

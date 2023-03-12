@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Enroot.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EnrootContext))]
-    [Migration("20230312125729_Initial")]
+    [Migration("20230312141440_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -280,14 +280,14 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CreatorId")
                         .HasPrincipalKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Enroot.Domain.Tenant.Tenant", null)
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .HasPrincipalKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsMany("Enroot.Domain.Tasq.Entities.Assignment", "Assignments", b1 =>
@@ -332,14 +332,14 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                                 .WithMany()
                                 .HasForeignKey("AssigneeId")
                                 .HasPrincipalKey("Id")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.HasOne("Enroot.Domain.Account.Account", null)
                                 .WithMany()
                                 .HasForeignKey("AssignerId")
                                 .HasPrincipalKey("Id")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.WithOwner()
@@ -422,7 +422,7 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                             b1.HasOne("Enroot.Domain.Account.Account", null)
                                 .WithOne()
                                 .HasForeignKey("Enroot.Domain.Tenant.Tenant.AccountIds#Enroot.Domain.Account.ValueObjects.AccountId", "Id")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.WithOwner()
@@ -458,7 +458,7 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                             b1.HasOne("Enroot.Domain.Account.Account", null)
                                 .WithOne()
                                 .HasForeignKey("Enroot.Domain.User.User.AccountIds#Enroot.Domain.Account.ValueObjects.AccountId", "Id")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.WithOwner()

@@ -59,8 +59,8 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
           .Property(a => a.Title)
           .HasMaxLength(100);
 
-        builder.HasOne<Tenant>().WithMany().HasForeignKey(t => t.TenantId).HasPrincipalKey(t => t.Id);
-        builder.HasOne<Account>().WithMany().HasForeignKey(t => t.CreatorId).HasPrincipalKey(a => a.Id);
+        builder.HasOne<Tenant>().WithMany().HasForeignKey(t => t.TenantId).HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne<Account>().WithMany().HasForeignKey(t => t.CreatorId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
     }
 
     private static void ConfigureAssignmentTable(EntityTypeBuilder<Tasq> builder)
@@ -98,8 +98,8 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                    value => AccountId.Create(value)
                );
 
-            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssigneeId).HasPrincipalKey(a => a.Id);
-            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssignerId).HasPrincipalKey(a => a.Id);
+            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssigneeId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
+            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssignerId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
 
             assignmentsBuilder
                .Property(a => a.Status)
