@@ -30,7 +30,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     {
         var email = Email.Create(command.Email).Value;
 
-        var user = await _userRepository.FindAsync(u => u.Email! == email);
+        var user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
 
         if (user is not null)
         {
@@ -46,7 +46,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             return createUserResult.Errors;
         }
 
-        var persistedUser = await _userRepository.CreateAsync(createUserResult.Value);
+        var persistedUser = await _userRepository.CreateAsync(createUserResult.Value, cancellationToken);
 
         var token = _jwtTokenGenerator.GenerateToken(persistedUser);
 

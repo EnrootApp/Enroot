@@ -31,14 +31,14 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
 
     public async Task<ErrorOr<TasqResult>> Handle(StartAssignmentCommand request, CancellationToken cancellationToken)
     {
-        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId));
+        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken);
 
         if (tasq is null)
         {
             return Errors.Tasq.NotFound;
         }
 
-        var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssigneeId));
+        var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssigneeId), cancellationToken);
 
         if (assignee is null)
         {

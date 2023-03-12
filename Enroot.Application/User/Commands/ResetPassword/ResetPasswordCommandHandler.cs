@@ -30,7 +30,7 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
             return email.Errors;
         }
 
-        var user = await _userRepository.FindAsync(u => u.Email! == email.Value);
+        var user = await _userRepository.FindAsync(u => u.Email! == email.Value, cancellationToken);
 
         if (user is null)
         {

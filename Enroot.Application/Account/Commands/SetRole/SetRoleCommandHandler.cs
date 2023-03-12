@@ -22,7 +22,7 @@ public class SetRoleCommandHandler : IRequestHandler<SetRoleCommand, ErrorOr<Acc
 
     public async Task<ErrorOr<AccountResult>> Handle(SetRoleCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.AccountId));
+        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.AccountId), cancellationToken);
 
         if (account is null)
         {

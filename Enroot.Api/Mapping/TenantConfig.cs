@@ -1,4 +1,5 @@
 ﻿using Enroot.Application.Authentication.Commands.Register;
+using Enroot.Application.Tenant.Commands.Create;
 using Enroot.Application.Tenant.Common;
 using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;

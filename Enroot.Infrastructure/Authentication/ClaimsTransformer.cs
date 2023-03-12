@@ -48,7 +48,7 @@ public class ClaimsTransformer : IClaimsTransformation
 
         var userId = UserId.Create(Guid.Parse(userIdClaimValue));
 
-        var account = await _accountRepository.FindAsync(a => a.TenantId == tenantId && a.UserId == userId);
+        var account = await _accountRepository.FindAsync(a => a.TenantId == tenantId && a.UserId == userId, CancellationToken.None);
 
         if (account is null)
         {

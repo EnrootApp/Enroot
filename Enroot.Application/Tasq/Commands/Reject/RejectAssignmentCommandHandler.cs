@@ -31,14 +31,14 @@ public class RejectAssignmentCommandHandler : IRequestHandler<RejectAssignmentCo
     public async Task<ErrorOr<TasqResult>> Handle(RejectAssignmentCommand request, CancellationToken cancellationToken)
     {
         var assignmentId = AssignmentId.Create(request.AssignmentId);
-        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId));
+        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken);
 
         if (tasq is null)
         {
             return Errors.Tasq.NotFound;
         }
 
-        var reviewer = await _accountRepository.GetByIdAsync(AccountId.Create(request.ReviewerId));
+        var reviewer = await _accountRepository.GetByIdAsync(AccountId.Create(request.ReviewerId), cancellationToken);
 
         if (reviewer is null)
         {

@@ -20,9 +20,9 @@ where TId : ValueObject
         _mediator = mediator;
     }
 
-    public async Task<TAggregateRoot> CreateAsync(TAggregateRoot aggregateRoot)
+    public async Task<TAggregateRoot> CreateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
     {
-        var result = await _context.Set<TAggregateRoot>().AddAsync(aggregateRoot);
+        var result = await _context.Set<TAggregateRoot>().AddAsync(aggregateRoot, cancellationToken);
         await SaveChangesAsync();
 
         return result.Entity;
@@ -36,9 +36,9 @@ where TId : ValueObject
         return result.Entity;
     }
 
-    public async Task<TAggregateRoot?> FindAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+    public async Task<TAggregateRoot?> FindAsync(Expression<Func<TAggregateRoot, bool>> predicate, CancellationToken cancellationToken)
     {
-        return await _context.Set<TAggregateRoot>().AsQueryable().FirstOrDefaultAsync(predicate);
+        return await _context.Set<TAggregateRoot>().AsQueryable().FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
     }
 
     public IQueryable<TAggregateRoot> GetAll()
@@ -51,9 +51,9 @@ where TId : ValueObject
         return _context.Set<TAggregateRoot>().AsQueryable().Where(predicate);
     }
 
-    public async Task<TAggregateRoot?> GetByIdAsync(TId id)
+    public async Task<TAggregateRoot?> GetByIdAsync(TId id, CancellationToken cancellationToken)
     {
-        return await FindAsync(ag => ag.Id == id);
+        return await FindAsync(ag => ag.Id == id, cancellationToken);
     }
 
     public async Task<TAggregateRoot> UpdateAsync(TAggregateRoot aggregateRoot)

@@ -33,8 +33,8 @@ public class HasPermissionQueryTests
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>(), CancellationToken.None)).Returns<RoleId, CancellationToken>((_, _) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>(), CancellationToken.None)).Returns<AccountId, CancellationToken>((_, _) => Task.FromResult(account)!);
         var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 
@@ -55,8 +55,8 @@ public class HasPermissionQueryTests
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>(), CancellationToken.None)).Returns<RoleId, CancellationToken>((_, _) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>(), CancellationToken.None)).Returns<AccountId, CancellationToken>((_, _) => Task.FromResult(account)!);
 
         var query = new HasPermissionQuery(account.Id, PermissionEnum.CreateTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
@@ -81,8 +81,8 @@ public class HasPermissionQueryTests
         var roleRepository = new Mock<IRepository<RoleEntity, RoleId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>())).Returns<RoleId>((_) => Task.FromResult(role)!);
-        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>())).Returns<AccountId>((_) => Task.FromResult(account)!);
+        roleRepository.Setup(rr => rr.GetByIdAsync(It.IsAny<RoleId>(), CancellationToken.None)).Returns<RoleId, CancellationToken>((_, _) => Task.FromResult(role)!);
+        accountRepository.Setup(ar => ar.GetByIdAsync(It.IsAny<AccountId>(), CancellationToken.None)).Returns<AccountId, CancellationToken>((_, _) => Task.FromResult(account)!);
         var query = new HasPermissionQuery(account.Id, PermissionEnum.ReviewTasq);
         var queryHandler = new HasPermissionQueryHandler(accountRepository.Object, roleRepository.Object);
 

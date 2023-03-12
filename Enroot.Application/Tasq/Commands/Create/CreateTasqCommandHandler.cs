@@ -29,7 +29,7 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
 
     public async Task<ErrorOr<TasqResult>> Handle(CreateTasqCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId));
+        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId), cancellationToken);
 
         if (account is null)
         {
@@ -43,7 +43,7 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
             return tasq.Errors;
         }
 
-        var result = await _tasqRepository.CreateAsync(tasq.Value);
+        var result = await _tasqRepository.CreateAsync(tasq.Value, cancellationToken);
 
         var assignments = _mapper.Map<IEnumerable<AssignmentResult>>(result.Assignments);
 

@@ -44,8 +44,8 @@ public class InviteUserCommandHandler : IRequestHandler<InviteUserCommand, Error
     public async Task<ErrorOr<AccountResult>> Handle(InviteUserCommand command, CancellationToken cancellationToken)
     {
         var email = Email.Create(command.Email).Value;
-        var user = await _userRepository.FindAsync(u => u.Email! == email);
-        var tenant = await _tenantRepository.GetByIdAsync(TenantId.Create(command.TenantId));
+        var user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
+        var tenant = await _tenantRepository.GetByIdAsync(TenantId.Create(command.TenantId), cancellationToken);
 
         var emailSubject = _localizer["InviteSubject"];
         var emailBody = string.Format(_localizer["InviteBody"], tenant!.Name.Value);
@@ -61,7 +61,7 @@ public class InviteUserCommandHandler : IRequestHandler<InviteUserCommand, Error
                 return createUserResult.Errors;
             }
 
-            user = await _userRepository.CreateAsync(createUserResult.Value);
+            user = await _userRepository.CreateAsync(createUserResult.Value, cancellationToken);
 
             emailSubject = _localizer["InviteNewUserSubject"];
             emailBody = string.Format(_localizer["InviteNewUserBody"], tenant!.Name.Value, password);

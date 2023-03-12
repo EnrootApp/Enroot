@@ -7,6 +7,7 @@ using Enroot.Contracts.Tenant;
 using Enroot.Domain.User.Enums;
 using MapsterMapper;
 using MediatR;
+using Enroot.Application.Tenant.Commands.Create;
 
 namespace Enroot.Api.Controllers;
 
