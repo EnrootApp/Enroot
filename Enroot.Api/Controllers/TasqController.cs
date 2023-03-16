@@ -12,6 +12,7 @@ using Enroot.Application.Tasq.Commands.Start;
 using Enroot.Application.Tasq.Commands.Complete;
 using Enroot.Application.Tasq.Commands.Approve;
 using Enroot.Application.Tasq.Commands.Reject;
+using Mapster;
 
 namespace Enroot.Api.Controllers
 {
@@ -55,7 +56,7 @@ namespace Enroot.Api.Controllers
 
         [HttpPost]
         [RequirePermission(PermissionEnum.CreateTasq)]
-        public async Task<IActionResult> Create(CreateTasqRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateTasqRequest request)
         {
             var creatorIdGuid = GetRequestAccountId();
 
@@ -71,7 +72,7 @@ namespace Enroot.Api.Controllers
 
         [HttpPost("assign")]
         [RequirePermission(PermissionEnum.CreateTasq)]
-        public async Task<IActionResult> Assign(AssignTasqRequest request)
+        public async Task<IActionResult> Assign([FromBody] AssignTasqRequest request)
         {
             var assignerId = GetRequestAccountId();
 
@@ -87,7 +88,7 @@ namespace Enroot.Api.Controllers
 
         [HttpPost("start")]
         [RequirePermission(PermissionEnum.CompleteTasq)]
-        public async Task<IActionResult> Start(StartAssignmentRequest request)
+        public async Task<IActionResult> Start([FromBody] StartAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
 
@@ -103,11 +104,14 @@ namespace Enroot.Api.Controllers
 
         [HttpPost("complete")]
         [RequirePermission(PermissionEnum.CompleteTasq)]
-        public async Task<IActionResult> Complete(CompleteAssignmentRequest request)
+        public async Task<IActionResult> Complete([FromBody] CompleteAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
 
-            var command = _mapper.Map<CompleteAssignmentCommand>(request);
+            var command = new CompleteAssignmentCommand(
+                assigneeId,
+                request.TasqId,
+                request.Attachments.Adapt<IEnumerable<CreateAttachmentModel>>());
 
             var result = await _mediator.Send(command);
 
@@ -119,7 +123,7 @@ namespace Enroot.Api.Controllers
 
         [HttpPost("reject")]
         [RequirePermission(PermissionEnum.ReviewTasq)]
-        public async Task<IActionResult> Reject(RejectAssignmentRequest request)
+        public async Task<IActionResult> Reject([FromBody] RejectAssignmentRequest request)
         {
             var reviewerId = GetRequestAccountId();
 
@@ -135,7 +139,7 @@ namespace Enroot.Api.Controllers
 
         [HttpPost("approve")]
         [RequirePermission(PermissionEnum.ReviewTasq)]
-        public async Task<IActionResult> Approve(ApproveAssignmentRequest request)
+        public async Task<IActionResult> Approve([FromBody] ApproveAssignmentRequest request)
         {
             var reviewerId = GetRequestAccountId();
 

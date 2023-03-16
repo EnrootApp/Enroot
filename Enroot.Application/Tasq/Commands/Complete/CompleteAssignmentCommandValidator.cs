@@ -12,12 +12,9 @@ public class CompleteAssignmentCommandValidator : AbstractValidator<CompleteAssi
            .NotEmpty();
         RuleFor(c => c.Attachments)
             .NotNull()
+            .Must(c => c.Count() <= 32)
             .ForEach(a => a.NotNull())
-            .ForEach(a =>
-                a.ChildRules(
-                    a => a.RuleFor(a => a.Name)
-                        .MaximumLength(64)
-                )
-            );
+            .ForEach(a => a.ChildRules(a => a.RuleFor(a => a.Name).MaximumLength(64)))
+            .ForEach(a => a.ChildRules(a => a.RuleFor(a => a.Url).NotEmpty()));
     }
 }

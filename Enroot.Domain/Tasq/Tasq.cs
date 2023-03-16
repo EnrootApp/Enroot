@@ -21,8 +21,9 @@ public sealed class Tasq : AggregateRoot<TasqId>
     public bool IsCompleted => _assignments.Any(a => a.Status is DoneStatus);
 
     private Tasq() { }
-    private Tasq(TenantId tenantId, AccountId creatorId, string? description, string title)
+    private Tasq(TasqId id, TenantId tenantId, AccountId creatorId, string? description, string title)
     {
+        Id = id;
         TenantId = tenantId;
         CreatorId = creatorId;
         Description = description;
@@ -46,7 +47,7 @@ public sealed class Tasq : AggregateRoot<TasqId>
             return Errors.Tasq.NotFound;
         }
 
-        return new Tasq(tenantId, creatorId, description, title);
+        return new Tasq(TasqId.CreateUnique(), tenantId, creatorId, description, title);
     }
 
     public ErrorOr<Tasq> AddAssignment(Assignment assignment)

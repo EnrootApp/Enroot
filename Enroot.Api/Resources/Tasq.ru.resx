@@ -122,36 +122,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AttachmentUrlInvalid" xml:space="preserve">
-    <value>Некорректная ссылка на прикрепленный файл</value>
-    <comment/>
-  </data>
-  <data name="AttachmentNameInvalid" xml:space="preserve">
-    <value>Некорректное имя закрепленного файла</value>
-    <comment/>
-  </data>
   <data name="NotFound" xml:space="preserve">
     <value>Задача не найдена</value>
-    <comment/>
-  </data>
-  <data name="AlreadyCompleted" xml:space="preserve">
-    <value>Задача уже выполнена</value>
     <comment/>
   </data>
   <data name="AlreadyAssigned" xml:space="preserve">
     <value>Задача уже назначена сотруднику</value>
     <comment/>
   </data>
-  <data name="NotOnReview" xml:space="preserve">
-    <value>Задача не на проверке</value>
-    <comment/>
-  </data>
   <data name="TitleInvalid" xml:space="preserve">
     <value>Заголовок не может быть пустым или длиннее 255 символов </value>
-    <comment/>
-  </data>
-  <data name="HasStarted" xml:space="preserve">
-    <value>Задача была начата</value>
     <comment/>
   </data>
 </root>

@@ -126,4 +126,16 @@
     <value>Назначений не найдено</value>
     <comment/>
   </data>
+  <data name="HasStarted" xml:space="preserve">
+    <value>Задача была начата</value>
+    <comment/>
+  </data>
+  <data name="AlreadyCompleted" xml:space="preserve">
+    <value>Задача уже выполнена</value>
+    <comment/>
+  </data>
+  <data name="NotOnReview" xml:space="preserve">
+    <value>Задача не на проверке</value>
+    <comment/>
+  </data>
 </root>

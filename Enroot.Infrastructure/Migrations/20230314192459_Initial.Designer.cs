@@ -6,16 +6,19 @@ using Enroot.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Enroot.Infrastructure.Persistence.Migrations
+namespace Enroot.Infrastructure.Migrations
 {
     [DbContext(typeof(EnrootContext))]
-    partial class EnrootContextModelSnapshot : ModelSnapshot
+    [Migration("20230314192459_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -401,7 +404,10 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.OwnsMany("Enroot.Domain.Account.ValueObjects.AccountId", "AccountIds", b1 =>
                         {
                             b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
                                 .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<int>("TenantId")
                                 .HasColumnType("int");
@@ -415,12 +421,6 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                             b1.HasIndex("TenantId");
 
                             b1.ToTable("TenantAccountIds", (string)null);
-
-                            b1.HasOne("Enroot.Domain.Account.Account", null)
-                                .WithOne()
-                                .HasForeignKey("Enroot.Domain.Tenant.Tenant.AccountIds#Enroot.Domain.Account.ValueObjects.AccountId", "Id")
-                                .OnDelete(DeleteBehavior.NoAction)
-                                .IsRequired();
 
                             b1.WithOwner()
                                 .HasForeignKey("TenantId");
@@ -437,7 +437,10 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.OwnsMany("Enroot.Domain.Account.ValueObjects.AccountId", "AccountIds", b1 =>
                         {
                             b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
                                 .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
@@ -451,12 +454,6 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                             b1.HasIndex("UserId");
 
                             b1.ToTable("UserAccountIds", (string)null);
-
-                            b1.HasOne("Enroot.Domain.Account.Account", null)
-                                .WithOne()
-                                .HasForeignKey("Enroot.Domain.User.User.AccountIds#Enroot.Domain.Account.ValueObjects.AccountId", "Id")
-                                .OnDelete(DeleteBehavior.NoAction)
-                                .IsRequired();
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

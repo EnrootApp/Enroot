@@ -23,7 +23,17 @@ public class AccountCreatedDomainEventHandler : INotificationHandler<AccountCrea
     public async Task Handle(AccountCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
         var tenant = await _tenantRepository.GetByIdAsync(notification.TenantId, cancellationToken);
-        var tenantAddResult = tenant!.AddAccountId(notification.AccountId);
+        if (tenant is null)
+        {
+            return;
+        }
+        var user = await _userRepository.GetByIdAsync(notification.UserId, cancellationToken);
+        if (user is null)
+        {
+            return;
+        }
+
+        var tenantAddResult = tenant.AddAccountId(notification.AccountId);
         if (tenantAddResult.IsError)
         {
             throw new ApplicationException();
@@ -31,7 +41,6 @@ public class AccountCreatedDomainEventHandler : INotificationHandler<AccountCrea
 
         await _tenantRepository.UpdateAsync(tenant);
 
-        var user = await _userRepository.GetByIdAsync(notification.UserId, cancellationToken);
         var userAddResult = user!.AddAccountId(notification.AccountId);
         if (userAddResult.IsError)
         {

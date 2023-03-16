@@ -56,7 +56,7 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
 
         if (assignment is null)
         {
-            return Errors.Tasq.HasStarted;
+            return Errors.Assignment.HasStarted;
         }
 
         var stageResult = assignment.CompleteStage();

@@ -48,6 +48,11 @@ public class ApproveAssignmentCommandHandler : IRequestHandler<ApproveAssignment
 
         var assignment = tasq.Assignments.First(a => a.Id == assignmentId);
 
+        if (assignment.Status is not AwaitingReviewStatus)
+        {
+            return Errors.Assignment.NotOnReview;
+        }
+
         var stageResult = assignment.CompleteStage();
         if (stageResult.IsError)
         {

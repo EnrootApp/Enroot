@@ -19,8 +19,9 @@ public sealed class Assignment : Entity<AssignmentId>
 
 
     private Assignment() { }
-    private Assignment(AccountId assignerId, AccountId assigneeId, StatusBase status)
+    private Assignment(AssignmentId id, AccountId assignerId, AccountId assigneeId, StatusBase status)
     {
+        Id = id;
         AssignerId = assignerId;
         AssigneeId = assigneeId;
         Status = status;
@@ -38,7 +39,7 @@ public sealed class Assignment : Entity<AssignmentId>
             return Errors.Account.NotFound;
         }
 
-        return new Assignment(assigneeId, assigneeId, new ToDoStatus());
+        return new Assignment(AssignmentId.CreateUnique(), assignerId, assigneeId, new ToDoStatus());
     }
 
     public ErrorOr<Assignment> CompleteStage()

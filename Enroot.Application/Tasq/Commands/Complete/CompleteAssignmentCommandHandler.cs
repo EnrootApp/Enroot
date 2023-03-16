@@ -19,17 +19,15 @@ public class CompleteAssignmentCommandHandler : IRequestHandler<CompleteAssignme
 {
     private readonly IRepository<AccountEntity, AccountId> _accountRepository;
     private readonly IRepository<TasqEntity, TasqId> _tasqRepository;
-    private readonly ICloudStorage _storage;
     private readonly IMapper _mapper;
 
     public CompleteAssignmentCommandHandler(
         IRepository<AccountEntity, AccountId> accountRepository,
-        IRepository<TasqEntity, TasqId> tasqRepository, IMapper mapper, ICloudStorage storage)
+        IRepository<TasqEntity, TasqId> tasqRepository, IMapper mapper)
     {
         _accountRepository = accountRepository;
         _tasqRepository = tasqRepository;
         _mapper = mapper;
-        _storage = storage;
     }
 
     public async Task<ErrorOr<TasqResult>> Handle(CompleteAssignmentCommand request, CancellationToken cancellationToken)
@@ -59,19 +57,12 @@ public class CompleteAssignmentCommandHandler : IRequestHandler<CompleteAssignme
 
         if (assignment is null)
         {
-            return Errors.Tasq.HasStarted;
+            return Errors.Assignment.HasCompleted;
         }
 
         foreach (var attachment in request.Attachments)
         {
-            var result = await _storage.UploadAsync(attachment.Name, attachment.File, cancellationToken);
-
-            if (result.IsError)
-            {
-                return ErrorOr<TasqResult>.From(result.Errors);
-            }
-
-            var uploadedAttachment = Attachment.Create(attachment.Name, result.Value);
+            var uploadedAttachment = Attachment.Create(attachment.Name, attachment.Url);
 
             if (uploadedAttachment.IsError)
             {

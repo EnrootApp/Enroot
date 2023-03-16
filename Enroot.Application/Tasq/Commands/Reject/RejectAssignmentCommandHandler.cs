@@ -49,7 +49,7 @@ public class RejectAssignmentCommandHandler : IRequestHandler<RejectAssignmentCo
 
         if (assignment.Status is not AwaitingReviewStatus)
         {
-            return Errors.Tasq.NotOnReview;
+            return Errors.Assignment.NotOnReview;
         }
 
         var stageResult = assignment.RejectStage(request.FeedbackMessage);

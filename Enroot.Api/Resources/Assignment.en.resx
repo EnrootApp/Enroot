@@ -126,4 +126,16 @@
     <value>Assignment not found</value>
     <comment/>
   </data>
+  <data name="NotOnReview" xml:space="preserve">
+    <value>Task is not not review</value>
+    <comment/>
+  </data>
+  <data name="HasStarted" xml:space="preserve">
+    <value>The task has been already started</value>
+    <comment/>
+  </data>
+  <data name="AlreadyCompleted" xml:space="preserve">
+    <value>Task is closed</value>
+    <comment/>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 using Enroot.Domain.Account;
+using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Tenant;
 using Enroot.Domain.Tenant.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,14 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
 
             accountIdBuilder.WithOwner().HasForeignKey(nameof(TenantId));
 
+            accountIdBuilder.Property<int>("Id")
+            .ValueGeneratedOnAdd();
             accountIdBuilder.HasKey("Id");
 
             accountIdBuilder.Property(accountId => accountId.Value)
-            .ValueGeneratedNever()
-            .HasColumnName("AccountId");
-
-            accountIdBuilder.HasOne<Account>().WithOne().HasForeignKey("AccountId").OnDelete(DeleteBehavior.NoAction);
+                .ValueGeneratedNever()
+                .HasColumnName("AccountId")
+                .IsRequired();
         });
 
         builder.Metadata.FindNavigation(nameof(Tenant.AccountIds))!.SetPropertyAccessMode(PropertyAccessMode.Field);
