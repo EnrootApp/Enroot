@@ -47,6 +47,11 @@ public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<IEnum
             result.Where(tasq => tasq.Assignments.Select(a => a.Status).Any(status => statuses.Contains(status)));
         }
 
+        if (request.AssigneeId.HasValue)
+        {
+            result.Where(tasq => tasq.Assignments.Any(a => a.AssignerId == AccountId.Create(request.AssigneeId.Value)));
+        }
+
         result.Skip(request.Skip).Take(request.Take);
 
         var tasqs = await result.ToListAsync(cancellationToken);

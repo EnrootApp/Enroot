@@ -8,6 +8,7 @@ public record GetTasqsQuery(
     Guid TenantId,
     string? Title,
     Guid? CreatorId,
+    Guid? AssigneeId,
     int[]? Statuses,
     int Skip,
     int Take)

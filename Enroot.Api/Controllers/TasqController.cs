@@ -33,7 +33,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet]
-        [RequirePermission(PermissionEnum.CreateTasq)]
         public async Task<IActionResult> Get(GetTasqsRequest request)
         {
             var tenantId = GetTenantId();
@@ -42,6 +41,7 @@ namespace Enroot.Api.Controllers
                 tenantId,
                 request.Title,
                 request.CreatorId,
+                request.AssigneeId,
                 request.Statuses,
                 request.Skip,
                 request.Take);
@@ -87,7 +87,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("start")]
-        [RequirePermission(PermissionEnum.CompleteTasq)]
         public async Task<IActionResult> Start([FromBody] StartAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
@@ -103,7 +102,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("complete")]
-        [RequirePermission(PermissionEnum.CompleteTasq)]
         public async Task<IActionResult> Complete([FromBody] CompleteAssignmentRequest request)
         {
             var assigneeId = GetRequestAccountId();
