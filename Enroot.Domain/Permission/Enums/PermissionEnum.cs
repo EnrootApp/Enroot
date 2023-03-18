@@ -10,6 +10,4 @@ public enum PermissionEnum
     ReviewTasq = 2,
     [Description("Permission that allows to create accounts")]
     CreateAccount = 3,
-    [Description("Permission that allows to do tasqs")]
-    CompleteTasq = 4
 }

@@ -6,6 +6,7 @@ using ErrorOr;
 using MediatR;
 using Enroot.Domain.Role;
 using Enroot.Domain.Permission.ValueObjects;
+using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Application.Authorization.HasPermission;
 
@@ -35,6 +36,11 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
         }
 
         var role = await _roleRepository.GetByIdAsync(account.RoleId, cancellationToken);
+
+        if (role!.Id == RoleId.Create(RoleEnum.Deactivated))
+        {
+            return Errors.Permission.NotFound;
+        }
 
         return role!.Permissions.Contains(permission.Value);
     }
