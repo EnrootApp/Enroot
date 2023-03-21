@@ -1,11 +1,11 @@
-import { Link, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Typography } from "@mui/material";
 import { Formik, FormikConfig } from "formik";
 import React from "react";
 import AuthPaper from "../../components/AuthPaper/AuthPaper";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
+import Link from "../../components/Link/Link";
 import strings from "../../localization/locales";
 import { LinkBox } from "./LoginPage.styles";
 
@@ -29,14 +29,10 @@ const LoginPage: React.FC<Props> = ({ formikConfig }) => {
           </Button>
           <LinkBox>
             <Typography align="center">
-              <Link href="#" underline="hover">
-                {strings.dontHaveAccount}
-              </Link>
+              <Link to="/register">{strings.dontHaveAccount}</Link>
             </Typography>
             <Typography align="center">
-              <Link href="#" underline="hover">
-                {strings.forgotPassword}
-              </Link>
+              <Link to="/forgotPassword">{strings.forgotPassword}</Link>
             </Typography>
           </LinkBox>
         </Form>

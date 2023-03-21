@@ -1,11 +1,11 @@
-import { Link, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Typography } from "@mui/material";
 import { Formik, FormikConfig } from "formik";
 import React from "react";
 import AuthPaper from "../../components/AuthPaper/AuthPaper";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
+import Link from "../../components/Link/Link";
 import strings from "../../localization/locales";
 import { LinkBox } from "./RegisterPage.styles";
 
@@ -29,9 +29,7 @@ const RegisterPage: React.FC<Props> = ({ formikConfig }) => {
           </Button>
           <LinkBox>
             <Typography align="center">
-              <Link href="#" underline="hover">
-                {strings.haveAccount}
-              </Link>
+              <Link to="/login">{strings.haveAccount}</Link>
             </Typography>
           </LinkBox>
         </Form>

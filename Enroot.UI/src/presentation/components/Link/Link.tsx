@@ -1,8 +1,9 @@
-import { Link, LinkProps } from "@mui/material";
 import React from "react";
+import { LinkProps } from "react-router-dom";
+import { StyledLink } from "./Link.styles";
 
-const Form: React.FC<LinkProps> = (props) => {
-  return <Link {...props} underline="hover" />;
+const Link: React.FC<LinkProps> = (props) => {
+  return <StyledLink {...props} />;
 };
 
-export default Form;
+export default Link;
