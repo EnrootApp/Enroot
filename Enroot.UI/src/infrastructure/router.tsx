@@ -1,41 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import ForgotPasswordPage from "../presentation/pages/ForgotPassword/ForgotPasswordPage";
-import LoginPage from "../presentation/pages/Login/LoginPage";
+import LoginPageContainer from "../application/pages/Login/LoginPageContainer";
 import RegisterPage from "../presentation/pages/Register/RegisterPage";
 import ResetPasswordPage from "../presentation/pages/ResetPassword/ResetPasswordPage";
+import ForgotPasswordPageContainer from "../application/pages/ForgotPassword/ForgotPasswordPageContainer";
+import RegisterPageContainer from "../application/pages/Register/RegisterPageContainer";
+import ResetPasswordPageContainer from "../application/pages/ResetPassword/ResetPasswordPageContainer";
 
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: (
-      <LoginPage
-        formikConfig={{ initialValues: {}, onSubmit(values, formikHelpers) {} }}
-      />
-    ),
+    element: <LoginPageContainer />,
   },
   {
     path: "/register",
-    element: (
-      <RegisterPage
-        formikConfig={{ initialValues: {}, onSubmit(values, formikHelpers) {} }}
-      />
-    ),
+    element: <RegisterPageContainer />,
   },
   {
     path: "/forgotPassword",
-    element: (
-      <ForgotPasswordPage
-        formikConfig={{ initialValues: {}, onSubmit(values, formikHelpers) {} }}
-      />
-    ),
+    element: <ForgotPasswordPageContainer />,
   },
   {
     path: "/resetPassword",
-    element: (
-      <ResetPasswordPage
-        formikConfig={{ initialValues: {}, onSubmit(values, formikHelpers) {} }}
-      />
-    ),
+    element: <ResetPasswordPageContainer />,
   },
 ]);
