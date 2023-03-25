@@ -147,7 +147,7 @@
     <comment/>
   </data>
     <data name="ResetPasswordBody" xml:space="preserve">
-    <value>Use the following code to reset your password: {0}.</value>
+    <value>Use the following link to reset your password: {0}.</value>
     <comment/>
   </data>
 </root>

@@ -29,5 +29,10 @@ var localizationOptions = new RequestLocalizationOptions()
 
 app.UseRequestLocalization(localizationOptions);
 
+app.UseCors(x => x.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .WithOrigins("http://localhost:5173")
+                            .AllowCredentials());
+
 app.Run();
 public partial class Program { }

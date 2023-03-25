@@ -73,6 +73,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("resetPassword")]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
         {
             var command = request.Adapt<ResetPasswordCommand>();

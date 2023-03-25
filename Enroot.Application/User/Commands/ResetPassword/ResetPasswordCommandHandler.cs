@@ -37,7 +37,8 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
             return Errors.User.NotFound;
         }
 
-        if (user.PasswordHash != request.Code)
+        var result = _passwordHasher.VerifyHashedPassword(user, request.Code, user.PasswordHash);
+        if (result != PasswordVerificationResult.Success)
         {
             return Errors.User.ResetPasswordCodeInvalid;
         }
