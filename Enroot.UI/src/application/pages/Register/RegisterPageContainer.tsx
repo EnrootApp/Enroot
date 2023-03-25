@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import errorStrings from "../../../presentation/localization/errorMessages";
 
 import RegisterPage from "../../../presentation/pages/Register/RegisterPage";
+import { useRegisterMutation } from "../../state/api/userApi";
 import { ISignUpForm } from "./RegisterPageContainer.types";
 
 const validationSchema = Yup.object().shape({
@@ -17,12 +18,16 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterPageContainer: React.FC<{}> = () => {
+  const [register] = useRegisterMutation();
+
   const formikConfig: FormikConfig<ISignUpForm> = {
     validationSchema: validationSchema,
     validateOnBlur: true,
     validateOnMount: true,
     initialValues: { email: "", password: "" },
-    onSubmit(values, formikHelpers) {},
+    onSubmit: async (values, formikHelpers) => {
+      var res = await register({ ...values });
+    },
   };
 
   return <RegisterPage formikConfig={formikConfig} />;

@@ -29,29 +29,20 @@ const ResetPassword: React.FC<Props> = ({ formikConfig }) => {
               <Typography align="center">
                 {strings.resetPasswordGuide}
               </Typography>
-              <Input
-                label={strings.securityCode}
-                variant="standard"
-                type="text"
-                name="securityCode"
-                value={values.code}
-                error={Boolean(errors.code && touched.code)}
-                helperText={errors.code && touched.code && errors.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
               <PasswordInput
                 label={strings.password}
                 inputProps={{
-                  name: "password",
+                  name: "newPassword",
                   type: "password",
-                  value: values.password,
+                  value: values.newPassword,
                   onChange: handleChange,
                   onBlur: handleBlur,
                 }}
-                error={Boolean(errors.password && touched.password)}
+                error={Boolean(errors.newPassword && touched.newPassword)}
                 helperText={
-                  errors.password && touched.password ? errors.password : ""
+                  errors.newPassword && touched.newPassword
+                    ? errors.newPassword
+                    : ""
                 }
               />
               <Button sx={{ marginTop: 2 }} size="large" type="submit">

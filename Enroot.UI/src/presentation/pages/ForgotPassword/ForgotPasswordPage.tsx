@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
-import { IForgotPasswordForm } from "../../../application/pages/ForgotPassword/ForgotPAsswordPageContainer.types";
+import { IForgotPasswordForm } from "../../../application/pages/ForgotPassword/ForgotPasswordPageContainer.types";
 import AuthPaper from "../../components/AuthPaper/AuthPaper";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
