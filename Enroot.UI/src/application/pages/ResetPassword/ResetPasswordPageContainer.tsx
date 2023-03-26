@@ -3,6 +3,7 @@ import { enqueueSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
+import { routes } from "../../../infrastructure/routing/routes";
 import apiStrings from "../../../presentation/localization/apiMessages";
 import errorStrings from "../../../presentation/localization/errorMessages";
 
@@ -28,7 +29,7 @@ const ResetPasswordPageContainer: React.FC<{}> = () => {
   useEffect(() => {
     if (isSuccess) {
       enqueueSnackbar(apiStrings.passwordChanged, { variant: "success" });
-      navigate("/login");
+      navigate(routes.login);
     }
   }, [isSuccess]);
 

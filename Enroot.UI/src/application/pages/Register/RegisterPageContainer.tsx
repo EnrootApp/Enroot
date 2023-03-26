@@ -1,5 +1,6 @@
 import { FormikConfig } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import errorStrings from "../../../presentation/localization/errorMessages";
 
@@ -9,7 +10,10 @@ import { ISignUpForm } from "./RegisterPageContainer.types";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email(errorStrings.invalidEmail)
+    .matches(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      errorStrings.invalidEmail
+    )
     .required(errorStrings.notEmpty),
   password: Yup.string()
     .required(errorStrings.notEmpty)
@@ -18,15 +22,23 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterPageContainer: React.FC<{}> = () => {
-  const [register] = useRegisterMutation();
+  const [register, { isSuccess, data }] = useRegisterMutation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem("accessToken", data!.accessToken);
+      navigate("/home");
+    }
+  }, [isSuccess]);
 
   const formikConfig: FormikConfig<ISignUpForm> = {
     validationSchema: validationSchema,
     validateOnBlur: true,
     validateOnMount: true,
     initialValues: { email: "", password: "" },
-    onSubmit: async (values, formikHelpers) => {
-      var res = await register({ ...values });
+    onSubmit: async (values) => {
+      await register({ ...values });
     },
   };
 

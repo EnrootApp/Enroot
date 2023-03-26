@@ -2,9 +2,8 @@ import { styled } from "@mui/material/styles";
 import { Paper, PaperProps, Container, ContainerProps } from "@mui/material";
 
 export const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
-  height: "80%",
+  height: "100%",
   width: "100%",
-  margin: "auto",
   display: "flex",
 
   [theme.breakpoints.down("md")]: {
@@ -12,17 +11,6 @@ export const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
     height: "100%",
   },
 }));
-
-export const StyledContainer = styled(Container)<ContainerProps>(
-  ({ theme }) => ({
-    display: "flex",
-    height: "100%",
-
-    [theme.breakpoints.down("md")]: {
-      padding: 0,
-    },
-  })
-);
 
 export const FormContainer = styled(Container)<ContainerProps>(({ theme }) => ({
   height: "100%",

@@ -9,6 +9,7 @@ import { router } from "./infrastructure/routing/router";
 import { Provider } from "react-redux";
 import store from "./infrastructure/state/store";
 import { SnackbarProvider } from "notistack";
+import AppWindowContainer from "./application/components/AppWindow/AppWindowContainer";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

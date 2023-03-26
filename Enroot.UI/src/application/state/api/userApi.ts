@@ -1,16 +1,19 @@
+import { AuthenticationResponse } from "../../../domain/authentication/AuthenticationResponse";
+import { ISignInForm } from "../../pages/Login/LoginPageContainer.types";
+import { ISignUpForm } from "../../pages/Register/RegisterPageContainer.types";
 import { apiSlice } from "./apiSlice";
 
 // Define our single API slice object
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<AuthenticationResponse, ISignInForm>({
       query: ({ email, password }) => ({
         url: "/authentication/login",
         method: "POST",
         body: { email, password },
       }),
     }),
-    register: builder.mutation({
+    register: builder.mutation<AuthenticationResponse, ISignUpForm>({
       query: ({ email, password }) => ({
         url: "/authentication/register",
         method: "POST",

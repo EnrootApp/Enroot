@@ -8,7 +8,10 @@ import { IForgotPasswordForm } from "./ForgotPasswordPageContainer.types";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email(errorStrings.invalidEmail)
+    .matches(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      errorStrings.invalidEmail
+    )
     .required(errorStrings.notEmpty),
 });
 
