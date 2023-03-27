@@ -33,6 +33,13 @@ export const userApi = apiSlice.injectEndpoints({
         body: { code, newPassword, email },
       }),
     }),
+    changePassword: builder.mutation({
+      query: ({ currentPassword, newPassword }) => ({
+        url: "/user/changePassword",
+        method: "POST",
+        body: { oldPassword: currentPassword, newPassword },
+      }),
+    }),
   }),
 });
 
@@ -41,4 +48,5 @@ export const {
   useRegisterMutation,
   useLazyForgotPasswordQuery,
   useResetPasswordMutation,
+  useChangePasswordMutation,
 } = userApi;

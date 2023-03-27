@@ -22,7 +22,8 @@ const strings = new LocalizedStrings({
     home: "Home",
     generalSettings: "General",
     securitySettings: "Security",
-    settings: "Settings",
+    generalSettingsTitle: "General Settings",
+    securitySettingsTitle: "Security Settings",
     profileImage: "Profile Image",
     change: "Change",
     delete: "Delete",
@@ -30,6 +31,8 @@ const strings = new LocalizedStrings({
     lastName: "Last Name",
     personalInfo: "Personal Info",
     save: "Save",
+    currentPassword: "Current password",
+    newPassword: "New password",
   },
   ru: {
     signIn: "Вход",
@@ -52,7 +55,8 @@ const strings = new LocalizedStrings({
     home: "Домой",
     generalSettings: "Общие",
     securitySettings: "Безопасность",
-    settings: "настройки",
+    generalSettingsTitle: "Общие настройки",
+    securitySettingsTitle: "Настройки безопасности",
     profileImage: "Фото профиля",
     change: "Изменить",
     delete: "Удалить",
@@ -60,6 +64,8 @@ const strings = new LocalizedStrings({
     lastName: "Фамилия",
     personalInfo: "Персональные данные",
     save: "Сохранить",
+    currentPassword: "Текущий пароль",
+    newPassword: "Новый пароль",
   },
 });
 

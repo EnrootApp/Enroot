@@ -3,6 +3,7 @@ import { TabContext } from "@mui/lab";
 import { Typography } from "@mui/material";
 import { SyntheticEvent } from "react";
 import GeneralSettingsContainer from "../../../application/components/GeneralSettings/GeneralSettingsContainer";
+import SecuritySettingsContainer from "../../../application/components/SecuritySettings/SecuritySettingsContainer";
 import Drawer from "../../components/Drawer/Drawer";
 import strings from "../../localization/locales";
 
@@ -30,7 +31,10 @@ const ProfilePage: React.FC<Props> = ({ tabsValue, onTabChange }) => {
         tabsValue={tabsValue}
         onTabChange={onTabChange}
       >
-        <GeneralSettingsContainer />
+        <>
+          <GeneralSettingsContainer />
+          <SecuritySettingsContainer />
+        </>
       </Drawer>
     </TabContext>
   );

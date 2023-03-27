@@ -1,5 +1,4 @@
 import { Home, Menu } from "@mui/icons-material";
-import { TabPanel } from "@mui/lab";
 import {
   Divider,
   IconButton,
@@ -31,7 +30,7 @@ const Drawer: React.FC<Props> = ({
   tabsValue,
   onTabChange,
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <>

@@ -3,5 +3,3 @@ export interface GeneralSettingsForm {
   lastName: string;
   avatarUrl: string;
 }
-
-export interface GeneralSettingsProps {}

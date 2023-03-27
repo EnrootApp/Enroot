@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Drawer } from "@mui/material";
+import { Drawer, styled } from "@mui/material";
 
 export const DrawerHeader = styled("div")(() => ({
   display: "flex",
@@ -9,7 +8,7 @@ export const DrawerHeader = styled("div")(() => ({
 
 export const StyledDrawer = styled(Drawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ open }) => ({
+})(({ theme, open }) => ({
   width: open ? 240 : 55,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -18,6 +17,11 @@ export const StyledDrawer = styled(Drawer, {
   transition: "all 0.3s ease",
 
   "& .MuiPaper-root": {
+    overflow: "hidden",
     position: "relative",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: open ? "100%" : 55,
   },
 }));
