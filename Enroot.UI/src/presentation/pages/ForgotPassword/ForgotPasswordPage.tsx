@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
 import { IForgotPasswordForm } from "../../../application/pages/ForgotPassword/ForgotPasswordPageContainer.types";
+import { routes } from "../../../infrastructure/routing/routes";
 import AuthPaper from "../../components/AuthPaper/AuthPaper";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
@@ -45,7 +46,7 @@ const ForgotPassword: React.FC<Props> = ({ formikConfig }) => {
               </Button>
               <LinkBox>
                 <Typography align="center">
-                  <Link to="/login">{strings.backToLogin}</Link>
+                  <Link to={routes.login}>{strings.backToLogin}</Link>
                 </Typography>
               </LinkBox>
             </Form>

@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
 import { ISignUpForm } from "../../../application/pages/Register/RegisterPageContainer.types";
+import { routes } from "../../../infrastructure/routing/routes";
 import AuthPaper from "../../components/AuthPaper/AuthPaper";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
@@ -57,7 +58,7 @@ const RegisterPage: React.FC<Props> = ({ formikConfig }) => {
               </Button>
               <LinkBox>
                 <Typography align="center">
-                  <Link to="/login">{strings.haveAccount}</Link>
+                  <Link to={routes.login}>{strings.haveAccount}</Link>
                 </Typography>
               </LinkBox>
             </Form>

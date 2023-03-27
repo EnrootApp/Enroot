@@ -10,6 +10,7 @@ import Link from "../../components/Link/Link";
 import strings from "../../localization/locales";
 import { LinkBox } from "./ResetPasswordPage.styles";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import { routes } from "../../../infrastructure/routing/routes";
 
 interface Props {
   formikConfig: FormikConfig<IResetPasswordForm>;
@@ -50,7 +51,7 @@ const ResetPassword: React.FC<Props> = ({ formikConfig }) => {
               </Button>
               <LinkBox>
                 <Typography align="center">
-                  <Link to="/login">{strings.backToLogin}</Link>
+                  <Link to={routes.login}>{strings.backToLogin}</Link>
                 </Typography>
               </LinkBox>
             </Form>
