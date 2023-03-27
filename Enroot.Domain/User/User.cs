@@ -9,10 +9,12 @@ namespace Enroot.Domain.User;
 
 public sealed class User : AggregateRoot<UserId>
 {
-    public Email? Email { get; private set; }
-    public PhoneNumber? PhoneNumber { get; private set; }
+    public Email Email { get; private set; }
     public string PasswordHash { get; set; }
     public string Role { get; private set; }
+    public Name FirstName { get; private set; }
+    public Name LastName { get; private set; }
+    public string AvatarUrl { get; private set; }
 
     private readonly List<AccountId> _accountIds = new();
 
@@ -23,13 +25,6 @@ public sealed class User : AggregateRoot<UserId>
     private User(UserId id, Email email, string passwordHash) : base(id)
     {
         Email = email;
-        PasswordHash = passwordHash;
-        Role = UserRoles.Default;
-    }
-
-    private User(UserId id, PhoneNumber phoneNumber, string passwordHash) : base(id)
-    {
-        PhoneNumber = phoneNumber;
         PasswordHash = passwordHash;
         Role = UserRoles.Default;
     }
@@ -49,21 +44,6 @@ public sealed class User : AggregateRoot<UserId>
         return new User(UserId.CreateUnique(), email, passwordHash);
     }
 
-    public static ErrorOr<User> CreateByPhoneNumber(PhoneNumber phoneNumber, string passwordHash)
-    {
-        if (phoneNumber is null)
-        {
-            return Errors.User.PhoneInvalid;
-        }
-
-        if (string.IsNullOrWhiteSpace(passwordHash))
-        {
-            return Errors.User.EmailInvalid;
-        }
-
-        return new User(UserId.CreateUnique(), phoneNumber, passwordHash);
-    }
-
     public ErrorOr<User> AddAccountId(AccountId id)
     {
         if (id is null)
@@ -77,6 +57,15 @@ public sealed class User : AggregateRoot<UserId>
         }
 
         _accountIds.Add(id);
+
+        return this;
+    }
+
+    public ErrorOr<User> UpdateInfo(Name firstName, Name lastName, string avatarUrl)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        AvatarUrl = avatarUrl;
 
         return this;
     }

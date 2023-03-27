@@ -15,7 +15,9 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     private readonly IRepository<UserEntity, UserId> _userRepository;
     private readonly IPasswordHasher<UserEntity> _passwordHasher;
 
-    public ResetPasswordCommandHandler(IRepository<UserEntity, UserId> userRepository, IPasswordHasher<UserEntity> passwordHasher, IPasswordHasher<UserEntity> passwordHasher2)
+    public ResetPasswordCommandHandler(
+        IRepository<UserEntity, UserId> userRepository,
+        IPasswordHasher<UserEntity> passwordHasher)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;

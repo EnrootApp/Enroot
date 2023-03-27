@@ -1,6 +1,8 @@
 using Enroot.Application.User.Commands.ChangePassword;
 using Enroot.Application.User.Commands.Invite;
 using Enroot.Application.User.Commands.ResetPassword;
+using Enroot.Application.User.Commands.SetInfo;
+using Enroot.Application.User.Queries.GetById;
 using Enroot.Application.User.Queries.ResetPasswordEmail;
 using Enroot.Contracts.User;
 using Enroot.Domain.Permission.Enums;
@@ -29,6 +31,36 @@ namespace Enroot.Api.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAsync()
+        {
+            var query = new GetByIdQuery(GetRequestUserId());
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+               Ok,
+               Problem
+           );
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> SetInfoAsync([FromBody] SetUserInfoRequest request)
+        {
+            var command = new SetInfoCommand(
+                GetRequestUserId(),
+                request.FirstName,
+                request.LastName,
+                request.AvatarUrl);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+               Ok,
+               Problem
+           );
         }
 
         [HttpPost("invite")]

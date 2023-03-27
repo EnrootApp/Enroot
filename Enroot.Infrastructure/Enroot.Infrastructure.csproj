@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AWSSDK.S3" Version="3.7.103.36" />
       <PackageReference Include="Backblaze.Agent" Version="1.0.1" />
       <PackageReference Include="mapster" Version="7.3.0" />
       <PackageReference Include="mapster.dependencyinjection" Version="1.0.0" />

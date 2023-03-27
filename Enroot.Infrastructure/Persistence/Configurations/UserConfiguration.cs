@@ -58,10 +58,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             );
 
         builder
-            .Property(user => user.PhoneNumber)
+            .Property(user => user.FirstName)
             .HasConversion(
-                phoneNumber => phoneNumber!.Value,
-                value => PhoneNumber.Create(value).Value
+                name => name.Value,
+                value => Name.Create(value).Value
             );
+        builder
+           .Property(user => user.LastName)
+           .HasConversion(
+               name => name.Value,
+               value => Name.Create(value).Value
+           );
+
+        builder.Property(user => user.AvatarUrl);
     }
 }

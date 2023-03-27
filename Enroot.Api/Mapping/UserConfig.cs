@@ -19,7 +19,10 @@ public class UserConfig : IRegister
         config.ForType<UserId, Guid>().MapWith(a => a.Value);
 
         config.NewConfig<UserEntity, UserResult>()
-            .Map(dest => dest.Email, src => src.Email!.Value, srcCond => srcCond.Email != null)
-            .Map(dest => dest.AccountIds, src => src.AccountIds.Adapt<IEnumerable<Guid>>());
+            .Map(dest => dest.Email, src => src.Email.Value)
+            .Map(dest => dest.AccountIds, src => src.AccountIds.Adapt<IEnumerable<Guid>>())
+            .Map(dest => dest.FirstName, src => src.FirstName.Value)
+            .Map(dest => dest.LastName, src => src.LastName.Value);
+
     }
 }
