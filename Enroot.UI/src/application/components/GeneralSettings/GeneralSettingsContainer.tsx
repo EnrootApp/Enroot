@@ -29,12 +29,6 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  const initialValues = {
-    firstName: data?.firstName || "",
-    lastName: data?.lastName || "",
-    avatarUrl: data?.avatarUrl || "",
-  };
-
   const handleFileChange = async ({
     event,
     setFieldValue,
@@ -66,11 +60,12 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
     setFieldValue,
     setFieldTouched,
   }: HandleDeleteImageProps) => {
-    if (avatarUrl == initialValues.avatarUrl) {
+    if (avatarUrl == "") {
       return;
     }
 
     setFile(null);
+
     setFieldValue("avatarUrl", "");
     setFieldTouched("avatarUrl", true);
   };
@@ -80,10 +75,6 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
       enqueueSnackbar("Settings updated", { variant: "success" });
     }
   }, [isSuccess]);
-
-  useEffect(() => {
-    console.log(progress);
-  }, [progress]);
 
   const formikConfig: FormikConfig<GeneralSettingsForm> = {
     validationSchema: validationSchema,
@@ -107,6 +98,7 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
       fileInputRef={fileInputRef}
       file={file}
       email={data?.email || ""}
+      imageProgress={progress}
     />
   ) : null;
 };

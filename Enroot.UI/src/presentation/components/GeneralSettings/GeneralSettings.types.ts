@@ -21,4 +21,5 @@ export interface GeneralSettingsProps {
   }: HandleDeleteImageProps) => void;
   file: File | null;
   email: string;
+  imageProgress: number;
 }

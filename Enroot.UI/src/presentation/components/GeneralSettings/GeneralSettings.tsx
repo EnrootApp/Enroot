@@ -1,5 +1,5 @@
 import { TabPanel } from "@mui/lab";
-import { Avatar } from "@mui/material";
+import { Avatar, CircularProgress } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
 import Button from "../../../presentation/components/Button/Button";
@@ -7,8 +7,9 @@ import Input from "../../../presentation/components/Input/Input";
 import SubTitle from "../../../presentation/components/SubTitle/SubTitle";
 import Title from "../../../presentation/components/Title/Title";
 import strings from "../../../presentation/localization/locales";
+import CircularProgressCentered from "../CircularProgressCentered/CircularProgressCentered";
 import Form from "../Form/Form";
-import { Column } from "./GeneralSettings.styles";
+import { Column, ImageButtonsDiv } from "./GeneralSettings.styles";
 import { GeneralSettingsProps } from "./GeneralSettings.types";
 
 const GeneralSettings: React.FC<GeneralSettingsProps> = ({
@@ -17,7 +18,10 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
   handleFileChange,
   fileInputRef,
   email,
+  imageProgress,
 }) => {
+  const isInProgress = imageProgress !== 0 && imageProgress !== 100;
+
   return (
     <TabPanel
       value="0"
@@ -57,18 +61,25 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
                         })
                       }
                     />
-                    <Avatar
-                      src={values.avatarUrl}
-                      sx={{ width: 140, height: 140, marginRight: 4 }}
-                    />
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        flexDirection: "column",
-                        width: "100%",
-                      }}
-                    >
+                    <div style={{ position: "relative", marginRight: 32 }}>
+                      <Avatar
+                        src={values.avatarUrl}
+                        sx={{
+                          width: 140,
+                          height: 140,
+                          opacity: isInProgress ? 0.4 : 1,
+                        }}
+                      />
+                      {isInProgress && (
+                        <CircularProgressCentered
+                          variant="determinate"
+                          color="secondary"
+                          value={imageProgress}
+                        />
+                      )}
+                    </div>
+
+                    <ImageButtonsDiv>
                       <Button
                         sx={{ width: "100%" }}
                         onClick={() => fileInputRef.current?.click()}
@@ -88,7 +99,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
                       >
                         {strings.delete}
                       </Button>
-                    </div>
+                    </ImageButtonsDiv>
                   </div>
                 </div>
 
