@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../../infrastructure/routing/routes";
 import HomeAppBar from "../../../presentation/components/HomeAppBar/HomeAppBar";
+import { useGetMeQuery } from "../../state/api/userApi";
 import { HomeAppBarProps } from "./HomeAppBarContainer.types";
 
 function HomeAppBarContainer() {

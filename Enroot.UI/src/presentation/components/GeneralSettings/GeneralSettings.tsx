@@ -1,7 +1,6 @@
 import { TabPanel } from "@mui/lab";
 import { Avatar } from "@mui/material";
-import { Formik, FormikConfig, FormikProps } from "formik";
-import { ChangeEventHandler, MouseEventHandler, RefObject } from "react";
+import { Formik, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
 import Button from "../../../presentation/components/Button/Button";
 import Input from "../../../presentation/components/Input/Input";
@@ -10,22 +9,14 @@ import Title from "../../../presentation/components/Title/Title";
 import strings from "../../../presentation/localization/locales";
 import Form from "../Form/Form";
 import { Column } from "./GeneralSettings.styles";
+import { GeneralSettingsProps } from "./GeneralSettings.types";
 
-interface Props {
-  formikConfig: FormikConfig<GeneralSettingsForm>;
-  fileInputRef: RefObject<HTMLInputElement>;
-  handleFileChange: ChangeEventHandler<HTMLInputElement>;
-  handleDeleteImage: MouseEventHandler<HTMLButtonElement>;
-  imageUrl: string | null;
-  file: File | null;
-}
-
-const GeneralSettings: React.FC<Props> = ({
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({
   formikConfig,
   handleDeleteImage,
   handleFileChange,
   fileInputRef,
-  imageUrl,
+  email,
 }) => {
   return (
     <TabPanel
@@ -38,7 +29,15 @@ const GeneralSettings: React.FC<Props> = ({
       <Column>
         <Formik {...formikConfig}>
           {(props: FormikProps<GeneralSettingsForm>) => {
-            const { values, touched, errors, handleBlur, handleChange } = props;
+            const {
+              values,
+              touched,
+              errors,
+              handleBlur,
+              handleChange,
+              setFieldValue,
+              setFieldTouched,
+            } = props;
             return (
               <Form noValidate>
                 <Title value={strings.generalSettingsTitle} />
@@ -50,10 +49,16 @@ const GeneralSettings: React.FC<Props> = ({
                       type="file"
                       hidden
                       ref={fileInputRef}
-                      onChange={(event) => handleFileChange(event)}
+                      onChange={(event) =>
+                        handleFileChange({
+                          event,
+                          setFieldValue,
+                          setFieldTouched,
+                        })
+                      }
                     />
                     <Avatar
-                      src={imageUrl || ""}
+                      src={values.avatarUrl}
                       sx={{ width: 140, height: 140, marginRight: 4 }}
                     />
                     <div
@@ -73,7 +78,13 @@ const GeneralSettings: React.FC<Props> = ({
                       <Button
                         sx={{ width: "100%" }}
                         variant="outlined"
-                        onClick={handleDeleteImage}
+                        onClick={() =>
+                          handleDeleteImage({
+                            setFieldValue,
+                            setFieldTouched,
+                            avatarUrl: values.avatarUrl,
+                          })
+                        }
                       >
                         {strings.delete}
                       </Button>
@@ -115,6 +126,7 @@ const GeneralSettings: React.FC<Props> = ({
                   />
                   <Input
                     label={strings.email}
+                    value={email}
                     variant="standard"
                     type="email"
                     name="email"
@@ -124,6 +136,13 @@ const GeneralSettings: React.FC<Props> = ({
                     sx={{ marginTop: 2, marginBottom: 2 }}
                     size="large"
                     type="submit"
+                    disabled={
+                      !(
+                        touched.lastName ||
+                        touched.firstName ||
+                        touched.avatarUrl
+                      )
+                    }
                   >
                     {strings.save}
                   </Button>

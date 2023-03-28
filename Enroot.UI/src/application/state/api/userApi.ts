@@ -1,4 +1,5 @@
 import { AuthenticationResponse } from "../../../domain/authentication/AuthenticationResponse";
+import { User } from "../../../domain/user/User";
 import { ISignInForm } from "../../pages/Login/LoginPageContainer.types";
 import { ISignUpForm } from "../../pages/Register/RegisterPageContainer.types";
 import { apiSlice } from "./apiSlice";
@@ -40,6 +41,18 @@ export const userApi = apiSlice.injectEndpoints({
         body: { oldPassword: currentPassword, newPassword },
       }),
     }),
+    getMe: builder.query<User, void>({
+      query: () => ({
+        url: "/user",
+      }),
+    }),
+    updateInfo: builder.mutation({
+      query: ({ firstName, lastName, avatarUrl }) => ({
+        url: "/user",
+        method: "PUT",
+        body: { firstName, lastName, avatarUrl },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +62,6 @@ export const {
   useLazyForgotPasswordQuery,
   useResetPasswordMutation,
   useChangePasswordMutation,
+  useGetMeQuery,
+  useUpdateInfoMutation,
 } = userApi;

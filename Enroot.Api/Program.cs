@@ -31,7 +31,7 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseCors(x => x.AllowAnyHeader()
                             .AllowAnyMethod()
-                            .WithOrigins("http://localhost:5173")
+                            .WithOrigins("http://localhost:5173", "https://localhost:5173")
                             .AllowCredentials());
 
 app.Run();
