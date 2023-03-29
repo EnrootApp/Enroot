@@ -11,6 +11,13 @@ import ResetPassword from "../../../presentation/pages/ResetPassword/ResetPasswo
 import { useResetPasswordMutation } from "../../state/api/userApi";
 import { IResetPasswordForm } from "./ResetPasswordPageContainer.types";
 
+const validationSchema = Yup.object().shape({
+  newPassword: Yup.string()
+    .required(errorStrings.notEmpty)
+    .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
+    .matches(new RegExp(/[a-z]/), errorStrings.characters),
+});
+
 const ResetPasswordPageContainer: React.FC<{}> = () => {
   const [resetPassword, { isSuccess }] = useResetPasswordMutation();
   const [searchParams] = useSearchParams();
@@ -25,13 +32,6 @@ const ResetPasswordPageContainer: React.FC<{}> = () => {
       navigate(routes.login);
     }
   }, [isSuccess]);
-
-  const validationSchema = Yup.object().shape({
-    newPassword: Yup.string()
-      .required(errorStrings.notEmpty)
-      .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
-      .matches(new RegExp(/[a-z]/), errorStrings.characters),
-  });
 
   const formikConfig: FormikConfig<IResetPasswordForm> = {
     validationSchema: validationSchema,

@@ -8,6 +8,14 @@ import { enqueueSnackbar } from "notistack";
 import apiStrings from "../../../presentation/localization/apiMessages";
 import { useEffect } from "react";
 
+const validationSchema = Yup.object().shape({
+  currentPassword: Yup.string().required(errorStrings.notEmpty),
+  newPassword: Yup.string()
+    .required(errorStrings.notEmpty)
+    .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
+    .matches(new RegExp(/[a-z]/), errorStrings.characters),
+});
+
 const SecuritySettingsContainer = () => {
   const [changePassword, { isSuccess }] = useChangePasswordMutation();
 
@@ -16,14 +24,6 @@ const SecuritySettingsContainer = () => {
       enqueueSnackbar(apiStrings.passwordChanged, { variant: "success" });
     }
   }, [isSuccess]);
-
-  const validationSchema = Yup.object().shape({
-    currentPassword: Yup.string().required(errorStrings.notEmpty),
-    newPassword: Yup.string()
-      .required(errorStrings.notEmpty)
-      .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
-      .matches(new RegExp(/[a-z]/), errorStrings.characters),
-  });
 
   const formikConfig: FormikConfig<SecuritySettingsForm> = {
     validationSchema: validationSchema,
