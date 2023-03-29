@@ -6,18 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Localization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Enroot.Api.Common.Errors;
 
 namespace Enroot.Api.Controllers;
 
+[ApiController]
 public abstract class ApiController : ControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IStringLocalizerFactory _localizerFactory;
 
-    protected ApiController(IHttpContextAccessor httpContextAccessor, IStringLocalizerFactory localizerFactory)
+    protected ApiController(
+        IHttpContextAccessor httpContextAccessor,
+        IStringLocalizerFactory localizerFactory)
     {
         _httpContextAccessor = httpContextAccessor;
         _localizerFactory = localizerFactory;
+        ProblemDetailsFactory = new EnrootProblemDetailsFactory();
     }
 
     protected Guid GetRequestUserId()
@@ -64,6 +70,8 @@ public abstract class ApiController : ControllerBase
 
     protected IActionResult Problem(IEnumerable<Error> errors)
     {
+        var localizer = _localizerFactory.Create("Errors", Assembly.GetExecutingAssembly().FullName!);
+        var title = localizer.GetString("General");
         var localizedErrors = GetLocalizedErrors(errors);
 
         if (localizedErrors.All(error => error.Type == ErrorType.Validation))
@@ -73,18 +81,11 @@ public abstract class ApiController : ControllerBase
             foreach (var error in localizedErrors)
             {
                 modelStateDictionary.AddModelError(
-                    error.Code,
+                    "Validation",
                     error.Description);
             }
 
-            var localizer = _localizerFactory.Create("Validation", Assembly.GetExecutingAssembly().FullName!);
-
-            ValidationProblemDetails validationProblemDetails = new(modelStateDictionary)
-            {
-                Title = localizer.GetString("General")
-            };
-
-            return ValidationProblem(validationProblemDetails);
+            return ValidationProblem(ProblemDetailsFactory.CreateValidationProblemDetails(HttpContext, modelStateDictionary, title: title));
         }
 
         HttpContext.Items[HttpContextItemKeys.Errors] = localizedErrors;
@@ -99,7 +100,7 @@ public abstract class ApiController : ControllerBase
             _ => StatusCodes.Status500InternalServerError
         };
 
-        return Problem(detail: firstError.Description, statusCode: statusCode, title: firstError.Code);
+        return new ObjectResult(ProblemDetailsFactory.CreateProblemDetails(HttpContext, statusCode, title));
     }
 
     private Error GetLocalizedError(Error error)

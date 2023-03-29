@@ -15,7 +15,12 @@ public static class DependencyInjection
             option.SwaggerDoc("v1", new OpenApiInfo { Title = "Enroot API", Version = "v1" });
         });
 
-        services.AddControllers();
+        services.AddControllers()
+        .ConfigureApiBehaviorOptions(options =>
+        {
+            options.SuppressMapClientErrors = true;
+            options.InvalidModelStateResponseFactory = actionContext => InvalidModelStateResponseFactory.GetBadRequestResult(actionContext);
+        });
 
         services.AddMappings();
 

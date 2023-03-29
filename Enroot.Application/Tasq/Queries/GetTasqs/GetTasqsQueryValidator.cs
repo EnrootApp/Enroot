@@ -9,9 +9,11 @@ public class GetTasqsQueryValidator : AbstractValidator<GetTasqsQuery>
         RuleFor(c => c.TenantId)
            .NotEmpty();
         RuleFor(c => c.Skip)
-           .NotEmpty();
+           .NotNull()
+           .GreaterThanOrEqualTo(0);
         RuleFor(c => c.Take)
-           .NotEmpty();
+           .NotNull()
+           .GreaterThanOrEqualTo(1);
         RuleFor(c => c.Title).MaximumLength(100);
     }
 }

@@ -1,6 +1,6 @@
 namespace Enroot.Contracts.Tenant;
 
 public record GetTenantsRequest(
-    int Offset,
+    int Skip,
     int Take,
     string? Name);

@@ -44,11 +44,11 @@ public class TenantController : ApiController
 
     [HttpGet("admin")]
     [Authorize(UserRoles.SystemAdmin)]
-    public async Task<IActionResult> GetAdminTenants(GetTenantsRequest request)
+    public async Task<IActionResult> GetAdminTenants([FromQuery] GetTenantsRequest request)
     {
         var requestorUserId = GetRequestUserId();
 
-        var query = new TenantsQuery(requestorUserId, request.Offset, request.Take, request.Name, false);
+        var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name, false);
 
         var result = await _mediator.Send(query);
 
@@ -59,11 +59,11 @@ public class TenantController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTenants(GetTenantsRequest request)
+    public async Task<IActionResult> GetTenants([FromQuery] GetTenantsRequest request)
     {
         var requestorUserId = GetRequestUserId();
 
-        var query = new TenantsQuery(requestorUserId, request.Offset, request.Take, request.Name);
+        var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name);
 
         var result = await _mediator.Send(query);
 

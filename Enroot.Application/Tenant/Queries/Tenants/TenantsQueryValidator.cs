@@ -10,9 +10,11 @@ public class TenantsQueryValidator : AbstractValidator<TenantsQuery>
            .NotEmpty();
         RuleFor(c => c.UserId)
            .NotEmpty();
-        RuleFor(c => c.Offset)
-           .NotEmpty();
+        RuleFor(c => c.Skip)
+           .NotNull()
+           .GreaterThanOrEqualTo(0);
         RuleFor(c => c.Take)
-           .NotEmpty();
+           .NotNull()
+           .GreaterThanOrEqualTo(1);
     }
 }

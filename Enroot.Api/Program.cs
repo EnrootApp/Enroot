@@ -28,7 +28,6 @@ var localizationOptions = new RequestLocalizationOptions()
     .AddSupportedUICultures(Localization.SupportedCultures);
 
 app.UseRequestLocalization(localizationOptions);
-
 app.UseCors(x => x.AllowAnyHeader()
                             .AllowAnyMethod()
                             .WithOrigins("http://localhost:5173", "https://localhost:5173")

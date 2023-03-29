@@ -33,7 +33,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetTasqsRequest request)
+        public async Task<IActionResult> Get([FromQuery] GetTasqsRequest request)
         {
             var tenantId = GetTenantId();
 

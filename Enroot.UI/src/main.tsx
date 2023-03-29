@@ -9,13 +9,22 @@ import { router } from "./infrastructure/routing/router";
 import { Provider } from "react-redux";
 import store from "./infrastructure/state/store";
 import { SnackbarProvider } from "notistack";
-import AppWindowContainer from "./application/components/AppWindow/AppWindowContainer";
+import { StyledMaterialDesignContent } from "./presentation/components/Snackbar/Snackbar.styles";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <SnackbarProvider preventDuplicate autoHideDuration={100000000} />
+        <SnackbarProvider
+          preventDuplicate
+          autoHideDuration={5000}
+          Components={{
+            error: StyledMaterialDesignContent,
+            success: StyledMaterialDesignContent,
+            warning: StyledMaterialDesignContent,
+            info: StyledMaterialDesignContent,
+          }}
+        />
         <RouterProvider router={router} />
       </ThemeProvider>
     </Provider>

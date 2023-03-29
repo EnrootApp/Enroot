@@ -45,7 +45,7 @@ public class TenantsQueryHandler : IRequestHandler<TenantsQuery, ErrorOr<IEnumer
 
         var tenants = await tenantsQuery
             .OrderBy(t => t.DbId)
-            .Skip(request.Offset)
+            .Skip(request.Skip)
             .Take(request.Take)
             .ToListAsync(cancellationToken: cancellationToken);
 

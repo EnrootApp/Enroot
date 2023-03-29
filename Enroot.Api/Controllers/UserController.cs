@@ -92,7 +92,7 @@ namespace Enroot.Api.Controllers
 
         [HttpGet("resetPasswordEmail")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPasswordEmail(string email)
+        public async Task<IActionResult> ResetPasswordEmail([FromQuery] string email)
         {
             var command = new ResetPasswordEmailQuery(email);
 

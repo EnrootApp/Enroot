@@ -12,6 +12,7 @@ import GeneralSettings from "../../../presentation/components/GeneralSettings/Ge
 import { enqueueSnackbar } from "notistack";
 import { useGetMeQuery, useUpdateInfoMutation } from "../../state/api/userApi";
 import useS3FileUpload from "../../../infrastructure/storage/uploadToS3";
+import apiStrings from "../../../presentation/localization/apiMessages";
 
 errorStrings.setLanguage("ru");
 strings.setLanguage("ru");
@@ -72,7 +73,7 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      enqueueSnackbar("Settings updated", { variant: "success" });
+      enqueueSnackbar(apiStrings.settingsUpdated, { variant: "success" });
     }
   }, [isSuccess]);
 

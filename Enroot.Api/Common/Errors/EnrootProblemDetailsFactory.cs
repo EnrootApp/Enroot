@@ -58,7 +58,6 @@ public class EnrootProblemDetailsFactory : ProblemDetailsFactory
 
         if (title is not null)
         {
-            // For validation problem details, don't overwrite the default title with null.
             problemDetails.Title = title;
         }
 
@@ -73,7 +72,16 @@ public class EnrootProblemDetailsFactory : ProblemDetailsFactory
 
         if (httpContext?.Items[HttpContextItemKeys.Errors] is IEnumerable<Error> errors)
         {
-            problemDetails.Extensions.Add("errorCodes", errors.Select(error => error.Code));
+            var groups = errors.GroupBy(err => err.Code);
+
+            var dictionary = new Dictionary<string, IEnumerable<string>>();
+
+            foreach (var group in groups)
+            {
+                dictionary.Add(group.Key, group.Select(e => e.Description));
+            }
+
+            problemDetails.Extensions.Add("errors", dictionary);
         }
     }
 }
