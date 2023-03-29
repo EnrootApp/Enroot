@@ -4,12 +4,11 @@ import "./presentation/styles/index.css";
 
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./presentation/styles/theme";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./infrastructure/routing/router";
 import { Provider } from "react-redux";
 import store from "./infrastructure/state/store";
 import { SnackbarProvider } from "notistack";
 import { StyledMaterialDesignContent } from "./presentation/components/Snackbar/Snackbar.styles";
+import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -25,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             info: StyledMaterialDesignContent,
           }}
         />
-        <RouterProvider router={router} />
+        <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

@@ -8,16 +8,6 @@ import LoginPage from "../../../presentation/pages/Login/LoginPage";
 import { useLoginMutation } from "../../state/api/userApi";
 import { ISignInForm } from "./LoginPageContainer.types";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .matches(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      errorStrings.invalidEmail
-    )
-    .required(errorStrings.notEmpty),
-  password: Yup.string().required(errorStrings.notEmpty),
-});
-
 const LoginPageContainer: React.FC<{}> = () => {
   const [login, { isSuccess, data }] = useLoginMutation();
   const navigate = useNavigate();
@@ -28,6 +18,16 @@ const LoginPageContainer: React.FC<{}> = () => {
       navigate("/home");
     }
   }, [isSuccess]);
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        errorStrings.invalidEmail
+      )
+      .required(errorStrings.notEmpty),
+    password: Yup.string().required(errorStrings.notEmpty),
+  });
 
   const formikConfig: FormikConfig<ISignInForm> = {
     validationSchema: validationSchema,

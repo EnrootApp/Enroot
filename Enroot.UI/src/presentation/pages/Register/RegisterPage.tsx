@@ -17,7 +17,6 @@ interface Props {
 }
 
 const RegisterPage: React.FC<Props> = ({ formikConfig }) => {
-  strings.setLanguage("en");
   return (
     <AuthPaper>
       <Formik {...formikConfig}>

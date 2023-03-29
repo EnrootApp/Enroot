@@ -33,13 +33,14 @@ const strings = new LocalizedStrings({
     save: "Save",
     currentPassword: "Current password",
     newPassword: "New password",
+    language: "Language",
   },
   ru: {
     signIn: "Вход",
     signUp: "Регистрация",
     email: "Адрес электронной почты",
     password: "Пароль",
-    submit: "Войти",
+    submit: "Подтвердить",
     haveAccount: "Уже есть аккаунт?",
     dontHaveAccount: "Еще нет аккаунта?",
     forgotPassword: "Забыли пароль?",
@@ -66,6 +67,7 @@ const strings = new LocalizedStrings({
     save: "Сохранить",
     currentPassword: "Текущий пароль",
     newPassword: "Новый пароль",
+    language: "Язык",
   },
 });
 

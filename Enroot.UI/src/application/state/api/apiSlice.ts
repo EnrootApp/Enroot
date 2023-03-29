@@ -9,6 +9,7 @@ export const apiSlice = createApi({
         "Authorization",
         `Bearer ${localStorage.getItem("accessToken")}`
       );
+      headers.set("Accept-Language", `Bearer ${localStorage.getItem("lang")}`);
       return headers;
     },
   }),

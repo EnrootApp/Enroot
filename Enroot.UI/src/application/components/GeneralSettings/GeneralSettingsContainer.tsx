@@ -14,14 +14,6 @@ import { useGetMeQuery, useUpdateInfoMutation } from "../../state/api/userApi";
 import useS3FileUpload from "../../../infrastructure/storage/uploadToS3";
 import apiStrings from "../../../presentation/localization/apiMessages";
 
-errorStrings.setLanguage("ru");
-strings.setLanguage("ru");
-
-const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required(errorStrings.notEmpty).max(50),
-  lastName: Yup.string().required(errorStrings.notEmpty).max(50),
-});
-
 const GeneralSettingsContainer: React.FC<{}> = () => {
   const { data, isLoading } = useGetMeQuery();
   const [updateInfo, { isSuccess }] = useUpdateInfoMutation();
@@ -76,6 +68,11 @@ const GeneralSettingsContainer: React.FC<{}> = () => {
       enqueueSnackbar(apiStrings.settingsUpdated, { variant: "success" });
     }
   }, [isSuccess]);
+
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required(errorStrings.notEmpty).max(50),
+    lastName: Yup.string().required(errorStrings.notEmpty).max(50),
+  });
 
   const formikConfig: FormikConfig<GeneralSettingsForm> = {
     validationSchema: validationSchema,

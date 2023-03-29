@@ -8,19 +8,6 @@ import RegisterPage from "../../../presentation/pages/Register/RegisterPage";
 import { useRegisterMutation } from "../../state/api/userApi";
 import { ISignUpForm } from "./RegisterPageContainer.types";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .matches(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      errorStrings.invalidEmail
-    )
-    .required(errorStrings.notEmpty),
-  password: Yup.string()
-    .required(errorStrings.notEmpty)
-    .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
-    .matches(new RegExp(/[a-z]/), errorStrings.characters),
-});
-
 const RegisterPageContainer: React.FC<{}> = () => {
   const [register, { isSuccess, data }] = useRegisterMutation();
   const navigate = useNavigate();
@@ -31,6 +18,19 @@ const RegisterPageContainer: React.FC<{}> = () => {
       navigate("/home");
     }
   }, [isSuccess]);
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        errorStrings.invalidEmail
+      )
+      .required(errorStrings.notEmpty),
+    password: Yup.string()
+      .required(errorStrings.notEmpty)
+      .min(6, errorStrings.formatString(errorStrings.tooShort, 6).toString())
+      .matches(new RegExp(/[a-z]/), errorStrings.characters),
+  });
 
   const formikConfig: FormikConfig<ISignUpForm> = {
     validationSchema: validationSchema,
