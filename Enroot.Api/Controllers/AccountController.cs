@@ -1,5 +1,6 @@
 using Enroot.Application.Account.Commands.Create;
 using Enroot.Application.Account.Commands.SetRole;
+using Enroot.Application.Account.Invite;
 using Enroot.Contracts.Account;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Domain.User.Enums;
@@ -29,20 +30,6 @@ namespace Enroot.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
-        [Authorize(UserRoles.SystemAdmin)]
-        public async Task<IActionResult> InviteAsync([FromBody] CreateAccountRequest request)
-        {
-            var command = _mapper.Map<CreateAccountCommand>(request);
-
-            var result = await _mediator.Send(command);
-
-            return result.Match(
-                value => Ok(value.Adapt<AccountResponse>()),
-                Problem
-            );
-        }
-
         [HttpPost("role")]
         [RequirePermission(PermissionEnum.CreateAccount)]
         public async Task<IActionResult> SetRole([FromBody] SetRoleRequest request)
@@ -53,6 +40,20 @@ namespace Enroot.Api.Controllers
 
             return result.Match(
                 value => Ok(value.Adapt<AccountResponse>()),
+                Problem
+            );
+        }
+
+        [HttpPost("invite")]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> InviteAsync([FromBody] InviteAccountRequest request)
+        {
+            var command = new InviteCommand(request.Email, GetTenantId());
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
                 Problem
             );
         }

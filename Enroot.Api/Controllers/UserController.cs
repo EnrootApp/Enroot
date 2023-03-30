@@ -1,12 +1,9 @@
 using Enroot.Application.User.Commands.ChangePassword;
-using Enroot.Application.User.Commands.Invite;
 using Enroot.Application.User.Commands.ResetPassword;
 using Enroot.Application.User.Commands.SetInfo;
 using Enroot.Application.User.Queries.GetById;
 using Enroot.Application.User.Queries.ResetPasswordEmail;
 using Enroot.Contracts.User;
-using Enroot.Domain.Permission.Enums;
-using Enroot.Infrastructure.Authorization;
 using Mapster;
 using MapsterMapper;
 using MediatR;
@@ -61,20 +58,6 @@ namespace Enroot.Api.Controllers
                Ok,
                Problem
            );
-        }
-
-        [HttpPost("invite")]
-        [RequirePermission(PermissionEnum.CreateAccount)]
-        public async Task<IActionResult> InviteAsync([FromBody] InviteUserRequest request)
-        {
-            var command = new InviteUserCommand(request.Email, GetTenantId());
-
-            var result = await _mediator.Send(command);
-
-            return result.Match(
-                Ok,
-                Problem
-            );
         }
 
         [HttpPost("changePassword")]

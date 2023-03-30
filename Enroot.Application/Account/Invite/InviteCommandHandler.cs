@@ -8,40 +8,37 @@ using Microsoft.Extensions.Localization;
 using ErrorOr;
 using MediatR;
 using Enroot.Application.Services;
-using Microsoft.AspNetCore.Identity;
 using Enroot.Application.Account.Commands.Create;
 using Enroot.Domain.Role.Enums;
 using System.Reflection;
 using Enroot.Domain.Tenant.ValueObjects;
+using Enroot.Application.Authentication.Commands.Register;
 
-namespace Enroot.Application.User.Commands.Invite;
+namespace Enroot.Application.Account.Invite;
 
-public class InviteUserCommandHandler : IRequestHandler<InviteUserCommand, ErrorOr<AccountResult>>
+public class InviteCommandHandler : IRequestHandler<InviteCommand, ErrorOr<AccountResult>>
 {
     private readonly IMediator _mediator;
     private readonly IRepository<UserEntity, UserId> _userRepository;
     private readonly IRepository<TenantEntity, TenantId> _tenantRepository;
     private readonly IEmailSender _emailSender;
-    private readonly IPasswordHasher<UserEntity> _passwordHasher;
     private readonly IStringLocalizer _localizer;
 
-    public InviteUserCommandHandler(
+    public InviteCommandHandler(
         IMediator mediator,
         IRepository<UserEntity, UserId> userRepository,
         IEmailSender emailSender,
-        IPasswordHasher<UserEntity> passwordHasher,
         IStringLocalizerFactory localizerFactory,
         IRepository<TenantEntity, TenantId> tenantRepository)
     {
         _mediator = mediator;
         _userRepository = userRepository;
         _emailSender = emailSender;
-        _passwordHasher = passwordHasher;
         _localizer = localizerFactory.Create("User.Emails", Assembly.GetExecutingAssembly().FullName!);
         _tenantRepository = tenantRepository;
     }
 
-    public async Task<ErrorOr<AccountResult>> Handle(InviteUserCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AccountResult>> Handle(InviteCommand command, CancellationToken cancellationToken)
     {
         var email = Email.Create(command.Email).Value;
         var user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
@@ -53,16 +50,16 @@ public class InviteUserCommandHandler : IRequestHandler<InviteUserCommand, Error
         if (user is null)
         {
             var password = Guid.NewGuid().ToString();
-            var passwordHash = _passwordHasher.HashPassword(null!, password);
-            var createUserResult = UserEntity.CreateByEmail(email, passwordHash);
 
-            if (createUserResult.IsError)
+            var registerUserCommand = new RegisterCommand(command.Email, password);
+            var registerResult = await _mediator.Send(registerUserCommand, cancellationToken);
+
+            if (registerResult.IsError)
             {
-                return createUserResult.Errors;
+                return registerResult.Errors;
             }
 
-            user = await _userRepository.CreateAsync(createUserResult.Value, cancellationToken);
-
+            user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
             emailSubject = _localizer["InviteNewUserSubject"];
             emailBody = string.Format(_localizer["InviteNewUserBody"], tenant!.Name.Value, password);
         }
