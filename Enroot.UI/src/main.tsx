@@ -7,7 +7,7 @@ import { theme } from "./presentation/styles/theme";
 import { Provider } from "react-redux";
 import store from "./infrastructure/state/store";
 import { SnackbarProvider } from "notistack";
-import { StyledMaterialDesignContent } from "./presentation/components/Snackbar/Snackbar.styles";
+import { StyledMaterialDesignContent } from "./presentation/uikit/Snackbar/Snackbar.styles";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

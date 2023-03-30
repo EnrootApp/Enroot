@@ -2,12 +2,12 @@ import { TabPanel } from "@mui/lab";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import { SecuritySettingsForm } from "../../../application/components/SecuritySettings/SecuritySettingsContainer.types";
 import strings from "../../localization/locales";
-import Button from "../Button/Button";
-import Form from "../Form/Form";
+import Button from "../../uikit/Button/Button";
+import Form from "../../uikit/Form/Form";
 import { Column } from "../GeneralSettings/GeneralSettings.styles";
-import PasswordInput from "../PasswordInput/PasswordInput";
-import SubTitle from "../SubTitle/SubTitle";
-import Title from "../Title/Title";
+import PasswordInput from "../../uikit/PasswordInput/PasswordInput";
+import SubTitle from "../../uikit/SubTitle/SubTitle";
+import Title from "../../uikit/Title/Title";
 
 interface Props {
   formikConfig: FormikConfig<SecuritySettingsForm>;

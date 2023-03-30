@@ -2,14 +2,14 @@ import { Typography } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
 import { ISignInForm } from "../../../application/pages/Login/LoginPageContainer.types";
-import AuthPaper from "../../components/AuthPaper/AuthPaper";
-import Button from "../../components/Button/Button";
-import Form from "../../components/Form/Form";
-import Input from "../../components/Input/Input";
-import Link from "../../components/Link/Link";
-import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import AuthPaper from "../../uikit/AuthPaper/AuthPaper";
+import Form from "../../uikit/Form/Form";
+import PasswordInput from "../../uikit/PasswordInput/PasswordInput";
 import strings from "../../localization/locales";
 import { LinkBox } from "./LoginPage.styles";
+import Button from "../../uikit/Button/Button";
+import Link from "../../uikit/Link/Link";
+import Input from "../../uikit/Input/Input";
 
 interface Props {
   formikConfig: FormikConfig<ISignInForm>;

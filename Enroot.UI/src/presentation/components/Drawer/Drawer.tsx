@@ -13,8 +13,8 @@ import {
 import { ReactElement, SyntheticEvent, useState } from "react";
 import { routes } from "../../../infrastructure/routing/routes";
 import strings from "../../localization/locales";
-import Link from "../Link/Link";
-import Tab from "../Tab/Tab";
+import Link from "../../uikit/Link/Link";
+import Tab from "../../uikit/Tab/Tab";
 import { DrawerHeader, StyledDrawer } from "./Drawer.styles";
 
 interface Props {

@@ -1,14 +1,14 @@
 import { TabPanel } from "@mui/lab";
-import { Avatar, CircularProgress } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
-import Button from "../../../presentation/components/Button/Button";
-import Input from "../../../presentation/components/Input/Input";
-import SubTitle from "../../../presentation/components/SubTitle/SubTitle";
-import Title from "../../../presentation/components/Title/Title";
 import strings from "../../../presentation/localization/locales";
-import CircularProgressCentered from "../CircularProgressCentered/CircularProgressCentered";
-import Form from "../Form/Form";
+import Button from "../../uikit/Button/Button";
+import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
+import Form from "../../uikit/Form/Form";
+import Input from "../../uikit/Input/Input";
+import SubTitle from "../../uikit/SubTitle/SubTitle";
+import Title from "../../uikit/Title/Title";
 import { Column, ImageButtonsDiv } from "./GeneralSettings.styles";
 import { GeneralSettingsProps } from "./GeneralSettings.types";
 

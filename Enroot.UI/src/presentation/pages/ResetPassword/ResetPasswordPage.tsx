@@ -2,15 +2,14 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import { IResetPasswordForm } from "../../../application/pages/ResetPassword/ResetPasswordPageContainer.types";
-import AuthPaper from "../../components/AuthPaper/AuthPaper";
-import Button from "../../components/Button/Button";
-import Form from "../../components/Form/Form";
-import Input from "../../components/Input/Input";
-import Link from "../../components/Link/Link";
+import AuthPaper from "../../uikit/AuthPaper/AuthPaper";
+import Form from "../../uikit/Form/Form";
 import strings from "../../localization/locales";
 import { LinkBox } from "./ResetPasswordPage.styles";
-import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import PasswordInput from "../../uikit/PasswordInput/PasswordInput";
 import { routes } from "../../../infrastructure/routing/routes";
+import Link from "../../uikit/Link/Link";
+import Button from "../../uikit/Button/Button";
 
 interface Props {
   formikConfig: FormikConfig<IResetPasswordForm>;
