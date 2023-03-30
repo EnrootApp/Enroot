@@ -7,7 +7,7 @@ public class TenantsQueryValidator : AbstractValidator<TenantsQuery>
     public TenantsQueryValidator()
     {
         RuleFor(c => c.IsParticipate)
-           .NotEmpty();
+           .NotNull();
         RuleFor(c => c.UserId)
            .NotEmpty();
         RuleFor(c => c.Skip)

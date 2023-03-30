@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Enroot.Application.Authentication.Commands.Register;
 using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
 using Enroot.Domain.User.Enums;
 using MapsterMapper;
 using MediatR;
 using Enroot.Application.Tenant.Commands.Create;
+using Enroot.Application.User.Queries.GetById;
 
 namespace Enroot.Api.Controllers;
 
@@ -42,28 +42,20 @@ public class TenantController : ApiController
         );
     }
 
-    [HttpGet("admin")]
-    [Authorize(UserRoles.SystemAdmin)]
-    public async Task<IActionResult> GetAdminTenants([FromQuery] GetTenantsRequest request)
-    {
-        var requestorUserId = GetRequestUserId();
-
-        var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name, false);
-
-        var result = await _mediator.Send(query);
-
-        return result.Match(
-            Ok,
-            Problem
-        );
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetTenants([FromQuery] GetTenantsRequest request)
     {
         var requestorUserId = GetRequestUserId();
 
-        var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name);
+        var user = await _mediator.Send(new GetByIdQuery(requestorUserId));
+        if (user.IsError)
+        {
+            return Problem(user.Errors);
+        }
+
+        var onlyParticipatingTenants = user.Value.Role != UserRoles.SystemAdmin;
+
+        var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name, onlyParticipatingTenants);
 
         var result = await _mediator.Send(query);
 
