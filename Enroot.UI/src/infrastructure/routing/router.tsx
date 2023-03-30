@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import LoginPageContainer from "../../application/pages/Login/LoginPageContainer";
 import ForgotPasswordPageContainer from "../../application/pages/ForgotPassword/ForgotPasswordPageContainer";
@@ -16,6 +16,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AppWindowContainer />,
     children: [
+      { index: true, element: <Navigate to={routes.home} replace /> },
       {
         path: routes.login,
         element: (
