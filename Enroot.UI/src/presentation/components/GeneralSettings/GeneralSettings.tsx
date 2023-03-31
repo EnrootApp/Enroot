@@ -1,15 +1,14 @@
 import { TabPanel } from "@mui/lab";
-import { Avatar } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
 import strings from "../../../presentation/localization/locales";
 import Button from "../../uikit/Button/Button";
-import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
 import Form from "../../uikit/Form/Form";
+import ImageUpload from "../../uikit/ImageUpload/ImageUpload";
 import Input from "../../uikit/Input/Input";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
 import Title from "../../uikit/Title/Title";
-import { Column, ImageButtonsDiv } from "./GeneralSettings.styles";
+import { Column } from "./GeneralSettings.styles";
 import { GeneralSettingsProps } from "./GeneralSettings.types";
 
 const GeneralSettings: React.FC<GeneralSettingsProps> = ({
@@ -47,60 +46,25 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
                 <Title value={strings.generalSettingsTitle} />
                 <div>
                   <SubTitle value={strings.profileImage} />
-                  <div style={{ display: "flex" }}>
-                    <input
-                      accept="image/*"
-                      type="file"
-                      hidden
-                      ref={fileInputRef}
-                      onChange={(event) =>
-                        handleFileChange({
-                          event,
-                          setFieldValue,
-                          setFieldTouched,
-                        })
-                      }
-                    />
-                    <div style={{ position: "relative", marginRight: 32 }}>
-                      <Avatar
-                        src={values.avatarUrl}
-                        sx={{
-                          width: 140,
-                          height: 140,
-                          opacity: isInProgress ? 0.4 : 1,
-                        }}
-                      />
-                      {isInProgress && (
-                        <CircularProgressCentered
-                          variant="determinate"
-                          color="secondary"
-                          value={imageProgress}
-                        />
-                      )}
-                    </div>
-
-                    <ImageButtonsDiv>
-                      <Button
-                        sx={{ width: "100%" }}
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        {strings.change}
-                      </Button>
-                      <Button
-                        sx={{ width: "100%" }}
-                        variant="outlined"
-                        onClick={() =>
-                          handleDeleteImage({
-                            setFieldValue,
-                            setFieldTouched,
-                            avatarUrl: values.avatarUrl,
-                          })
-                        }
-                      >
-                        {strings.delete}
-                      </Button>
-                    </ImageButtonsDiv>
-                  </div>
+                  <ImageUpload
+                    progress={imageProgress}
+                    fileInputRef={fileInputRef}
+                    handleFileChange={(event) =>
+                      handleFileChange({
+                        event,
+                        setFieldValue,
+                        setFieldTouched,
+                      })
+                    }
+                    handleDeleteImage={() => {
+                      handleDeleteImage({
+                        setFieldValue,
+                        setFieldTouched,
+                        avatarUrl: values.avatarUrl,
+                      });
+                    }}
+                    imageSrc={values.avatarUrl}
+                  />
                 </div>
 
                 <div
