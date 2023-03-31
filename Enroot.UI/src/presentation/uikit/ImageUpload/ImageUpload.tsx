@@ -1,13 +1,13 @@
 import { Cancel, Edit } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
-import { ChangeEventHandler, MouseEventHandler, RefObject } from "react";
+import { ChangeEventHandler, RefObject } from "react";
 import CircularProgressCentered from "../CircularProgressCentered/CircularProgressCentered";
 import { AvatarDiv, ButtonDiv, StyledIconButton } from "./ImageUpload.styles";
 
 interface Props {
   fileInputRef: RefObject<HTMLInputElement>;
   handleFileChange: ChangeEventHandler<HTMLInputElement>;
-  handleDeleteImage: MouseEventHandler<HTMLButtonElement>;
+  handleDeleteImage: () => void;
   progress: number;
   imageSrc: string;
 }
@@ -50,7 +50,10 @@ const ImageUpload: React.FC<Props> = ({
         )}
         <ButtonDiv>
           {imageSrc ? (
-            <StyledIconButton className="icon" onClick={handleDeleteImage}>
+            <StyledIconButton
+              className="icon"
+              onClick={(event) => handleDeleteImage()}
+            >
               <Cancel />
             </StyledIconButton>
           ) : (

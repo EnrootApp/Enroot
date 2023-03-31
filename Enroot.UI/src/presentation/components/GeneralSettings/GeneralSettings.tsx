@@ -1,26 +1,21 @@
 import { TabPanel } from "@mui/lab";
-import { Formik, FormikProps } from "formik";
+import { Formik, FormikConfig, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
+import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
 import strings from "../../../presentation/localization/locales";
 import Button from "../../uikit/Button/Button";
 import Form from "../../uikit/Form/Form";
-import ImageUpload from "../../uikit/ImageUpload/ImageUpload";
 import Input from "../../uikit/Input/Input";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
 import Title from "../../uikit/Title/Title";
 import { Column } from "./GeneralSettings.styles";
-import { GeneralSettingsProps } from "./GeneralSettings.types";
 
-const GeneralSettings: React.FC<GeneralSettingsProps> = ({
-  formikConfig,
-  handleDeleteImage,
-  handleFileChange,
-  fileInputRef,
-  email,
-  imageProgress,
-}) => {
-  const isInProgress = imageProgress !== 0 && imageProgress !== 100;
+export interface Props {
+  formikConfig: FormikConfig<GeneralSettingsForm>;
+  email: string;
+}
 
+const GeneralSettings: React.FC<Props> = ({ formikConfig, email }) => {
   return (
     <TabPanel
       value="0"
@@ -46,22 +41,10 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
                 <Title value={strings.generalSettingsTitle} />
                 <div>
                   <SubTitle value={strings.profileImage} />
-                  <ImageUpload
-                    progress={imageProgress}
-                    fileInputRef={fileInputRef}
-                    handleFileChange={(event) =>
-                      handleFileChange({
-                        event,
-                        setFieldValue,
-                        setFieldTouched,
-                      })
-                    }
-                    handleDeleteImage={() => {
-                      handleDeleteImage({
-                        setFieldValue,
-                        setFieldTouched,
-                        avatarUrl: values.avatarUrl,
-                      });
+                  <ImageUploadContainer
+                    setImageSrc={(imageSrc) => {
+                      setFieldValue("avatarUrl", imageSrc);
+                      setFieldTouched("avatarUrl", true);
                     }}
                     imageSrc={values.avatarUrl}
                   />
