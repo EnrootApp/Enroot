@@ -21,7 +21,7 @@ const HomeAppBar: React.FC<HomeAppBarProps> = ({
   anchorElUser,
 }) => {
   return (
-    <AppBar position="static" sx={{ height: 70 }}>
+    <AppBar position="sticky" sx={{ height: "auto" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 0 }}>

@@ -8,6 +8,7 @@ using MapsterMapper;
 using MediatR;
 using Enroot.Application.Tenant.Commands.Create;
 using Enroot.Application.User.Queries.GetById;
+using Mapster;
 
 namespace Enroot.Api.Controllers;
 
@@ -37,7 +38,7 @@ public class TenantController : ApiController
         var result = await _mediator.Send(command);
 
         return result.Match(
-            value => Ok(_mapper.Map<CreateTenantResponse>(value)),
+            value => Ok(_mapper.Map<TenantResponse>(value)),
             Problem
         );
     }
@@ -60,7 +61,7 @@ public class TenantController : ApiController
         var result = await _mediator.Send(query);
 
         return result.Match(
-            Ok,
+            value => Ok(value.Adapt<TenantResponse[]>()),
             Problem
         );
     }

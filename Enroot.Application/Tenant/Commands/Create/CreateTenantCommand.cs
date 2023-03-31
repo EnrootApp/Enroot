@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Enroot.Application.Tenant.Commands.Create;
 
-public record CreateTenantCommand(string Name) : IRequest<ErrorOr<TenantResult>>;
+public record CreateTenantCommand(string Name, string? LogoUrl) : IRequest<ErrorOr<TenantResult>>;

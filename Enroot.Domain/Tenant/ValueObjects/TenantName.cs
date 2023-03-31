@@ -20,7 +20,7 @@ public sealed partial class TenantName : ValueObject
     {
         if (!NameValidator().IsMatch(name))
         {
-            return Errors.User.EmailInvalid;
+            return Errors.Tenant.NameInvalid;
         }
 
         return new TenantName(name);

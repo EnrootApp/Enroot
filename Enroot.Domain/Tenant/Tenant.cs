@@ -13,16 +13,17 @@ public sealed class Tenant : AggregateRoot<TenantId>
     public IReadOnlyList<AccountId> AccountIds => _accountIds.AsReadOnly();
 
     public TenantName Name { get; private set; }
-    public bool IsOpen { get; private set; }
+    public string? LogoUrl { get; private set; }
 
     private Tenant() { }
 
-    private Tenant(TenantId id, TenantName name) : base(id)
+    private Tenant(TenantId id, TenantName name, string? logoUrl) : base(id)
     {
         Name = name;
+        LogoUrl = logoUrl;
     }
 
-    public static ErrorOr<Tenant> Create(TenantId id, TenantName name)
+    public static ErrorOr<Tenant> Create(TenantId id, TenantName name, string? logoUrl)
     {
         if (id is null)
         {
@@ -34,7 +35,7 @@ public sealed class Tenant : AggregateRoot<TenantId>
             return Errors.Tenant.NameInvalid;
         }
 
-        return new Tenant(id, name);
+        return new Tenant(id, name, logoUrl);
     }
 
     public ErrorOr<Tenant> AddAccountId(AccountId id)

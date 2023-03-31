@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.Tenant;
 
-public record CreateTenantRequest(string Name);
+public record CreateTenantRequest(string Name, string? LogoUrl);

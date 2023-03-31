@@ -1,5 +1,4 @@
-﻿using Enroot.Application.Authentication.Commands.Register;
-using Enroot.Application.Tenant.Commands.Create;
+﻿using Enroot.Application.Tenant.Commands.Create;
 using Enroot.Application.Tenant.Common;
 using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
@@ -16,7 +15,8 @@ public class TenantConfig : IRegister
 
         config.NewConfig<CreateTenantRequest, CreateTenantCommand>();
 
-        config.NewConfig<TenantResult, CreateTenantResponse>();
+        config.NewConfig<TenantResult, TenantResponse>()
+        .Map(dest => dest.AccountIds, src => src.AccountIds.Select(id => id.ToString()));
 
         config.NewConfig<GetTenantsRequest, TenantsQuery>()
         .Map(dest => dest.IsParticipate, _ => false);

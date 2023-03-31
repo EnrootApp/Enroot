@@ -1,5 +1,3 @@
-using Enroot.Domain.Account.ValueObjects;
-using Enroot.Domain.Tenant.ValueObjects;
 
 namespace Enroot.Application.Tenant.Common;
 

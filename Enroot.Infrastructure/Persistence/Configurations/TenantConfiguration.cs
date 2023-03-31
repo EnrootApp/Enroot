@@ -54,6 +54,8 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
                 value => TenantId.Create(value)
             );
 
-        builder.OwnsOne(x => x.Name).Property(t => t.Value).HasColumnName("Name");
+        builder.Property(t => t.LogoUrl);
+
+        builder.OwnsOne(x => x.Name).Property(t => t.Value).HasColumnName("Name").HasMaxLength(62);
     }
 }

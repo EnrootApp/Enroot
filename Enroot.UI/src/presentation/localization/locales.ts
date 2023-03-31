@@ -34,6 +34,8 @@ const strings = new LocalizedStrings({
     currentPassword: "Current password",
     newPassword: "New password",
     language: "Language",
+    createTenant: "Create Tenant",
+    tenantName: "Tenant Name",
   },
   ru: {
     signIn: "Вход",
@@ -68,6 +70,8 @@ const strings = new LocalizedStrings({
     currentPassword: "Текущий пароль",
     newPassword: "Новый пароль",
     language: "Язык",
+    createTenant: "Добавить организацию",
+    tenantName: "Название организации",
   },
 });
 
