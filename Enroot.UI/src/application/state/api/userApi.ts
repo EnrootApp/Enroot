@@ -4,7 +4,6 @@ import { ISignInForm } from "../../pages/Login/LoginPageContainer.types";
 import { ISignUpForm } from "../../pages/Register/RegisterPageContainer.types";
 import { apiSlice } from "./apiSlice";
 
-// Define our single API slice object
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<AuthenticationResponse, ISignInForm>({

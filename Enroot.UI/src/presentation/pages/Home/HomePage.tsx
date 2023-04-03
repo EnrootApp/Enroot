@@ -3,10 +3,14 @@ import CreateTenantContainer from "../../../application/components/CreateTenant/
 import HomeAppBarContainer from "../../../application/components/HomeAppBar/HomeAppBarContainer";
 import TenantContainer from "../../../application/components/Tenant/TenantContainer";
 
-const HomePage: React.FC<{}> = () => {
+interface Props {
+  isSystemAdmin: boolean;
+}
+
+const HomePage: React.FC<Props> = ({ isSystemAdmin }) => {
   return (
     <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
-      <HomeAppBarContainer></HomeAppBarContainer>
+      <HomeAppBarContainer />
       <Container>
         <Grid
           container
@@ -14,9 +18,11 @@ const HomePage: React.FC<{}> = () => {
           spacing={2}
           style={{ padding: 16, overflow: "hidden" }}
         >
-          <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
-            <CreateTenantContainer />
-          </Grid>
+          {isSystemAdmin && (
+            <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
+              <CreateTenantContainer />
+            </Grid>
+          )}
 
           {Array.from(new Array(12)).map(() => (
             <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>

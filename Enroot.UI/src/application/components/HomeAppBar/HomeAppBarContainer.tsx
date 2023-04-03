@@ -1,13 +1,8 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { routes } from "../../../infrastructure/routing/routes";
 import HomeAppBar from "../../../presentation/components/HomeAppBar/HomeAppBar";
-import { useGetMeQuery } from "../../state/api/userApi";
 import { HomeAppBarProps } from "./HomeAppBarContainer.types";
 
 function HomeAppBarContainer() {
-  const navigate = useNavigate();
-
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -22,7 +17,7 @@ function HomeAppBarContainer() {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    navigate(routes.login);
+    window.location.reload();
   };
 
   const props: HomeAppBarProps = {

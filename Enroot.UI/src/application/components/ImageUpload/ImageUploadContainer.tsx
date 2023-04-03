@@ -1,8 +1,8 @@
 import { enqueueSnackbar } from "notistack";
-import { ChangeEventHandler, useRef, useState } from "react";
+import { ChangeEventHandler, useRef } from "react";
 import useS3FileUpload from "../../../infrastructure/storage/uploadToS3";
 import errorStrings from "../../../presentation/localization/errorMessages";
-import ImageUpload from "../../../presentation/uikit/ImageUpload/ImageUpload";
+import ImageUpload from "../../../presentation/components/ImageUpload/ImageUpload";
 
 interface Props {
   imageSrc: string;

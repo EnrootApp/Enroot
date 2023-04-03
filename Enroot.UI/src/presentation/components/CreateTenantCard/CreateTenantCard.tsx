@@ -1,24 +1,18 @@
+import { MouseEventHandler } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import {
-  CardActionArea,
-  Container,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
-import { MouseEventHandler } from "react";
-import SubTitle from "../../uikit/SubTitle/SubTitle";
-import strings from "../../localization/locales";
-import Dialog from "../../uikit/Dialog/Dialog";
+import { CardActionArea, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
+
+import { CreateTenantForm } from "../../../application/components/CreateTenant/CreateTenantContainer.types";
+import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
+import SubTitle from "../../uikit/SubTitle/SubTitle";
+import Dialog from "../../uikit/Dialog/Dialog";
+import strings from "../../localization/locales";
 import Form from "../../uikit/Form/Form";
 import Button from "../../uikit/Button/Button";
-import { CreateTenantForm } from "../../../application/components/CreateTenant/CreateTenantContainer.types";
 import Input from "../../uikit/Input/Input";
-import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
-import { Column } from "../GeneralSettings/GeneralSettings.styles";
-import Title from "../../uikit/Title/Title";
 
 interface Props {
   open: boolean;

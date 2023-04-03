@@ -1,7 +1,7 @@
 import { Cancel, Edit } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import { ChangeEventHandler, RefObject } from "react";
-import CircularProgressCentered from "../CircularProgressCentered/CircularProgressCentered";
+import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
 import { AvatarDiv, ButtonDiv, StyledIconButton } from "./ImageUpload.styles";
 
 interface Props {
@@ -32,10 +32,10 @@ const ImageUpload: React.FC<Props> = ({
       />
       <AvatarDiv>
         <Avatar
-          src={imageSrc}
+          src={imageSrc || "imagePlaceholder.svg"}
           sx={{
-            width: 140,
-            height: 140,
+            width: 240,
+            height: 240,
             opacity: isInProgress ? 0.4 : 1,
             transition: "0.2s",
           }}
