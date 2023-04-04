@@ -13,6 +13,7 @@ import { HomeAppBarProps } from "../../../application/components/HomeAppBar/Home
 import strings from "../../localization/locales";
 import Link from "../../uikit/Link/Link";
 import { routes } from "../../../infrastructure/routing/routes";
+import { useGetMeQuery } from "../../../application/state/api/userApi";
 
 const HomeAppBar: React.FC<HomeAppBarProps> = ({
   handleCloseUserMenu,
@@ -20,14 +21,16 @@ const HomeAppBar: React.FC<HomeAppBarProps> = ({
   handleLogout,
   anchorElUser,
 }) => {
-  return (
+  const { data, isLoading } = useGetMeQuery();
+
+  return isLoading ? null : (
     <AppBar position="sticky" sx={{ height: "auto" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar>DK</Avatar>
+                <Avatar src={data?.avatarUrl}></Avatar>
               </IconButton>
             </Tooltip>
             <Menu

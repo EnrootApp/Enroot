@@ -24,12 +24,13 @@ const HomePageContainer = () => {
 
   const isSystemAdmin = !isFetching && data?.role === "SystemAdmin";
 
-  return tenants.isFetching ? null : (
+  return (
     <HomePage
       isSystemAdmin={isSystemAdmin}
       tenants={tenants.data || []}
       setSearchName={(event) => setSearchName(event.target.value)}
       searchName={searchName}
+      isLoading={tenants.isFetching || tenants.isUninitialized}
     />
   );
 };
