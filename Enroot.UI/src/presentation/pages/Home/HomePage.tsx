@@ -33,7 +33,7 @@ const HomePage: React.FC<Props> = ({
         </div>
         <Grid
           container
-          justifyContent="space-around"
+          justifyContent="start"
           spacing={2}
           style={{ padding: 16, overflow: "hidden" }}
         >

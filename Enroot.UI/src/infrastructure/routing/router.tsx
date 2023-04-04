@@ -10,6 +10,7 @@ import HomePageContainer from "../../application/pages/Home/HomePageContainer";
 import AppWindowContainer from "../../application/components/AppWindow/AppWindowContainer";
 import { routes } from "./routes";
 import ProfilePageContainer from "../../application/pages/Profile/ProfilePageContainer";
+import TenantPageContainer from "../../application/pages/Tenant/TenantPageContainer";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProfilePageContainer />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: routes.tenant + "/:name",
+        element: (
+          <ProtectedRoute>
+            <TenantPageContainer />
           </ProtectedRoute>
         ),
       },

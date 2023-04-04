@@ -5,6 +5,7 @@ export const routes = {
   resetPassword: "/resetPassword",
   home: "/home",
   profile: "/profile",
+  tenant: "/tenant",
 };
 
 export const publicRoutes = [

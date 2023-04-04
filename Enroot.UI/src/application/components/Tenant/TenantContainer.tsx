@@ -1,12 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import { Tenant } from "../../../domain/tenant/Tenant";
-import TenantView from "../../../presentation/components/TenantCard/TenantCard";
+import { routes } from "../../../infrastructure/routing/routes";
+import TenantCard from "../../../presentation/components/TenantCard/TenantCard";
 
 interface Props {
   tenant: Tenant;
 }
 
 const TenantContainer: React.FC<Props> = ({ tenant }) => {
-  return <TenantView onClick={() => {}} tenant={tenant} />;
+  const navigate = useNavigate();
+
+  return (
+    <TenantCard
+      onClick={() => {
+        navigate(`${routes.tenant}/${tenant.name}`);
+      }}
+      tenant={tenant}
+    />
+  );
 };
 
 export default TenantContainer;
