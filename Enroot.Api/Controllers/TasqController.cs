@@ -13,10 +13,12 @@ using Enroot.Application.Tasq.Commands.Complete;
 using Enroot.Application.Tasq.Commands.Approve;
 using Enroot.Application.Tasq.Commands.Reject;
 using Mapster;
+using Enroot.Infrastructure.Authentication;
 
 namespace Enroot.Api.Controllers
 {
     [Route("[controller]")]
+    [RequireTenantAccount]
     public class TasqController : ApiController
     {
         private readonly ISender _mediator;

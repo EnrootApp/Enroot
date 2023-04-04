@@ -38,7 +38,6 @@ public abstract class ApiController : ControllerBase
 
     protected Guid GetTenantId()
     {
-        // TODO add tenantId filter;
         var tenantIdHeader = _httpContextAccessor.HttpContext!.Request.Headers["TenantId"];
 
         return Guid.Parse(tenantIdHeader!);
