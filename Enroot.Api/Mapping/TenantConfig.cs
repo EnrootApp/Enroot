@@ -2,6 +2,7 @@
 using Enroot.Application.Tenant.Common;
 using Enroot.Application.Tenant.Queries.Tenants;
 using Enroot.Contracts.Tenant;
+using Enroot.Domain.Tenant;
 using Enroot.Domain.Tenant.ValueObjects;
 using Mapster;
 
@@ -17,6 +18,9 @@ public class TenantConfig : IRegister
 
         config.NewConfig<TenantResult, TenantResponse>()
         .Map(dest => dest.AccountIds, src => src.AccountIds.Select(id => id.ToString()));
+
+        config.NewConfig<Tenant, TenantResult>()
+        .Map(dest => dest.Name, src => src.Name.Value);
 
         config.NewConfig<GetTenantsRequest, TenantsQuery>()
         .Map(dest => dest.IsParticipate, _ => false);

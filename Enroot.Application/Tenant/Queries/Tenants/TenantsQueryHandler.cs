@@ -5,6 +5,7 @@ using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
 using ErrorOr;
+using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,12 +44,17 @@ public class TenantsQueryHandler : IRequestHandler<TenantsQuery, ErrorOr<IEnumer
             tenantsQuery = tenantsQuery.Where(t => t.Name.Value.Contains(request.Name));
         }
 
-        var tenants = await tenantsQuery
-            .OrderBy(t => t.DbId)
-            .Skip(request.Skip)
-            .Take(request.Take)
-            .ToListAsync(cancellationToken: cancellationToken);
+        tenantsQuery = tenantsQuery
+          .OrderBy(t => t.DbId)
+          .Skip(request.Skip);
 
-        return tenants.ConvertAll(t => new TenantResult(t.Id.Value, t.Name.Value, t.AccountIds.Select(t => t.Value)));
+        if (request.Take != 0)
+        {
+            tenantsQuery = tenantsQuery.Take(request.Take);
+        }
+
+        var tenants = await tenantsQuery.ToListAsync(cancellationToken: cancellationToken);
+
+        return tenants.ConvertAll(t => t.Adapt<TenantResult>());
     }
 }

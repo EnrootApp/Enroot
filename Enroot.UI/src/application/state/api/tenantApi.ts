@@ -11,7 +11,13 @@ export const tenantApi = apiSlice.injectEndpoints({
         body: { logoUrl, name },
       }),
     }),
+    getTenants: builder.query<Tenant[], { name: string }>({
+      query: ({ name }) => ({
+        url: "/tenant",
+        params: { name },
+      }),
+    }),
   }),
 });
 
-export const { useCreateTenantMutation } = tenantApi;
+export const { useCreateTenantMutation, useLazyGetTenantsQuery } = tenantApi;

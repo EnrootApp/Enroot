@@ -5,6 +5,7 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
+using Mapster;
 
 namespace Enroot.Application.Tenant.Commands.Create;
 
@@ -44,9 +45,6 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
         var persistedTenant = await _tenantRepository.CreateAsync(createTenantResult.Value, cancellationToken);
 
-        return new TenantResult(
-            persistedTenant.Id.Value,
-            persistedTenant.Name.Value,
-            persistedTenant.AccountIds.Select(id => id.Value));
+        return persistedTenant.Adapt<TenantResult>();
     }
 }

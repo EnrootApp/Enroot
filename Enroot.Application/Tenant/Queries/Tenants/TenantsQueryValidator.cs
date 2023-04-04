@@ -15,6 +15,6 @@ public class TenantsQueryValidator : AbstractValidator<TenantsQuery>
            .GreaterThanOrEqualTo(0);
         RuleFor(c => c.Take)
            .NotNull()
-           .GreaterThanOrEqualTo(1);
+           .GreaterThanOrEqualTo(0);
     }
 }

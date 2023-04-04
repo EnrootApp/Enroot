@@ -4,12 +4,16 @@ import { FormikConfig } from "formik";
 
 import { CreateTenantForm } from "./CreateTenantContainer.types";
 import errorStrings from "../../../presentation/localization/errorMessages";
-import { useCreateTenantMutation } from "../../state/api/tenantApi";
+import {
+  useCreateTenantMutation,
+  useLazyGetTenantsQuery,
+} from "../../state/api/tenantApi";
 import CreateTenantCard from "../../../presentation/components/CreateTenantCard/CreateTenantCard";
 
 const CreateTenantContainer = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [createTenant, { isSuccess }] = useCreateTenantMutation();
+  const [getTenants] = useLazyGetTenantsQuery();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -33,6 +37,7 @@ const CreateTenantContainer = () => {
   useEffect(() => {
     if (isSuccess) {
       setDialogOpen(false);
+      getTenants({ name: "" });
     }
   }, [isSuccess]);
 
