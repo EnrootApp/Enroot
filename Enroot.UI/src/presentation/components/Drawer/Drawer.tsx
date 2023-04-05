@@ -7,14 +7,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  TabProps,
   Tabs,
 } from "@mui/material";
 import { ReactElement, SyntheticEvent, useState } from "react";
 import { routes } from "../../../infrastructure/routing/routes";
 import strings from "../../localization/locales";
 import Link from "../../uikit/Link/Link";
-import Tab from "../../uikit/Tab/Tab";
+import Tab, { TabProps } from "../../uikit/Tab/Tab";
 import { DrawerHeader, StyledDrawer } from "./Drawer.styles";
 
 interface Props {

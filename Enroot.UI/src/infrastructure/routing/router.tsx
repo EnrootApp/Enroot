@@ -11,6 +11,7 @@ import AppWindowContainer from "../../application/components/AppWindow/AppWindow
 import { routes } from "./routes";
 import ProfilePageContainer from "../../application/pages/Profile/ProfilePageContainer";
 import TenantPageContainer from "../../application/pages/Tenant/TenantPageContainer";
+import TasqsPageContainer from "../../application/pages/Tasqs/TasksPageContainer";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,28 @@ export const router = createBrowserRouter([
             <TenantPageContainer />
           </ProtectedRoute>
         ),
+        children: [
+          {
+            index: true,
+            element: <Navigate to={routes.assignments} replace />,
+          },
+          {
+            path: routes.tasqs,
+            element: (
+              <ProtectedRoute>
+                <TasqsPageContainer />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: routes.assignments,
+            element: (
+              <ProtectedRoute>
+                <h1>Assignments</h1>
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
     ],
   },

@@ -6,6 +6,8 @@ export const routes = {
   home: "/home",
   profile: "/profile",
   tenant: "/tenant",
+  tasqs: "tasqs",
+  assignments: "assignments",
 };
 
 export const publicRoutes = [

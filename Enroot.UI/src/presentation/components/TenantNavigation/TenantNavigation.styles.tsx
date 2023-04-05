@@ -1,12 +1,15 @@
-import { Drawer, styled } from "@mui/material";
+import { List, ListProps, styled } from "@mui/material";
+import React from "react";
 
-export const DrawerHeader = styled("div")(() => ({
-  display: "flex",
-  alignItems: "center",
-  padding: "8px",
-}));
+interface StyledListProps extends ListProps {
+  open: boolean;
+}
 
-export const StyledDrawer = styled(Drawer, {
+const CustomList: React.FC<StyledListProps> = (props) => {
+  return <List {...props} />;
+};
+
+export const StyledList = styled(CustomList, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: open ? 240 : 55,
@@ -14,6 +17,8 @@ export const StyledDrawer = styled(Drawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  overflow: "hidden",
+  borderRight: `1px solid ${theme.palette.action.focus}`,
 
   transition: "all 0.3s ease",
 

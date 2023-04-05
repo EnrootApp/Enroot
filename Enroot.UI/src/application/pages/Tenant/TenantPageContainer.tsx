@@ -1,22 +1,24 @@
-import { Container, Drawer } from "@mui/material";
-import HomeAppBarContainer from "../../components/HomeAppBar/HomeAppBarContainer";
+import { useEffect, useState } from "react";
+import { useGetTenantsQuery } from "../../state/api/tenantApi";
+import TenantPage from "../../../presentation/pages/Tenant/TenantPage";
 
 const TenantPageContainer = () => {
-  return (
-    <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
-      <HomeAppBarContainer />
-      <Container disableGutters>
-        <Drawer
-          sx={{
-            width: 240,
-            flexShrink: 0,
-            whiteSpace: "nowrap",
-            boxSizing: "border-box",
-          }}
-        ></Drawer>
-      </Container>
-    </div>
-  );
+  const [tab, setTab] = useState("1");
+  const pathname = window.location.pathname;
+  const regex = /^\/tenant\/([^/]+)/;
+  const match = pathname.match(regex);
+  const tenantName = match?.[1] || "";
+
+  const { data, isSuccess } = useGetTenantsQuery({ name: tenantName });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const tenantId = data?.find((tenant) => tenant.name === tenantName)?.id;
+      localStorage.setItem("tenantId", tenantId || "");
+    }
+  }, [isSuccess]);
+
+  return <TenantPage tab={tab} setTab={setTab} isLoading={!isSuccess} />;
 };
 
 export default TenantPageContainer;

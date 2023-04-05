@@ -37,6 +37,9 @@ const strings = new LocalizedStrings({
     createTenant: "Create Tenant",
     tenantName: "Tenant Name",
     search: "Search",
+    tasqs: "Tasks",
+    assignments: "Assignments",
+    reports: "Reports",
   },
   ru: {
     signIn: "Вход",
@@ -74,6 +77,9 @@ const strings = new LocalizedStrings({
     createTenant: "Добавить организацию",
     tenantName: "Название организации",
     search: "Поиск",
+    tasqs: "Задачи",
+    assignments: "Назначения",
+    reports: "Отчеты",
   },
 });
 
