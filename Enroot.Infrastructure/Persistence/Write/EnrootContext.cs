@@ -7,7 +7,7 @@ using Enroot.Domain.Tasq.Entities;
 using Enroot.Domain.Tenant;
 using Enroot.Domain.User;
 
-namespace Enroot.Infrastructure.Persistence;
+namespace Enroot.Infrastructure.Persistence.Write;
 
 public class EnrootContext : DbContext
 {

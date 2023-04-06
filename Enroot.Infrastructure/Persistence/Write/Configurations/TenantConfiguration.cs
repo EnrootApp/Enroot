@@ -5,7 +5,7 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
 {
@@ -21,11 +21,10 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
         {
             accountIdBuilder.ToTable("TenantAccountIds");
 
-            accountIdBuilder.WithOwner().HasForeignKey(nameof(TenantId));
+            accountIdBuilder.WithOwner().HasPrincipalKey(t => t.Id);
 
-            accountIdBuilder.Property<int>("Id")
-            .ValueGeneratedOnAdd();
-            accountIdBuilder.HasKey("Id");
+            accountIdBuilder.Property<int>("DbId").ValueGeneratedOnAdd();
+            accountIdBuilder.HasKey("DbId");
 
             accountIdBuilder.Property(accountId => accountId.Value)
                 .ValueGeneratedNever()

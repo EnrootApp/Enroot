@@ -1,11 +1,9 @@
 using System.ComponentModel;
-using System.Reflection;
-using Enroot.Domain.Common.Interfaces;
 using Enroot.Domain.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Enroot.Infrastructure.Persistence.Common;
+namespace Enroot.Infrastructure.Persistence.Write.Common;
 
 public static class Extensions
 {

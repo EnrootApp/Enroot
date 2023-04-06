@@ -5,10 +5,9 @@ using Enroot.Domain.Permission.ValueObjects;
 using Enroot.Domain.Role;
 using Enroot.Domain.Role.Enums;
 using Enroot.Domain.Role.ValueObjects;
-using Enroot.Infrastructure.Persistence.Common;
-using Enroot.Domain.Permission;
+using Enroot.Infrastructure.Persistence.Write.Common;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {

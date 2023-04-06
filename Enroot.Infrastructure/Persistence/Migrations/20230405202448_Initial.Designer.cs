@@ -2,7 +2,7 @@
 using System;
 using Enroot.Domain.Role.Enums;
 using Enroot.Domain.Tasq.Enums;
-using Enroot.Infrastructure.Persistence;
+using Enroot.Infrastructure.Persistence.Write;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -11,10 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Enroot.Infrastructure.Migrations
+namespace Enroot.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EnrootContext))]
-    [Migration("20230314192459_Initial")]
+    [Migration("20230405202448_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -80,11 +80,163 @@ namespace Enroot.Infrastructure.Migrations
                         new
                         {
                             Id = 3
-                        },
-                        new
-                        {
-                            Id = 4
                         });
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AccountRead", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DbId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("Accounts", (string)null);
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AssignmentRead", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssigneeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FeedbackMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TasqId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
+
+                    b.HasIndex("AssignerId");
+
+                    b.HasIndex("TasqId");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("Assignments", (string)null);
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AttachmentRead", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BlobUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("Attachments", (string)null);
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.TasqRead", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("Tasqs", (string)null);
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.UserRead", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AvatarUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("Users", (string)null);
                 });
 
             modelBuilder.Entity("Enroot.Domain.Role.Role", b =>
@@ -162,8 +314,8 @@ namespace Enroot.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("bit");
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DbId");
 
@@ -178,17 +330,27 @@ namespace Enroot.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DbId"));
 
+                    b.Property<string>("AvatarUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
@@ -221,6 +383,66 @@ namespace Enroot.Infrastructure.Migrations
                         .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AccountRead", b =>
+                {
+                    b.HasOne("Enroot.Domain.ReadEntities.UserRead", "User")
+                        .WithMany("Accounts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AssignmentRead", b =>
+                {
+                    b.HasOne("Enroot.Domain.ReadEntities.AccountRead", "Assignee")
+                        .WithMany()
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Enroot.Domain.ReadEntities.AccountRead", "Assigner")
+                        .WithMany()
+                        .HasForeignKey("AssignerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Enroot.Domain.ReadEntities.TasqRead", "Tasq")
+                        .WithMany("Assignments")
+                        .HasForeignKey("TasqId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assignee");
+
+                    b.Navigation("Assigner");
+
+                    b.Navigation("Tasq");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AttachmentRead", b =>
+                {
+                    b.HasOne("Enroot.Domain.ReadEntities.AssignmentRead", "Assignment")
+                        .WithMany("Attachments")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.TasqRead", b =>
+                {
+                    b.HasOne("Enroot.Domain.ReadEntities.AccountRead", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Enroot.Domain.Role.Role", b =>
@@ -263,11 +485,6 @@ namespace Enroot.Infrastructure.Migrations
                                 {
                                     Value = 2,
                                     RoleId = 3
-                                },
-                                new
-                                {
-                                    Value = 4,
-                                    RoleId = 2
                                 });
                         });
 
@@ -315,8 +532,8 @@ namespace Enroot.Infrastructure.Migrations
                             b1.Property<Status>("Status")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("TasqId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("TasqId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.HasKey("DbId");
 
@@ -343,7 +560,8 @@ namespace Enroot.Infrastructure.Migrations
                                 .IsRequired();
 
                             b1.WithOwner()
-                                .HasForeignKey("TasqId");
+                                .HasForeignKey("TasqId")
+                                .HasPrincipalKey("Id");
 
                             b1.OwnsMany("Enroot.Domain.Tasq.ValueObjects.Attachment", "Attachments", b2 =>
                                 {
@@ -353,8 +571,8 @@ namespace Enroot.Infrastructure.Migrations
 
                                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b2.Property<int>("Id"));
 
-                                    b2.Property<int>("AssignmentId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("AssignmentId")
+                                        .HasColumnType("uniqueidentifier");
 
                                     b2.Property<string>("BlobUrl")
                                         .IsRequired()
@@ -372,7 +590,8 @@ namespace Enroot.Infrastructure.Migrations
                                     b2.ToTable("Attachments", (string)null);
 
                                     b2.WithOwner()
-                                        .HasForeignKey("AssignmentId");
+                                        .HasForeignKey("AssignmentId")
+                                        .HasPrincipalKey("Id");
                                 });
 
                             b1.Navigation("Attachments");
@@ -390,7 +609,8 @@ namespace Enroot.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(62)
+                                .HasColumnType("nvarchar(62)")
                                 .HasColumnName("Name");
 
                             b1.HasKey("TenantDbId");
@@ -403,27 +623,28 @@ namespace Enroot.Infrastructure.Migrations
 
                     b.OwnsMany("Enroot.Domain.Account.ValueObjects.AccountId", "AccountIds", b1 =>
                         {
-                            b1.Property<int>("Id")
+                            b1.Property<int>("DbId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int");
 
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("DbId"));
 
-                            b1.Property<int>("TenantId")
-                                .HasColumnType("int");
+                            b1.Property<Guid?>("TenantId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<Guid>("Value")
                                 .HasColumnType("uniqueidentifier")
                                 .HasColumnName("AccountId");
 
-                            b1.HasKey("Id");
+                            b1.HasKey("DbId");
 
                             b1.HasIndex("TenantId");
 
                             b1.ToTable("TenantAccountIds", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("TenantId");
+                                .HasForeignKey("TenantId")
+                                .HasPrincipalKey("Id");
                         });
 
                     b.Navigation("AccountIds");
@@ -460,6 +681,21 @@ namespace Enroot.Infrastructure.Migrations
                         });
 
                     b.Navigation("AccountIds");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.AssignmentRead", b =>
+                {
+                    b.Navigation("Attachments");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.TasqRead", b =>
+                {
+                    b.Navigation("Assignments");
+                });
+
+            modelBuilder.Entity("Enroot.Domain.ReadEntities.UserRead", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

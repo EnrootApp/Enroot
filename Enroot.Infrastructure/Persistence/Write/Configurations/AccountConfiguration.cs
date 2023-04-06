@@ -1,5 +1,6 @@
 using Enroot.Domain.Account;
 using Enroot.Domain.Account.ValueObjects;
+using Enroot.Domain.ReadEntities;
 using Enroot.Domain.Role;
 using Enroot.Domain.Role.ValueObjects;
 using Enroot.Domain.Tenant;
@@ -9,7 +10,7 @@ using Enroot.Domain.User.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class AccountConfiguration : IEntityTypeConfiguration<Account>
 {

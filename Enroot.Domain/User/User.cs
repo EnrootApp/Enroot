@@ -12,9 +12,9 @@ public sealed class User : AggregateRoot<UserId>
     public Email Email { get; private set; }
     public string PasswordHash { get; set; }
     public string Role { get; private set; }
-    public Name FirstName { get; private set; }
-    public Name LastName { get; private set; }
-    public string AvatarUrl { get; private set; }
+    public Name? FirstName { get; private set; }
+    public Name? LastName { get; private set; }
+    public string? AvatarUrl { get; private set; }
 
     private readonly List<AccountId> _accountIds = new();
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Enroot.Infrastructure.Migrations
+namespace Enroot.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -41,8 +41,8 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     DbId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsOpen = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(62)", maxLength: 62, nullable: false),
+                    LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -57,10 +57,12 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     DbId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -91,20 +93,19 @@ namespace Enroot.Infrastructure.Migrations
                 name: "TenantAccountIds",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    DbId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TenantAccountIds", x => x.Id);
+                    table.PrimaryKey("PK_TenantAccountIds", x => x.DbId);
                     table.ForeignKey(
                         name: "FK_TenantAccountIds_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
-                        principalColumn: "DbId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +178,7 @@ namespace Enroot.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasqs", x => x.DbId);
+                    table.UniqueConstraint("AK_Tasqs_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Tasqs_Accounts_CreatorId",
                         column: x => x.CreatorId,
@@ -199,12 +201,13 @@ namespace Enroot.Infrastructure.Migrations
                     AssignerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssigneeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    TasqId = table.Column<int>(type: "int", nullable: false),
+                    TasqId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assignments", x => x.DbId);
+                    table.UniqueConstraint("AK_Assignments_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Assignments_Accounts_AssigneeId",
                         column: x => x.AssigneeId,
@@ -219,7 +222,7 @@ namespace Enroot.Infrastructure.Migrations
                         name: "FK_Assignments_Tasqs_TasqId",
                         column: x => x.TasqId,
                         principalTable: "Tasqs",
-                        principalColumn: "DbId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -229,7 +232,7 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AssignmentId = table.Column<int>(type: "int", nullable: false),
+                    AssignmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BlobUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
@@ -240,7 +243,7 @@ namespace Enroot.Infrastructure.Migrations
                         name: "FK_Attachments_Assignments_AssignmentId",
                         column: x => x.AssignmentId,
                         principalTable: "Assignments",
-                        principalColumn: "DbId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -251,8 +254,7 @@ namespace Enroot.Infrastructure.Migrations
                 {
                     1,
                     2,
-                    3,
-                    4
+                    3
                 });
 
             migrationBuilder.InsertData(
@@ -274,8 +276,7 @@ namespace Enroot.Infrastructure.Migrations
                     { 1, 1 },
                     { 1, 2 },
                     { 3, 2 },
-                    { 1, 3 },
-                    { 2, 4 }
+                    { 1, 3 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -4,7 +4,7 @@ using Enroot.Domain.User.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

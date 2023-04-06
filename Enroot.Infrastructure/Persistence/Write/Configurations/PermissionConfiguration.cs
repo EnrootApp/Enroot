@@ -1,11 +1,11 @@
 using Enroot.Domain.Permission;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Domain.Permission.ValueObjects;
-using Enroot.Infrastructure.Persistence.Common;
+using Enroot.Infrastructure.Persistence.Write.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
 {

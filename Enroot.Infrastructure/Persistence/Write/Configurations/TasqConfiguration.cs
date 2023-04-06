@@ -8,8 +8,9 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Tenant;
 using Enroot.Domain.Account;
 using Enroot.Domain.Tasq;
+using Enroot.Domain.ReadEntities;
 
-namespace Enroot.Infrastructure.Persistence.Configurations;
+namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
 public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
 {
@@ -69,7 +70,7 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
         {
             assignmentsBuilder.ToTable("Assignments");
 
-            assignmentsBuilder.WithOwner().HasForeignKey(nameof(TasqId));
+            assignmentsBuilder.WithOwner().HasPrincipalKey(t => t.Id);
 
             assignmentsBuilder.HasKey(a => a.DbId);
 
@@ -116,7 +117,7 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
             {
                 attachmentBuilder.ToTable("Attachments");
 
-                attachmentBuilder.WithOwner().HasForeignKey(nameof(AssignmentId));
+                attachmentBuilder.WithOwner().HasPrincipalKey(a => a.Id);
 
                 attachmentBuilder.Property<int>("Id").UseIdentityColumn();
                 attachmentBuilder.HasKey("Id", nameof(AssignmentId));

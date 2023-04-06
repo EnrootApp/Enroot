@@ -1,11 +1,11 @@
 using System.Linq.Expressions;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Common.Models;
-using Enroot.Infrastructure.Persistence.Common;
+using Enroot.Infrastructure.Persistence.Write.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Enroot.Infrastructure.Persistence.Repositories;
+namespace Enroot.Infrastructure.Persistence.Write.Repositories;
 
 public class Repository<TAggregateRoot, TId> : IRepository<TAggregateRoot, TId>
 where TAggregateRoot : AggregateRoot<TId>
