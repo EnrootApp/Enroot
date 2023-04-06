@@ -1,7 +1,7 @@
 import LocalizedStrings from "react-localization";
 
 const strings = new LocalizedStrings({
-  en: {
+  enEN: {
     signIn: "Sign In",
     signUp: "Sign Up",
     email: "Email",
@@ -43,10 +43,11 @@ const strings = new LocalizedStrings({
     summary: "Summary",
     creator: "Creator",
     completed: "Completed",
-    assigned: "Assigned",
+    assignee: "Assignee",
     key: "Key",
+    emptyName: "Not assigned",
   },
-  ru: {
+  ruRU: {
     signIn: "Вход",
     signUp: "Регистрация",
     email: "Адрес электронной почты",
@@ -88,8 +89,9 @@ const strings = new LocalizedStrings({
     summary: "Задача",
     creator: "Создатель",
     completed: "Завершена",
-    assigned: "Назначена",
+    assignee: "Назначена",
     key: "Ключ",
+    emptyName: "Не назначена",
   },
 });
 

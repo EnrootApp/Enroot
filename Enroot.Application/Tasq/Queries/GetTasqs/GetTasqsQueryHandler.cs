@@ -47,6 +47,8 @@ public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<GetTa
 
         result = result
             .Include(t => t.Assignments)
+            .ThenInclude(a => a.Assignee)
+            .ThenInclude(a => a.User)
             .Include(t => t.Creator)
             .ThenInclude(a => a.User);
 

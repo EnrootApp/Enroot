@@ -37,16 +37,6 @@ const TenantNavigation: React.FC<{}> = () => {
           </ListItemButton>
         </Link>
       </ListItem>
-      <ListItem disablePadding>
-        <Link to={routes.assignments} style={{ width: "100%" }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <AssignmentInd />
-            </ListItemIcon>
-            <ListItemText primary={strings.assignments} />
-          </ListItemButton>
-        </Link>
-      </ListItem>
       <Divider />
       <ListItem disablePadding>
         <Link to={routes.home} style={{ width: "100%" }}>

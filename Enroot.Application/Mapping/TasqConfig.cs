@@ -12,14 +12,12 @@ public class TasqConfig : IRegister
     {
         config
             .NewConfig<TasqRead, Tasq.Queries.GetTasqs.TasqResult>()
-            .Map(dest => dest.Creator, src => new AccountModel(src.CreatorId,
-                src.Creator.User.AvatarUrl,
-                string.IsNullOrEmpty(src.Creator.User.FirstName) || string.IsNullOrEmpty(src.Creator.User.LastName)
-                    ? src.Creator.User.Email
-                    : $"{src.Creator.User.FirstName} {src.Creator.User.LastName}"))
+            .Map(dest => dest.Creator, src => new AccountModel(src.CreatorId, src.Creator.User.AvatarUrl, src.Creator.User.DisplayName))
             .Map(dest => dest.Key, src => src.DbId)
             .Map(dest => dest.Title, src => src.Title)
-            .Map(dest => dest.IsAssigned, src => src.Assignments.Any())
-            .Map(dest => dest.IsCompleted, src => src.Assignments.Any(a => a.Status == Status.Done));
+            .Map(dest => dest.IsCompleted, src => src.Assignments.Any(a => a.Status == Status.Done))
+            .Map(dest => dest.Assignee,
+                src =>
+                    new AccountModel(src.CurrentAssignment!.AssigneeId, src.CurrentAssignment!.Assignee.User.AvatarUrl, src.CurrentAssignment.Assignee.User.DisplayName), src => src.Assignments.Any());
     }
 }

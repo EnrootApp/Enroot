@@ -77,21 +77,13 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to={routes.assignments} replace />,
+            element: <Navigate to={routes.tasqs} replace />,
           },
           {
             path: routes.tasqs,
             element: (
               <ProtectedRoute>
                 <TasqsPageContainer />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: routes.assignments,
-            element: (
-              <ProtectedRoute>
-                <h1>Assignments</h1>
               </ProtectedRoute>
             ),
           },

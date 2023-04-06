@@ -1,4 +1,5 @@
 import { Avatar, Typography } from "@mui/material";
+import strings from "../../localization/locales";
 
 interface Props {
   imageSrc: string;

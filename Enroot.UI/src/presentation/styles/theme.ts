@@ -1,4 +1,5 @@
 import { createTheme, PaletteOptions } from "@mui/material";
+import { enUS, ruRU } from "@mui/x-data-grid";
 
 declare module "@mui/material/styles" {}
 
@@ -16,9 +17,13 @@ export const myPalette: PaletteOptions = {
   },
 };
 
-export const theme = createTheme({
-  typography: {
-    fontFamily: ["Lato"].join(","),
+export const theme = createTheme(
+  {
+    typography: {
+      fontFamily: ["Lato"].join(","),
+    },
+    palette: myPalette,
   },
-  palette: myPalette,
-});
+  ruRU,
+  enUS
+);

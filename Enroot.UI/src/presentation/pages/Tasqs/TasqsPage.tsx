@@ -6,7 +6,8 @@ import {
   GridColDef,
   GridFilterModel,
   GridPaginationModel,
-  getGridStringOperators,
+  enUS,
+  ruRU,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TasqToolbar from "../../components/TasqToolbar/TasqToolbar";
@@ -27,60 +28,6 @@ interface Props {
   paginationModel: GridPaginationModel;
 }
 
-const containsFilterOperators = getGridStringOperators().filter(({ value }) =>
-  ["contains"].includes(value)
-);
-
-const equalFilterOperators = getGridStringOperators().filter(({ value }) =>
-  ["equals"].includes(value)
-);
-
-const columns: GridColDef[] = [
-  {
-    field: "key",
-    headerName: "Key",
-    flex: 0.2,
-    sortable: false,
-    filterable: false,
-  },
-  {
-    field: "title",
-    headerName: strings.summary,
-    flex: 1,
-    minWidth: 250,
-    renderCell: (params) => <Link to={routes.home}>{params.value}</Link>,
-    sortable: false,
-    filterable: false,
-  },
-  {
-    field: "creator",
-    headerName: strings.creator,
-    flex: 1,
-    minWidth: 200,
-    renderCell: (params) => (
-      <User imageSrc={params.value.avatarUrl} name={params.value.name} />
-    ),
-    sortable: false,
-    filterOperators: containsFilterOperators,
-  },
-  {
-    field: "isCompleted",
-    headerName: strings.completed,
-    renderCell: (params) => (params.value === true ? <Check /> : <Clear />),
-    flex: 0.5,
-    sortable: false,
-    type: "boolean",
-  },
-  {
-    field: "isAssigned",
-    headerName: strings.assigned,
-    renderCell: (params) => (params.value === true ? <Check /> : <Clear />),
-    flex: 0.5,
-    sortable: false,
-    type: "boolean",
-  },
-];
-
 const TasqsPage: React.FC<Props> = ({
   tasqs,
   isSuccess,
@@ -88,6 +35,58 @@ const TasqsPage: React.FC<Props> = ({
   setPaginationModel,
   paginationModel,
 }) => {
+  const columns: GridColDef[] = [
+    {
+      field: "key",
+      headerName: strings.key,
+      flex: 0.2,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: "title",
+      headerName: strings.summary,
+      flex: 1,
+      minWidth: 250,
+      renderCell: (params) => <Link to={routes.home}>{params.value}</Link>,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: "creator",
+      headerName: strings.creator,
+      flex: 1,
+      minWidth: 200,
+      renderCell: (params) => (
+        <User imageSrc={params.value.avatarUrl} name={params.value.name} />
+      ),
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: "assignee",
+      headerName: strings.assignee,
+      renderCell: (params) => (
+        <User
+          imageSrc={params.value?.avatarUrl}
+          name={params.value?.name || strings.emptyName}
+        />
+      ),
+      flex: 1,
+      minWidth: 200,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: "isCompleted",
+      headerName: strings.completed,
+      renderCell: (params) => (params.value === true ? <Check /> : <Clear />),
+      flex: 0.5,
+      sortable: false,
+      type: "boolean",
+    },
+  ];
+
   return (
     <Box sx={{ width: "100%" }}>
       <DataGrid
@@ -110,6 +109,11 @@ const TasqsPage: React.FC<Props> = ({
         onPaginationModelChange={setPaginationModel}
         paginationModel={paginationModel}
         rowCount={tasqs?.totalAmount || 0}
+        localeText={
+          localStorage.getItem("lang") === "enUS"
+            ? enUS.components.MuiDataGrid.defaultProps.localeText
+            : ruRU.components.MuiDataGrid.defaultProps.localeText
+        }
       />
     </Box>
   );

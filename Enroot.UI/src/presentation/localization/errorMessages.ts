@@ -1,7 +1,7 @@
 import LocalizedStrings from "react-localization";
 
 const errorStrings = new LocalizedStrings({
-  en: {
+  enUS: {
     notEmpty: "Field must not be empty",
     invalidEmail: "Enter valid email",
     tooShort: "Should contain more then {0} characters",
@@ -10,7 +10,7 @@ const errorStrings = new LocalizedStrings({
     tenantName:
       "Tenant Name can contain at least 3 numeric or latin alphabetic characters",
   },
-  ru: {
+  ruRU: {
     notEmpty: "Поле должно быть заполнено",
     invalidEmail: "Некорректный адрес электронной почты",
     tooShort: "Поле не должно быть короче {0} символов",

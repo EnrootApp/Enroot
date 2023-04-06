@@ -11,4 +11,6 @@ public class UserRead : ReadEntity
     public string? LastName { get; private set; }
     public string? AvatarUrl { get; private set; }
     public ICollection<AccountRead> Accounts { get; private set; } = default!;
+
+    public string DisplayName => string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName) ? Email : $"{FirstName} {LastName}";
 }

@@ -10,7 +10,7 @@ const LanguagePicker: React.FC<Props> = ({ onChange }) => {
   return (
     <FormControl sx={{ width: "fit-content" }}>
       <NativeSelect
-        defaultValue={localStorage.getItem("lang") || "ru"}
+        defaultValue={localStorage.getItem("lang") || "ruRU"}
         startAdornment={
           <InputAdornment position="start">
             <Language />
@@ -19,8 +19,8 @@ const LanguagePicker: React.FC<Props> = ({ onChange }) => {
         disableUnderline
         onChange={onChange}
       >
-        <option value="en">English</option>
-        <option value="ru">Русский</option>
+        <option value="enUS">English</option>
+        <option value="ruRU">Русский</option>
       </NativeSelect>
     </FormControl>
   );
