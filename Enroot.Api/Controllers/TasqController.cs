@@ -43,15 +43,15 @@ namespace Enroot.Api.Controllers
                 tenantId,
                 request.Title,
                 request.CreatorId,
-                request.AssigneeId,
-                request.Statuses,
+                request.IsCompleted,
+                request.IsAssigned,
                 request.Skip,
                 request.Take);
 
             var result = await _mediator.Send(query);
 
             return result.Match(
-                value => Ok(_mapper.Map<IEnumerable<TasqResponse>>(value)),
+                Ok,
                 Problem
             );
         }

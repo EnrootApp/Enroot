@@ -20,4 +20,8 @@ export const tenantApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateTenantMutation, useLazyGetTenantsQuery } = tenantApi;
+export const {
+  useCreateTenantMutation,
+  useLazyGetTenantsQuery,
+  useGetTenantsQuery,
+} = tenantApi;

@@ -1,4 +1,3 @@
-using Enroot.Application.Tasq.Common;
 using ErrorOr;
 using MediatR;
 
@@ -8,8 +7,8 @@ public record GetTasqsQuery(
     Guid TenantId,
     string? Title,
     Guid? CreatorId,
-    Guid? AssigneeId,
-    int[]? Statuses,
+    bool? IsCompleted,
+    bool? IsAssigned,
     int Skip,
     int Take)
-: IRequest<ErrorOr<IEnumerable<TasqResult>>>;
+: IRequest<ErrorOr<GetTasqsResult>>;

@@ -10,7 +10,7 @@ public class TenantTests
     [Fact]
     public void Create_Should_ReturnSuccess()
     {
-        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value);
+        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
 
         Assert.False(tenant.IsError);
     }
@@ -18,7 +18,7 @@ public class TenantTests
     [Fact]
     public void AddAccountId_Should_AddOnlyFirst()
     {
-        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value);
+        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
 
         var accountId = AccountId.CreateUnique();
         tenant.Value.AddAccountId(accountId);

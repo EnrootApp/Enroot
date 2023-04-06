@@ -40,6 +40,11 @@ const strings = new LocalizedStrings({
     tasqs: "Tasks",
     assignments: "Assignments",
     reports: "Reports",
+    summary: "Summary",
+    creator: "Creator",
+    completed: "Completed",
+    assigned: "Assigned",
+    key: "Key",
   },
   ru: {
     signIn: "Вход",
@@ -80,6 +85,11 @@ const strings = new LocalizedStrings({
     tasqs: "Задачи",
     assignments: "Назначения",
     reports: "Отчеты",
+    summary: "Задача",
+    creator: "Создатель",
+    completed: "Завершена",
+    assigned: "Назначена",
+    key: "Ключ",
   },
 });
 

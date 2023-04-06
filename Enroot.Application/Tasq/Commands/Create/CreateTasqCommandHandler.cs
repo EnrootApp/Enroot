@@ -48,10 +48,11 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
         var assignments = _mapper.Map<IEnumerable<AssignmentResult>>(result.Assignments);
 
         return new TasqResult(
+            result.Id.Value,
             result.CreatorId.Value,
-            result.TenantId.Value,
-            result.Description,
+            "",
             result.Title,
+            result.Description,
             assignments);
     }
 }

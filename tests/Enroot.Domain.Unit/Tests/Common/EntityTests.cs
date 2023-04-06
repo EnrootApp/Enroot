@@ -10,8 +10,8 @@ public class EntityTests
     {
         var tenantId = TenantId.CreateUnique();
 
-        var tenant = Tenant.Tenant.Create(tenantId, TenantName.Create("great").Value);
-        var sameTenant = Tenant.Tenant.Create(tenantId, TenantName.Create("super").Value);
+        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
+        var sameTenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
 
         Assert.False(tenant.IsError);
         Assert.False(sameTenant.IsError);

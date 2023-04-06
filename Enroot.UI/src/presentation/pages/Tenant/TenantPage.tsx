@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
@@ -15,14 +15,19 @@ const TenantPage: React.FC<Props> = ({ isLoading }) => {
   return (
     <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
       <HomeAppBarContainer />
-      <Container
-        disableGutters
-        sx={{ m: 0, width: "100%", height: "100%", display: "flex" }}
+      <Box
+        sx={{
+          m: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          maxWidth: "100%",
+        }}
       >
         <TenantNavigation />
 
         {isLoading ? <CircularProgressCentered /> : <Outlet />}
-      </Container>
+      </Box>
     </div>
   );
 };

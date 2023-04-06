@@ -10,7 +10,8 @@ public static class DependencyInjection
     {
         var config = TypeAdapterConfig.GlobalSettings;
 
-        config.Scan(Assembly.GetExecutingAssembly());
+        config.Scan(typeof(AccountConfig).Assembly);
+        config.Scan(typeof(Application.Mapping.TasqConfig).Assembly);
 
         services.AddSingleton(config);
         services.AddScoped<IMapper, ServiceMapper>();
