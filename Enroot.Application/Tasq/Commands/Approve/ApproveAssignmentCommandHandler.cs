@@ -39,7 +39,8 @@ public class ApproveAssignmentCommandHandler : IRequestHandler<ApproveAssignment
             return Errors.Tasq.NotFound;
         }
 
-        var reviewer = await _accountRepository.GetByIdAsync(AccountId.Create(request.ReviewerId), cancellationToken);
+        var reviewerId = AccountId.Create(request.ReviewerId);
+        var reviewer = await _accountRepository.GetByIdAsync(reviewerId, cancellationToken);
 
         if (reviewer is null)
         {
@@ -53,7 +54,7 @@ public class ApproveAssignmentCommandHandler : IRequestHandler<ApproveAssignment
             return Errors.Assignment.NotOnReview;
         }
 
-        var stageResult = assignment.CompleteStage();
+        var stageResult = assignment.CompleteStage(reviewerId);
         if (stageResult.IsError)
         {
             return ErrorOr<TasqResult>.From(stageResult.Errors);

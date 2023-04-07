@@ -14,7 +14,6 @@ import TasqToolbar from "../../components/TasqToolbar/TasqToolbar";
 import User from "../../uikit/User/User";
 import { Check, Clear } from "@mui/icons-material";
 import strings from "../../localization/locales";
-import { routes } from "../../../infrastructure/routing/routes";
 import Link from "../../uikit/Link/Link";
 
 interface Props {
@@ -48,7 +47,9 @@ const TasqsPage: React.FC<Props> = ({
       headerName: strings.summary,
       flex: 1,
       minWidth: 250,
-      renderCell: (params) => <Link to={routes.home}>{params.value}</Link>,
+      renderCell: (params) => (
+        <Link to={`${params.row.key}`}>{params.value}</Link>
+      ),
       sortable: false,
       filterable: false,
     },

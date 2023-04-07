@@ -1,6 +1,7 @@
-using Enroot.Application.Account.Commands.Create;
+using Enroot.Application.Account.Commands.Invite;
 using Enroot.Application.Account.Commands.SetRole;
-using Enroot.Application.Account.Invite;
+using Enroot.Application.Account.Queries.GetAccounts;
+using Enroot.Application.Account.Queries.GetPermissions;
 using Enroot.Contracts.Account;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Domain.User.Enums;
@@ -54,6 +55,34 @@ namespace Enroot.Api.Controllers
             var command = new InviteCommand(request.Email, GetTenantId());
 
             var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpGet]
+        [RequireTenantAccount]
+        public async Task<IActionResult> GetAsync([FromQuery] string name)
+        {
+            var query = new GetAccountsQuery(GetTenantId(), name);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpGet("permissions")]
+        [RequireTenantAccount]
+        public async Task<IActionResult> GetPermissionsAsync()
+        {
+            var query = new GetPermissionsQuery(GetRequestAccountId());
+
+            var result = await _mediator.Send(query);
 
             return result.Match(
                 Ok,

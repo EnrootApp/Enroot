@@ -31,6 +31,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DbId"));
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
@@ -60,6 +63,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Permissions", (string)null);
@@ -67,15 +73,18 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1
+                            Id = 1,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(7290)
                         },
                         new
                         {
-                            Id = 2
+                            Id = 2,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(7330)
                         },
                         new
                         {
-                            Id = 3
+                            Id = 3,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(7360)
                         });
                 });
 
@@ -83,6 +92,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DbId")
                         .HasColumnType("int");
@@ -107,11 +119,17 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ApproverId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("AssigneeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AssignerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DbId")
                         .HasColumnType("int");
@@ -126,6 +144,8 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
 
                     b.HasIndex("AssigneeId");
 
@@ -150,6 +170,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DbId")
                         .HasColumnType("int");
 
@@ -170,6 +193,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uniqueidentifier");
@@ -204,6 +230,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DbId")
                         .HasColumnType("int");
 
@@ -237,6 +266,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roles", (string)null);
@@ -244,19 +276,23 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1
+                            Id = 1,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(9150)
                         },
                         new
                         {
-                            Id = 2
+                            Id = 2,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(9180)
                         },
                         new
                         {
-                            Id = 3
+                            Id = 3,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(9200)
                         },
                         new
                         {
-                            Id = 4
+                            Id = 4,
+                            CreatedOn = new DateTime(2023, 4, 6, 18, 41, 35, 115, DateTimeKind.Utc).AddTicks(9220)
                         });
                 });
 
@@ -267,6 +303,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DbId"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uniqueidentifier");
@@ -304,6 +343,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DbId"));
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
@@ -325,6 +367,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -388,6 +433,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Enroot.Domain.ReadEntities.AssignmentRead", b =>
                 {
+                    b.HasOne("Enroot.Domain.ReadEntities.AccountRead", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Enroot.Domain.ReadEntities.AccountRead", "Assignee")
                         .WithMany()
                         .HasForeignKey("AssigneeId")
@@ -405,6 +456,8 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .HasForeignKey("TasqId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Approver");
 
                     b.Navigation("Assignee");
 
@@ -505,11 +558,17 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("DbId"));
 
+                            b1.Property<Guid?>("ApproverId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.Property<Guid>("AssigneeId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<Guid>("AssignerId")
                                 .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("CreatedOn")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("FeedbackMessage")
                                 .HasMaxLength(255)
@@ -527,6 +586,8 @@ namespace Enroot.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("DbId");
 
+                            b1.HasIndex("ApproverId");
+
                             b1.HasIndex("AssigneeId");
 
                             b1.HasIndex("AssignerId");
@@ -534,6 +595,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                             b1.HasIndex("TasqId");
 
                             b1.ToTable("Assignments", (string)null);
+
+                            b1.HasOne("Enroot.Domain.Account.Account", null)
+                                .WithMany()
+                                .HasForeignKey("ApproverId")
+                                .HasPrincipalKey("Id")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.HasOne("Enroot.Domain.Account.Account", null)
                                 .WithMany()

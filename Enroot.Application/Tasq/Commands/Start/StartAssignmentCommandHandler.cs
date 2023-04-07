@@ -38,7 +38,8 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
             return Errors.Tasq.NotFound;
         }
 
-        var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssigneeId), cancellationToken);
+        var assigneeId = AccountId.Create(request.AssigneeId);
+        var assignee = await _accountRepository.GetByIdAsync(assigneeId, cancellationToken);
 
         if (assignee is null)
         {
@@ -59,7 +60,7 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
             return Errors.Assignment.HasStarted;
         }
 
-        var stageResult = assignment.CompleteStage();
+        var stageResult = assignment.CompleteStage(assigneeId);
         if (stageResult.IsError)
         {
             return ErrorOr<TasqResult>.From(stageResult.Errors);

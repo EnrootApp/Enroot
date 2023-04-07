@@ -14,7 +14,7 @@ using System.Reflection;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Application.Authentication.Commands.Register;
 
-namespace Enroot.Application.Account.Invite;
+namespace Enroot.Application.Account.Commands.Invite;
 
 public class InviteCommandHandler : IRequestHandler<InviteCommand, ErrorOr<AccountResult>>
 {

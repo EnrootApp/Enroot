@@ -21,9 +21,8 @@ public sealed class Tasq : AggregateRoot<TasqId>
     public bool IsCompleted => _assignments.Any(a => a.Status is DoneStatus);
 
     private Tasq() { }
-    private Tasq(TasqId id, TenantId tenantId, AccountId creatorId, string? description, string title)
+    private Tasq(TasqId id, TenantId tenantId, AccountId creatorId, string? description, string title) : base(id)
     {
-        Id = id;
         TenantId = tenantId;
         CreatorId = creatorId;
         Description = description;

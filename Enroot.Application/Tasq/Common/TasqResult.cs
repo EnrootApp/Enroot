@@ -1,9 +1,11 @@
+using Enroot.Application.Account.Common;
+
 namespace Enroot.Application.Tasq.Common;
 
 public record TasqResult(
-    Guid TasqId,
-    Guid CreatorId,
-    string CreatorName,
+    Guid Id,
+    DateTime CreatedOn,
+    AccountModel Creator,
     string Title,
     string? Description,
     IEnumerable<AssignmentResult>? Assignments);

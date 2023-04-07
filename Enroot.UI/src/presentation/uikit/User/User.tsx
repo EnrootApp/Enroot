@@ -1,12 +1,7 @@
 import { Avatar, Typography } from "@mui/material";
-import strings from "../../localization/locales";
+import { UserProps } from "./User.types";
 
-interface Props {
-  imageSrc: string;
-  name: string;
-}
-
-const User: React.FC<Props> = ({ imageSrc, name }) => {
+const User: React.FC<UserProps> = ({ imageSrc, name }) => {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <Avatar src={imageSrc} /> <Typography>{name}</Typography>

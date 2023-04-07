@@ -62,12 +62,12 @@ namespace Enroot.Api.Controllers
         {
             var creatorIdGuid = GetRequestAccountId();
 
-            var command = new CreateTasqCommand(creatorIdGuid, request.Description, request.Title);
+            var command = new CreateTasqCommand(creatorIdGuid, request.Description, request.Title, request.AssigneeId);
 
             var result = await _mediator.Send(command);
 
             return result.Match(
-                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Ok,
                 Problem
             );
         }

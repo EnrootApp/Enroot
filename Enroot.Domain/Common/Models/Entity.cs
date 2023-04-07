@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic.CompilerServices;
 namespace Enroot.Domain.Common.Models;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
@@ -6,6 +5,7 @@ where TId : notnull
 {
     public int DbId { get; private set; }
     public TId Id { get; protected set; }
+    public DateTime CreatedOn { get; private set; }
 
     protected Entity()
     {
@@ -14,6 +14,7 @@ where TId : notnull
     protected Entity(TId id)
     {
         Id = id;
+        CreatedOn = DateTime.UtcNow;
     }
 
     public override bool Equals(object? obj)

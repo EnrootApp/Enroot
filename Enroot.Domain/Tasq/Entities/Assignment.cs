@@ -14,9 +14,9 @@ public sealed class Assignment : Entity<AssignmentId>
     public string? FeedbackMessage { get; private set; }
     public AccountId AssignerId { get; private set; }
     public AccountId AssigneeId { get; private set; }
+    public AccountId? ApproverId { get; private set; }
     public StatusBase Status { get; private set; }
     public IReadOnlyList<Attachment> Attachments => _attachments.AsReadOnly();
-
 
     private Assignment() { }
     private Assignment(AssignmentId id, AccountId assignerId, AccountId assigneeId, StatusBase status)
@@ -42,7 +42,7 @@ public sealed class Assignment : Entity<AssignmentId>
         return new Assignment(AssignmentId.CreateUnique(), assignerId, assigneeId, new ToDoStatus());
     }
 
-    public ErrorOr<Assignment> CompleteStage()
+    public ErrorOr<Assignment> CompleteStage(AccountId approverId)
     {
         var result = Status.Complete();
 
@@ -51,11 +51,12 @@ public sealed class Assignment : Entity<AssignmentId>
             return result.FirstError;
         }
 
+        ApproverId = approverId;
         Status = result.Value;
         return this;
     }
 
-    public ErrorOr<Assignment> RejectStage(string feedbackMessage)
+    public ErrorOr<Assignment> RejectStage(AccountId approverId, string feedbackMessage)
     {
         var result = Status.Reject();
 
@@ -65,6 +66,7 @@ public sealed class Assignment : Entity<AssignmentId>
         }
 
         FeedbackMessage = feedbackMessage;
+        ApproverId = approverId;
         Status = result.Value;
         return this;
     }

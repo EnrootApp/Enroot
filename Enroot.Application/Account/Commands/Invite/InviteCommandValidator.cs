@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Enroot.Application.Account.Invite;
+namespace Enroot.Application.Account.Commands.Invite;
 
 public class InviteCommandValidator : AbstractValidator<InviteCommand>
 {

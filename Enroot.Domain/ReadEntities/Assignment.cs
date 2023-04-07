@@ -12,8 +12,10 @@ public class AssignmentRead : ReadEntity
     public Guid TasqId { get; private set; }
     public Guid AssigneeId { get; private set; }
     public Guid AssignerId { get; private set; }
+    public Guid ApproverId { get; private set; }
 
     public virtual TasqRead Tasq { get; private set; } = default!;
     public virtual AccountRead Assignee { get; private set; } = default!;
     public virtual AccountRead Assigner { get; private set; } = default!;
+    public virtual AccountRead Approver { get; private set; } = default!;
 }

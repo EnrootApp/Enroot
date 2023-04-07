@@ -30,20 +30,20 @@ public class AssignTasqCommandHandler : IRequestHandler<AssignTasqCommand, Error
 
     public async Task<ErrorOr<TasqResult>> Handle(AssignTasqCommand request, CancellationToken cancellationToken)
     {
-        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken);
-        if (tasq is null)
-        {
-            return Errors.Tasq.NotFound;
-        }
-
         var assigner = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssignerId), cancellationToken);
         if (assigner is null)
         {
             return Errors.Account.NotFound;
         }
 
+        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken);
+        if (tasq is null || tasq.TenantId != assigner.TenantId)
+        {
+            return Errors.Tasq.NotFound;
+        }
+
         var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.AssigneeId), cancellationToken);
-        if (assignee is null)
+        if (assignee is null || assignee.TenantId != assigner.TenantId)
         {
             return Errors.Account.NotFound;
         }

@@ -14,5 +14,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<AccountRead>
     private static void ConfigureAccountTable(EntityTypeBuilder<AccountRead> builder)
     {
         builder.ToView("Accounts");
+        builder.Property(a => a.RoleId).HasColumnName("RoleId");
     }
 }

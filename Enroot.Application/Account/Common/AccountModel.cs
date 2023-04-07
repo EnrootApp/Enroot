@@ -1,4 +1,4 @@
-namespace Enroot.Application.Tasq.Common;
+namespace Enroot.Application.Account.Common;
 
 public record AccountModel(
     Guid Id,

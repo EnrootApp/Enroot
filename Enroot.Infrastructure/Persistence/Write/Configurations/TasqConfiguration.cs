@@ -99,8 +99,16 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                    value => AccountId.Create(value)
                );
 
+            assignmentsBuilder
+                .Property(a => a.AssignerId)
+                .HasConversion(
+                    ai => ai!.Value,
+                    value => AccountId.Create(value)
+                );
+
             assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssigneeId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
             assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssignerId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
+            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.ApproverId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
 
             assignmentsBuilder
                .Property(a => a.Status)

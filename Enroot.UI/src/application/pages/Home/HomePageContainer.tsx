@@ -7,6 +7,7 @@ import { useGetMeQuery } from "../../state/api/userApi";
 const HomePageContainer = () => {
   const { data, isFetching } = useGetMeQuery();
   const [getTenants, tenants] = useLazyGetTenantsQuery({});
+
   const [searchName, setSearchName] = useState("");
 
   const debouncedSearch = useMemo(

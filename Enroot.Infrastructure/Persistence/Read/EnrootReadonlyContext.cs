@@ -15,6 +15,8 @@ public class EnrootReadonlyContext : DbContext
     public DbSet<TasqRead> Tasqs { get; set; } = null!;
     public DbSet<AssignmentRead> Assignments { get; set; } = null!;
     public DbSet<AttachmentRead> Attachments { get; set; } = null!;
+    public DbSet<RoleRead> Courses { get; set; }
+    public DbSet<PermissionRead> Students { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

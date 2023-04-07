@@ -1,5 +1,4 @@
 using Enroot.Domain.Common.Models;
-using Enroot.Domain.Tasq.Enums;
 
 namespace Enroot.Domain.ReadEntities;
 

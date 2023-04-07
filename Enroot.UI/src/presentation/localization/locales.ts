@@ -46,6 +46,9 @@ const strings = new LocalizedStrings({
     assignee: "Assignee",
     key: "Key",
     emptyName: "Not assigned",
+    addTasq: "New Task",
+    description: "Description",
+    selectUser: "Select User",
   },
   ruRU: {
     signIn: "Вход",
@@ -87,11 +90,14 @@ const strings = new LocalizedStrings({
     assignments: "Назначения",
     reports: "Отчеты",
     summary: "Задача",
-    creator: "Создатель",
+    creator: "Автор",
     completed: "Завершена",
-    assignee: "Назначена",
+    assignee: "Исполнитель",
     key: "Ключ",
     emptyName: "Не назначена",
+    addTasq: "Новая задача",
+    description: "Описание задачи",
+    selectUser: "Выбрать пользователя",
   },
 });
 
