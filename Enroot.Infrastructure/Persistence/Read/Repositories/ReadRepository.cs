@@ -15,9 +15,20 @@ where TReadEntity : ReadEntity
         _context = context;
     }
 
-    public async Task<TReadEntity?> FindAsync(Expression<Func<TReadEntity, bool>> predicate, CancellationToken cancellationToken)
+    public async Task<TReadEntity?> FindAsync(
+        Expression<Func<TReadEntity, bool>> predicate,
+        CancellationToken cancellationToken,
+        params Expression<Func<TReadEntity, object>>[] includeProps)
     {
-        return await _context.Set<TReadEntity>().AsQueryable().FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
+        var entities = _context.Set<TReadEntity>().AsQueryable();
+        entities = entities.Where(predicate);
+
+        foreach (var includeProp in includeProps)
+        {
+            entities = entities.Include(includeProp);
+        }
+
+        return await entities.FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }
 
     public IQueryable<TReadEntity> GetAll()
@@ -30,8 +41,11 @@ where TReadEntity : ReadEntity
         return _context.Set<TReadEntity>().AsQueryable().Where(predicate);
     }
 
-    public async Task<TReadEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TReadEntity?> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken,
+        params Expression<Func<TReadEntity, object>>[] includeProps)
     {
-        return await FindAsync(ag => ag.Id == id, cancellationToken);
+        return await FindAsync(ag => ag.Id == id, cancellationToken, includeProps);
     }
 }

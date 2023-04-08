@@ -67,7 +67,11 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
 
         var result = await _tasqRepository.CreateAsync(tasq, cancellationToken);
 
-        var model = await _tasqReadRepository.GetByIdAsync(result.Id.Value, cancellationToken);
+        var model = await _tasqReadRepository.GetByIdAsync(
+            result.Id.Value,
+            cancellationToken,
+            t => t.Creator,
+            t => t.Assignments);
 
         return model!.Adapt<TasqResult>();
     }
