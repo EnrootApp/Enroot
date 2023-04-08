@@ -3,14 +3,17 @@ using Enroot.Domain.Common.Models;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
+using Enroot.Domain.Tasq.ValueObjects;
 
 namespace Enroot.Domain.Tenant;
 
 public sealed class Tenant : AggregateRoot<TenantId>
 {
     private readonly List<AccountId> _accountIds = new();
-
     public IReadOnlyList<AccountId> AccountIds => _accountIds.AsReadOnly();
+
+    private readonly List<TasqId> _tasqIds = new();
+    public IReadOnlyList<TasqId> TasqIds => _tasqIds.AsReadOnly();
 
     public TenantName Name { get; private set; }
     public string? LogoUrl { get; private set; }
@@ -51,6 +54,23 @@ public sealed class Tenant : AggregateRoot<TenantId>
         }
 
         _accountIds.Add(id);
+
+        return this;
+    }
+
+    public ErrorOr<Tenant> AddTasqId(TasqId id)
+    {
+        if (id is null)
+        {
+            return Errors.Tasq.NotFound;
+        }
+
+        if (_tasqIds.Contains(id))
+        {
+            return Errors.Tasq.AlreadyExists;
+        }
+
+        _tasqIds.Add(id);
 
         return this;
     }

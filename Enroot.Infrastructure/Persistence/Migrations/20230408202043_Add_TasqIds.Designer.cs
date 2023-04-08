@@ -4,6 +4,7 @@ using Enroot.Infrastructure.Persistence.Write;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Enroot.Domain.Role.Enums;
 using Enroot.Domain.Tasq.Enums;
@@ -12,9 +13,11 @@ using Enroot.Domain.Tasq.Enums;
 namespace Enroot.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EnrootContext))]
-    partial class EnrootContextModelSnapshot : ModelSnapshot
+    [Migration("20230408202043_Add_TasqIds")]
+    partial class AddTasqIds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

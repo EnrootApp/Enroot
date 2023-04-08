@@ -6,6 +6,7 @@ using Enroot.Domain.Tenant.ValueObjects;
 using ErrorOr;
 using Enroot.Domain.Common.Errors;
 using Enroot.Domain.Tasq.ValueObjects.Statuses;
+using Enroot.Domain.Tasq.Events;
 
 namespace Enroot.Domain.Tasq;
 
@@ -46,7 +47,11 @@ public sealed class Tasq : AggregateRoot<TasqId>
             return Errors.Tasq.NotFound;
         }
 
-        return new Tasq(TasqId.CreateUnique(), tenantId, creatorId, description, title);
+        var tasq = new Tasq(TasqId.CreateUnique(), tenantId, creatorId, description, title);
+
+        tasq.AddDomainEvent(new TasqCreatedDomainEvent(tenantId, tasq.Id));
+
+        return tasq;
     }
 
     public ErrorOr<Tasq> AddAssignment(Assignment assignment)

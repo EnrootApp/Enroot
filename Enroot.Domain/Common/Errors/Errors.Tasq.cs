@@ -15,5 +15,7 @@ public static partial class Errors
             Error.Conflict(_code, "AlreadyAssigned");
         public static Error NotFound =>
            Error.NotFound(_code, "NotFound");
+        public static Error AlreadyExists =>
+            Error.Conflict(_code, "AlreadyExists");
     }
 }
