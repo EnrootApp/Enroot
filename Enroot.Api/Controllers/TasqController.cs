@@ -14,6 +14,8 @@ using Enroot.Application.Tasq.Commands.Approve;
 using Enroot.Application.Tasq.Commands.Reject;
 using Mapster;
 using Enroot.Infrastructure.Authentication;
+using Enroot.Application.Tasq.Queries.GetTasq;
+using Enroot.Application.Tasq.Commands.Update;
 
 namespace Enroot.Api.Controllers
 {
@@ -47,6 +49,21 @@ namespace Enroot.Api.Controllers
                 request.IsAssigned,
                 request.Skip,
                 request.Take);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var tenantId = GetTenantId();
+
+            var query = new GetTasqQuery(tenantId, id);
 
             var result = await _mediator.Send(query);
 
@@ -93,7 +110,7 @@ namespace Enroot.Api.Controllers
         {
             var assigneeId = GetRequestAccountId();
 
-            var command = new StartAssignmentCommand(assigneeId, request.TasqId);
+            var command = new StartAssignmentCommand(assigneeId, request.AssignmentId);
 
             var result = await _mediator.Send(command);
 
@@ -110,7 +127,7 @@ namespace Enroot.Api.Controllers
 
             var command = new CompleteAssignmentCommand(
                 assigneeId,
-                request.TasqId,
+                request.AssignmentId,
                 request.Attachments.Adapt<IEnumerable<CreateAttachmentModel>>());
 
             var result = await _mediator.Send(command);
@@ -144,6 +161,22 @@ namespace Enroot.Api.Controllers
             var reviewerId = GetRequestAccountId();
 
             var command = new ApproveAssignmentCommand(reviewerId, request.AssignmentId);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                value => Ok(_mapper.Map<TasqResponse>(value)),
+                Problem
+            );
+        }
+
+        [HttpPut("{id}")]
+        [RequirePermission(PermissionEnum.CreateTasq)]
+        public async Task<IActionResult> Update([FromBody] UpdateTasqRequest request, Guid id)
+        {
+            var authorId = GetRequestAccountId();
+
+            var command = new UpdateTasqCommand(authorId, id, request.Description);
 
             var result = await _mediator.Send(command);
 

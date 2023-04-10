@@ -8,7 +8,7 @@ import { useCreateTasqMutation } from "../../state/api/tasqApi";
 
 const AddTasqContainer = () => {
   const [open, setOpen] = useState(false);
-  const [createTasq, { isSuccess }] = useCreateTasqMutation();
+  const [createTasq] = useCreateTasqMutation();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(errorStrings.notEmpty).max(100),
@@ -22,6 +22,7 @@ const AddTasqContainer = () => {
     initialValues: { title: "", description: "" },
     onSubmit: async (values) => {
       createTasq(values);
+      setOpen(false);
     },
   };
 

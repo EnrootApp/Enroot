@@ -5,18 +5,18 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Enroot.Application.Account.Queries.GetPermissions;
+namespace Enroot.Application.Account.Queries.GetMe;
 
-public class GetPermissionsQueryHandler : IRequestHandler<GetPermissionsQuery, ErrorOr<IEnumerable<PermissionEnum>>>
+public class GetMeQueryHandler : IRequestHandler<GetMeQuery, ErrorOr<GetMeResult>>
 {
     private readonly IReadRepository<AccountRead> _accountRepository;
 
-    public GetPermissionsQueryHandler(IReadRepository<AccountRead> accountRepository)
+    public GetMeQueryHandler(IReadRepository<AccountRead> accountRepository)
     {
         _accountRepository = accountRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<PermissionEnum>>> Handle(GetPermissionsQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<GetMeResult>> Handle(GetMeQuery request, CancellationToken cancellationToken)
     {
         var accountQuery = _accountRepository.Filter(a => a.Id == request.AccountId);
 
@@ -29,6 +29,10 @@ public class GetPermissionsQueryHandler : IRequestHandler<GetPermissionsQuery, E
 
         var account = await accountQuery.FirstAsync(cancellationToken);
 
-        return account.Role.Permissions.Select(p => p.PermissionId).ToList();
+        return new GetMeResult(
+            account.TenantId,
+            account.Id,
+            account.UserId,
+            account.Role.Permissions.Select(p => p.PermissionId).ToList());
     }
 }

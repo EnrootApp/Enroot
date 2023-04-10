@@ -75,4 +75,12 @@ public sealed class Tasq : AggregateRoot<TasqId>
 
         return this;
     }
+
+    public ErrorOr<Tasq> UpdateDescription(string description, AccountId author)
+    {
+        Description = description;
+        CreatorId = author;
+
+        return this;
+    }
 }

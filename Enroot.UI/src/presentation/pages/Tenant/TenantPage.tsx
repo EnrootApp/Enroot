@@ -22,7 +22,6 @@ const TenantPage: React.FC<Props> = ({ isLoading }) => {
           height: "100%",
           display: "flex",
           maxWidth: "100%",
-          overflow: "auto",
         }}
       >
         <TenantNavigation />

@@ -6,5 +6,5 @@ namespace Enroot.Application.Tasq.Commands.Complete;
 
 public record CompleteAssignmentCommand(
     Guid AssigneeId,
-    Guid TasqId,
+    Guid AssignmentId,
     IEnumerable<CreateAttachmentModel> Attachments) : IRequest<ErrorOr<TasqResult>>;

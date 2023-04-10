@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Enroot.Application.Tasq.Commands.Start;
 
-public record StartAssignmentCommand(Guid AssigneeId, Guid TasqId) : IRequest<ErrorOr<TasqResult>>;
+public record StartAssignmentCommand(Guid AssigneeId, Guid AssignmentId) : IRequest<ErrorOr<TasqResult>>;

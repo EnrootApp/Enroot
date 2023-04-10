@@ -69,7 +69,6 @@ public static class DependencyInjection
             options.KeyId = configuration["CloudStorage:KeyId"];
             options.ApplicationKey = configuration["CloudStorage:AppKey"];
         });
-        services.AddScoped<ICloudStorage, CloudStorage>();
 
         var emailConfig = configuration.GetSection("EmailConfig");
         services.Configure<EmailConfig>(emailConfig);

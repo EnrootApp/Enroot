@@ -32,7 +32,7 @@ const ImageUpload: React.FC<Props> = ({
       />
       <AvatarDiv>
         <Avatar
-          src={imageSrc || "imagePlaceholder.svg"}
+          src={imageSrc || "/imagePlaceholder.svg"}
           sx={{
             width: 240,
             height: 240,

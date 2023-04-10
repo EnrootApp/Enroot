@@ -1,6 +1,7 @@
 import { AccountModel } from "../../../domain/account/AccountModel";
 import { apiSlice } from "./apiSlice";
 import { Permission } from "../../common/enums/permission";
+import { Me } from "../../../domain/account/Me";
 
 export const accountsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,12 +11,12 @@ export const accountsApi = apiSlice.injectEndpoints({
         params: { name },
       }),
     }),
-    getPermissions: builder.query<Permission[], {}>({
+    getMyAccount: builder.query<Me, {}>({
       query: () => ({
-        url: "/account/permissions",
+        url: "/account/me",
       }),
     }),
   }),
 });
 
-export const { useLazyGetAccountsQuery, useGetPermissionsQuery } = accountsApi;
+export const { useLazyGetAccountsQuery, useGetMyAccountQuery } = accountsApi;

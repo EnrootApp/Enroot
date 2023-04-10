@@ -1,8 +1,10 @@
+import { AccountModel } from "../account/AccountModel";
 import { Assignment } from "./Assignment";
 
 export interface Tasq {
-  tasqId: string;
-  creatorId: string;
+  id: string;
+  createdOn: Date;
+  creator: AccountModel;
   title: string;
   description: string;
   assignments: Assignment[];

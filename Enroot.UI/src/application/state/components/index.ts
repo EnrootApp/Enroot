@@ -1,4 +1,4 @@
-// import { combineReducers } from "@reduxjs/toolkit";
-// import langSlice from "./langSlice";
+import { combineReducers } from "@reduxjs/toolkit";
+import fileUploaderSlice from "./fileUploaderSlice";
 
-// export default combineReducers({ langSlice });
+export default combineReducers({ fileUploaderSlice });

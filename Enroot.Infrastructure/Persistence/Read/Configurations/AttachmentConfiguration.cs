@@ -14,5 +14,10 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<AttachmentRead>
     private static void ConfigureAccountTable(EntityTypeBuilder<AttachmentRead> builder)
     {
         builder.ToView("Attachments");
+
+        builder.Property(a => a.Id);
+
+        builder.Ignore(a => a.DbId);
+        builder.Ignore(a => a.CreatedOn);
     }
 }

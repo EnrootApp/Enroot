@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.Tasq;
 
-public record CompleteAssignmentRequest(Guid TasqId, IEnumerable<AttachmentRequest> Attachments);
+public record CompleteAssignmentRequest(Guid AssignmentId, IEnumerable<AttachmentRequest> Attachments);

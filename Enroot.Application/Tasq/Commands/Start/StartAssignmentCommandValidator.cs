@@ -9,6 +9,6 @@ public class StartAssignmentCommandValidator : AbstractValidator<StartAssignment
     public StartAssignmentCommandValidator()
     {
         RuleFor(c => c.AssigneeId).NotEmpty();
-        RuleFor(c => c.TasqId).NotEmpty();
+        RuleFor(c => c.AssignmentId).NotEmpty();
     }
 }

@@ -10,7 +10,7 @@ import {
   ruRU,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import TasqToolbar from "../../components/TasqToolbar/TasqToolbar";
+import TasqsToolbar from "../../components/TasqsToolbar/TasqsToolbar";
 import User from "../../uikit/User/User";
 import { Check, Clear } from "@mui/icons-material";
 import strings from "../../localization/locales";
@@ -99,7 +99,7 @@ const TasqsPage: React.FC<Props> = ({
         disableRowSelectionOnClick
         paginationMode="server"
         filterMode="server"
-        slots={{ toolbar: TasqToolbar }}
+        slots={{ toolbar: TasqsToolbar }}
         onFilterModelChange={onFilterModelChange}
         initialState={{
           pagination: {

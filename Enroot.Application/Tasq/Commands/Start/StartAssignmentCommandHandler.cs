@@ -31,7 +31,8 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
 
     public async Task<ErrorOr<TasqResult>> Handle(StartAssignmentCommand request, CancellationToken cancellationToken)
     {
-        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken);
+        var assignmentId = AssignmentId.Create(request.AssignmentId);
+        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken);
 
         if (tasq is null)
         {

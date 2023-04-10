@@ -18,16 +18,13 @@ namespace Enroot.Api.Controllers
     public class UserController : ApiController
     {
         private readonly ISender _mediator;
-        private readonly IMapper _mapper;
 
         public UserController(
             IHttpContextAccessor httpContextAccessor,
             IStringLocalizerFactory localizer,
-            ISender mediator,
-            IMapper mapper) : base(httpContextAccessor, localizer)
+            ISender mediator) : base(httpContextAccessor, localizer)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
         [HttpGet]

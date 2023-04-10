@@ -10,6 +10,4 @@ public class TasqRead : ReadEntity
     public Guid CreatorId { get; private set; }
     public AccountRead Creator { get; private set; } = default!;
     public virtual ICollection<AssignmentRead> Assignments { get; private set; } = default!;
-
-    public AssignmentRead? CurrentAssignment => Assignments.OrderBy(a => a.Status).FirstOrDefault();
 }

@@ -8,7 +8,7 @@ public class CompleteAssignmentCommandValidator : AbstractValidator<CompleteAssi
     {
         RuleFor(c => c.AssigneeId)
            .NotEmpty();
-        RuleFor(c => c.TasqId)
+        RuleFor(c => c.AssignmentId)
            .NotEmpty();
         RuleFor(c => c.Attachments)
             .NotNull()

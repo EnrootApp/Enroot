@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.Tasq;
 
-public record StartAssignmentRequest(Guid TasqId);
+public record StartAssignmentRequest(Guid AssignmentId);
