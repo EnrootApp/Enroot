@@ -18,10 +18,10 @@ where TReadEntity : ReadEntity
     public async Task<TReadEntity?> FindAsync(
         Expression<Func<TReadEntity, bool>> predicate,
         CancellationToken cancellationToken,
+        bool includeDeleted = false,
         params Expression<Func<TReadEntity, object>>[] includeProps)
     {
-        var entities = _context.Set<TReadEntity>().AsQueryable();
-        entities = entities.Where(predicate);
+        var entities = Filter(predicate, includeDeleted);
 
         foreach (var includeProp in includeProps)
         {
@@ -31,21 +31,29 @@ where TReadEntity : ReadEntity
         return await entities.FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }
 
-    public IQueryable<TReadEntity> GetAll()
+    public IQueryable<TReadEntity> GetAll(bool includeDeleted = false)
     {
-        return _context.Set<TReadEntity>();
+        var entities = _context.Set<TReadEntity>().AsQueryable();
+
+        if (!includeDeleted)
+        {
+            entities = entities.Where(e => !e.IsDeleted);
+        }
+
+        return entities;
     }
 
-    public IQueryable<TReadEntity> Filter(Expression<Func<TReadEntity, bool>> predicate)
+    public IQueryable<TReadEntity> Filter(Expression<Func<TReadEntity, bool>> predicate, bool includeDeleted = false)
     {
-        return _context.Set<TReadEntity>().AsQueryable().Where(predicate);
+        return GetAll(includeDeleted).Where(predicate);
     }
 
     public async Task<TReadEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken,
+        bool includeDeleted = false,
         params Expression<Func<TReadEntity, object>>[] includeProps)
     {
-        return await FindAsync(ag => ag.Id == id, cancellationToken, includeProps);
+        return await FindAsync(ag => ag.Id == id, cancellationToken, includeDeleted, includeProps);
     }
 }

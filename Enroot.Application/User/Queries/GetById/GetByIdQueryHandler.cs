@@ -20,7 +20,7 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, ErrorOr<UserRes
 
     public async Task<ErrorOr<UserResult>> Handle(GetByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(UserId.Create(request.Id), cancellationToken);
+        var user = await _userRepository.GetByIdAsync(UserId.Create(request.Id), cancellationToken: cancellationToken);
 
         if (user is null)
         {

@@ -26,7 +26,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
         var userId = UserId.Create(command.UserId);
         var tenantId = TenantId.Create(command.TenantId);
 
-        var account = await _accountRepository.FindAsync(a => a.UserId == userId && a.TenantId == tenantId, cancellationToken);
+        var account = await _accountRepository.FindAsync(a => a.UserId == userId && a.TenantId == tenantId, cancellationToken: cancellationToken);
 
         if (account is not null)
         {
@@ -47,7 +47,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
             return accountResult.Errors;
         }
 
-        var persistedAccount = await _accountRepository.CreateAsync(accountResult.Value, cancellationToken);
+        var persistedAccount = await _accountRepository.CreateAsync(accountResult.Value, cancellationToken: cancellationToken);
 
         return persistedAccount.Adapt<AccountResult>();
     }

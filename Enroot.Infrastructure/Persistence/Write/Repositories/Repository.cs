@@ -22,7 +22,7 @@ where TId : ValueObject
 
     public async Task<TAggregateRoot> CreateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
     {
-        var result = await _context.Set<TAggregateRoot>().AddAsync(aggregateRoot, cancellationToken);
+        var result = await _context.Set<TAggregateRoot>().AddAsync(aggregateRoot, cancellationToken: cancellationToken);
         await SaveChangesAsync();
 
         return result.Entity;
@@ -36,24 +36,31 @@ where TId : ValueObject
         return result.Entity;
     }
 
-    public async Task<TAggregateRoot?> FindAsync(Expression<Func<TAggregateRoot, bool>> predicate, CancellationToken cancellationToken)
+    public async Task<TAggregateRoot?> FindAsync(Expression<Func<TAggregateRoot, bool>> predicate, bool includeDeleted = false, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<TAggregateRoot>().AsQueryable().FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
+        return await GetAll(includeDeleted).FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
     }
 
-    public IQueryable<TAggregateRoot> GetAll()
+    public IQueryable<TAggregateRoot> GetAll(bool includeDeleted = false)
     {
-        return _context.Set<TAggregateRoot>();
+        var entities = _context.Set<TAggregateRoot>().AsQueryable();
+
+        if (!includeDeleted)
+        {
+            entities = entities.Where(e => !e.IsDeleted);
+        }
+
+        return entities;
     }
 
-    public IQueryable<TAggregateRoot> Filter(Expression<Func<TAggregateRoot, bool>> predicate)
+    public IQueryable<TAggregateRoot> Filter(Expression<Func<TAggregateRoot, bool>> predicate, bool includeDeleted = false)
     {
-        return _context.Set<TAggregateRoot>().AsQueryable().Where(predicate);
+        return GetAll(includeDeleted).Where(predicate);
     }
 
-    public async Task<TAggregateRoot?> GetByIdAsync(TId id, CancellationToken cancellationToken)
+    public async Task<TAggregateRoot?> GetByIdAsync(TId id, bool includeDeleted = false, CancellationToken cancellationToken = default)
     {
-        return await FindAsync(ag => ag.Id == id, cancellationToken);
+        return await FindAsync(ag => ag.Id == id, includeDeleted, cancellationToken: cancellationToken);
     }
 
     public async Task<TAggregateRoot> UpdateAsync(TAggregateRoot aggregateRoot)

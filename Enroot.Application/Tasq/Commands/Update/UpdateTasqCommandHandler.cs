@@ -33,14 +33,14 @@ public class UpdateTasqCommandHandler : IRequestHandler<UpdateTasqCommand, Error
     public async Task<ErrorOr<TasqResult>> Handle(UpdateTasqCommand request, CancellationToken cancellationToken)
     {
         var authorId = AccountId.Create(request.AuthorId);
-        var author = await _accountRepository.GetByIdAsync(authorId, cancellationToken);
+        var author = await _accountRepository.GetByIdAsync(authorId, cancellationToken: cancellationToken);
 
         if (authorId is null)
         {
             return Errors.Account.NotFound;
         }
 
-        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken);
+        var tasq = await _tasqRepository.GetByIdAsync(TasqId.Create(request.TasqId), cancellationToken: cancellationToken);
 
         if (tasq is null || tasq.TenantId != author!.TenantId)
         {

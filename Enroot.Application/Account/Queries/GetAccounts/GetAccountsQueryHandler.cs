@@ -33,7 +33,7 @@ public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr
         var totalAmount = await accounts.CountAsync();
         accounts = accounts.OrderBy(a => a.DbId).Skip(request.Skip).Take(request.Take);
 
-        var result = await accounts.ToListAsync(cancellationToken);
+        var result = await accounts.ToListAsync(cancellationToken: cancellationToken);
 
         return new GetTasqsResult(result.Adapt<List<AccountModel>>(), totalAmount);
     }

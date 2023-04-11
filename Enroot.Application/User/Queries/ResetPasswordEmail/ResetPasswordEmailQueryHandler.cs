@@ -45,7 +45,7 @@ public class ResetPasswordEmailQueryHandler : IRequestHandler<ResetPasswordEmail
             return email.Errors;
         }
 
-        var user = await _userRepository.FindAsync(u => u.Email! == email.Value, cancellationToken);
+        var user = await _userRepository.FindAsync(u => u.Email! == email.Value, cancellationToken: cancellationToken);
 
         if (user is null)
         {

@@ -27,7 +27,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
     public async Task<ErrorOr<UserResult>> Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
     {
         var userId = UserId.Create(command.UserId);
-        var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(userId, cancellationToken: cancellationToken);
 
         if (user is null)
         {

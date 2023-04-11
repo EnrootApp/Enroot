@@ -44,7 +44,7 @@ public class RequireTenantAccountAttribute : Attribute, IAsyncAuthorizationFilte
 
         var repository = context.HttpContext.RequestServices.GetService<IRepository<Domain.Tenant.Tenant, TenantId>>();
 
-        var tenant = await repository!.GetByIdAsync(tenantId, CancellationToken.None);
+        var tenant = await repository!.GetByIdAsync(tenantId, cancellationToken: CancellationToken.None);
 
         if (tenant?.AccountIds.Contains(accountId) != true)
         {

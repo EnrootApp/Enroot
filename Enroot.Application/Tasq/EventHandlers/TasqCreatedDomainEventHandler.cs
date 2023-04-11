@@ -16,7 +16,7 @@ public class TasqCreatedDomainEventHandler : INotificationHandler<TasqCreatedDom
 
     public async Task Handle(TasqCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        var tenant = await _tenantRepository.GetByIdAsync(notification.TenantId, cancellationToken);
+        var tenant = await _tenantRepository.GetByIdAsync(notification.TenantId, cancellationToken: cancellationToken);
         if (tenant is null)
         {
             return;

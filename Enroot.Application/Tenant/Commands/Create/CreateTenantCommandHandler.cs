@@ -29,7 +29,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
         var tenant = await _tenantRepository.FindAsync(
             t => t.Name.Value.ToUpper() == commandTenantName.Value.Value.ToUpper(),
-            cancellationToken);
+            cancellationToken: cancellationToken);
 
         if (tenant is not null)
         {
@@ -43,7 +43,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
             return createTenantResult.Errors;
         }
 
-        var persistedTenant = await _tenantRepository.CreateAsync(createTenantResult.Value, cancellationToken);
+        var persistedTenant = await _tenantRepository.CreateAsync(createTenantResult.Value, cancellationToken: cancellationToken);
 
         return persistedTenant.Adapt<TenantResult>();
     }

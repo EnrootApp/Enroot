@@ -31,7 +31,7 @@ public class RejectAssignmentCommandHandler : IRequestHandler<RejectAssignmentCo
     public async Task<ErrorOr<TasqResult>> Handle(RejectAssignmentCommand request, CancellationToken cancellationToken)
     {
         var assignmentId = AssignmentId.Create(request.AssignmentId);
-        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken);
+        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken: cancellationToken);
 
         if (tasq is null)
         {
@@ -39,7 +39,7 @@ public class RejectAssignmentCommandHandler : IRequestHandler<RejectAssignmentCo
         }
 
         var reviewerId = AccountId.Create(request.ReviewerId);
-        var reviewer = await _accountRepository.GetByIdAsync(reviewerId, cancellationToken);
+        var reviewer = await _accountRepository.GetByIdAsync(reviewerId, cancellationToken: cancellationToken);
 
         if (reviewer is null)
         {

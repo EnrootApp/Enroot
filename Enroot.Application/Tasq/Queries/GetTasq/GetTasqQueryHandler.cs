@@ -36,7 +36,7 @@ public class GetTasqQueryHandler : IRequestHandler<GetTasqQuery, ErrorOr<TasqRes
             .ThenInclude(a => a.Assignee)
             .ThenInclude(a => a.User);
 
-        var tasq = await result.FirstOrDefaultAsync(cancellationToken);
+        var tasq = await result.FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         return tasq!.Adapt<TasqResult>();
     }

@@ -21,7 +21,7 @@ public class SetInfoCommandHandler : IRequestHandler<SetInfoCommand, ErrorOr<Use
 
     public async Task<ErrorOr<UserResult>> Handle(SetInfoCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(UserId.Create(request.UserId), cancellationToken);
+        var user = await _userRepository.GetByIdAsync(UserId.Create(request.UserId), cancellationToken: cancellationToken);
 
         if (user is null)
         {

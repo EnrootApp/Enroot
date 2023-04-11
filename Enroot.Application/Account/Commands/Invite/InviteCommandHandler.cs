@@ -41,8 +41,8 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, ErrorOr<Accou
     public async Task<ErrorOr<AccountResult>> Handle(InviteCommand command, CancellationToken cancellationToken)
     {
         var email = Email.Create(command.Email).Value;
-        var user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
-        var tenant = await _tenantRepository.GetByIdAsync(TenantId.Create(command.TenantId), cancellationToken);
+        var user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken: cancellationToken);
+        var tenant = await _tenantRepository.GetByIdAsync(TenantId.Create(command.TenantId), cancellationToken: cancellationToken);
 
         var emailSubject = _localizer["InviteSubject"];
         var emailBody = string.Format(_localizer["InviteBody"], tenant!.Name.Value);
@@ -52,20 +52,20 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, ErrorOr<Accou
             var password = Guid.NewGuid().ToString();
 
             var registerUserCommand = new RegisterCommand(command.Email, password);
-            var registerResult = await _mediator.Send(registerUserCommand, cancellationToken);
+            var registerResult = await _mediator.Send(registerUserCommand, cancellationToken: cancellationToken);
 
             if (registerResult.IsError)
             {
                 return registerResult.Errors;
             }
 
-            user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken);
+            user = await _userRepository.FindAsync(u => u.Email! == email, cancellationToken: cancellationToken);
             emailSubject = _localizer["InviteNewUserSubject"];
             emailBody = string.Format(_localizer["InviteNewUserBody"], tenant!.Name.Value, password);
         }
 
         var createAccountCommand = new CreateAccountCommand(user.Id.Value, command.TenantId, (int)RoleEnum.Default);
-        var result = await _mediator.Send(createAccountCommand, cancellationToken);
+        var result = await _mediator.Send(createAccountCommand, cancellationToken: cancellationToken);
 
         if (result.IsError)
         {

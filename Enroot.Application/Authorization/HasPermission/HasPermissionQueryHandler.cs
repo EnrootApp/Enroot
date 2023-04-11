@@ -23,7 +23,7 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
 
     public async Task<ErrorOr<bool>> Handle(HasPermissionQuery query, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetByIdAsync(query.Id, cancellationToken);
+        var account = await _accountRepository.GetByIdAsync(query.Id, cancellationToken: cancellationToken);
         if (account is null)
         {
             return Errors.Account.NotFound;
@@ -35,7 +35,7 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
             return Errors.Permission.NotFound;
         }
 
-        var role = await _roleRepository.GetByIdAsync(account.RoleId, cancellationToken);
+        var role = await _roleRepository.GetByIdAsync(account.RoleId, cancellationToken: cancellationToken);
 
         if (role!.Id == RoleId.Create(RoleEnum.Deactivated))
         {

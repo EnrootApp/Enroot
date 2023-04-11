@@ -27,7 +27,7 @@ public class GetMeQueryHandler : IRequestHandler<GetMeQuery, ErrorOr<GetMeResult
 
         accountQuery = accountQuery.Include(a => a.Role).ThenInclude(r => r.Permissions);
 
-        var account = await accountQuery.FirstAsync(cancellationToken);
+        var account = await accountQuery.FirstAsync(cancellationToken: cancellationToken);
 
         return new GetMeResult(
             account.TenantId,

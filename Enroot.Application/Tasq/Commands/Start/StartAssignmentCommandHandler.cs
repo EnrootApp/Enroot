@@ -32,7 +32,7 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
     public async Task<ErrorOr<TasqResult>> Handle(StartAssignmentCommand request, CancellationToken cancellationToken)
     {
         var assignmentId = AssignmentId.Create(request.AssignmentId);
-        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken);
+        var tasq = await _tasqRepository.FindAsync(t => t.Assignments.Any(a => a.Id == assignmentId), cancellationToken: cancellationToken);
 
         if (tasq is null)
         {
@@ -40,7 +40,7 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
         }
 
         var assigneeId = AccountId.Create(request.AssigneeId);
-        var assignee = await _accountRepository.GetByIdAsync(assigneeId, cancellationToken);
+        var assignee = await _accountRepository.GetByIdAsync(assigneeId, cancellationToken: cancellationToken);
 
         if (assignee is null)
         {

@@ -52,7 +52,7 @@ public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<GetTa
             .Include(t => t.Creator)
             .ThenInclude(a => a.User);
 
-        var tasqs = await result.ToListAsync(cancellationToken);
+        var tasqs = await result.ToListAsync(cancellationToken: cancellationToken);
 
         return new GetTasqsResult(tasqs.Adapt<IEnumerable<TasqResult>>().ToList(), totalAmount);
     }

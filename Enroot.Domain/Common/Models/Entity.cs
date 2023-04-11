@@ -6,6 +6,7 @@ where TId : notnull
     public int DbId { get; private set; }
     public TId Id { get; protected set; }
     public DateTime CreatedOn { get; private set; }
+    public bool IsDeleted { get; private set; }
 
     protected Entity()
     {

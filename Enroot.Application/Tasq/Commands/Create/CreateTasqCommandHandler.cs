@@ -31,7 +31,7 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
 
     public async Task<ErrorOr<TasqResult>> Handle(CreateTasqCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId), cancellationToken);
+        var account = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId), cancellationToken: cancellationToken);
 
         if (account is null)
         {
@@ -49,7 +49,7 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
 
         if (request.AssigneeId.HasValue)
         {
-            var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId), cancellationToken);
+            var assignee = await _accountRepository.GetByIdAsync(AccountId.Create(request.CreatorId), cancellationToken: cancellationToken);
 
             if (assignee is null || assignee.TenantId != account.TenantId)
             {
@@ -65,11 +65,12 @@ public class CreateTasqCommandHandler : IRequestHandler<CreateTasqCommand, Error
             tasq.AddAssignment(assignment.Value);
         }
 
-        var result = await _tasqRepository.CreateAsync(tasq, cancellationToken);
+        var result = await _tasqRepository.CreateAsync(tasq, cancellationToken: cancellationToken);
 
         var model = await _tasqReadRepository.GetByIdAsync(
             result.Id.Value,
             cancellationToken,
+            false,
             t => t.Creator,
             t => t.Assignments);
 
