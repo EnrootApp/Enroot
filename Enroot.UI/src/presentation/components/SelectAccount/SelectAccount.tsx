@@ -9,6 +9,9 @@ interface Props {
   onChange: (value: AccountModel | null) => void;
   onInputChange: (value: string | null) => void;
   isLoading: boolean;
+  isEdit: boolean;
+  account: AccountModel | null;
+  setIsEdit: (value: boolean) => void;
 }
 
 const SelectAccount: React.FC<Props> = ({
@@ -16,8 +19,18 @@ const SelectAccount: React.FC<Props> = ({
   onChange,
   onInputChange,
   isLoading,
+  isEdit,
+  setIsEdit,
+  account,
 }) => {
-  return (
+  return !isEdit ? (
+    <div onClick={() => setIsEdit(true)}>
+      <User
+        imageSrc={account?.avatarUrl || ""}
+        name={account?.name || strings.emptyName}
+      />
+    </div>
+  ) : (
     <Autocomplete
       filterOptions={(x) => x}
       options={accounts}
@@ -33,11 +46,14 @@ const SelectAccount: React.FC<Props> = ({
           label={strings.selectUser}
           variant="standard"
           name="title"
+          autoFocus
         />
       )}
       onChange={(props, value) => onChange(value)}
       onInputChange={(props, value) => onInputChange(value)}
       loading={isLoading}
+      noOptionsText={strings.noOptions}
+      onBlur={() => setIsEdit(false)}
     />
   );
 };

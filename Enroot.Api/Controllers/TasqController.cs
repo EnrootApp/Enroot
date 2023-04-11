@@ -144,7 +144,7 @@ namespace Enroot.Api.Controllers
         {
             var reviewerId = GetRequestAccountId();
 
-            var command = new RejectAssignmentCommand(reviewerId, request.AssignmentId, request.RejectMessage);
+            var command = new RejectAssignmentCommand(reviewerId, request.AssignmentId, request.FeedbackMessage);
 
             var result = await _mediator.Send(command);
 

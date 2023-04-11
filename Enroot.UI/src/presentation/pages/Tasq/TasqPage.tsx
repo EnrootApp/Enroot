@@ -56,13 +56,16 @@ const TasqPage: React.FC<Props> = ({
                 <SubTitle value={strings.attachments}></SubTitle>
                 <Box style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
                   {tasq.assignments[0]?.attachments.map((attachment) => (
-                    <a href={attachment.url} target="_blank">
+                    <a
+                      href={attachment.url}
+                      target="_blank"
+                      key={attachment.url}
+                    >
                       <img
-                        key={attachment.url}
                         src={attachment.url}
                         style={{
-                          height: 90,
-                          width: 90,
+                          height: 150,
+                          width: 150,
                           objectFit: "contain",
                           borderRadius: "50%",
                         }}

@@ -64,6 +64,8 @@ const strings = new LocalizedStrings({
     complete: "Send for review",
     approve: "Approve",
     reject: "Reject",
+    feedback: "Feedback message",
+    noOptions: "Type to search users...",
   },
   ruRU: {
     signIn: "Вход",
@@ -128,6 +130,8 @@ const strings = new LocalizedStrings({
     complete: "Отправить на проверку",
     approve: "Одобрить",
     reject: "Отклонить",
+    feedback: "Обратная связь",
+    noOptions: "Введите имя для поиска...",
   },
 });
 

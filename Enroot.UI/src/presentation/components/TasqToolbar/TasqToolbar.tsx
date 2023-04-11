@@ -1,4 +1,10 @@
-import { Box, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Typography,
+} from "@mui/material";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
 import strings from "../../localization/locales";
 import User from "../../uikit/User/User";
@@ -6,6 +12,11 @@ import TasqStatus from "../../uikit/Status/TasqStatus";
 import { Status } from "../../../domain/tasq/Status";
 import { Tasq } from "../../../domain/tasq/Tasq";
 import Button from "../../uikit/Button/Button";
+import Dialog from "../../uikit/Dialog/Dialog";
+import { Formik, FormikConfig, FormikProps } from "formik";
+import Form from "../../uikit/Form/Form";
+import Input from "../../uikit/Input/Input";
+import SelectAccountContainer from "../../../application/components/SelectAccount/SelectAccountContainer";
 
 interface Props {
   tasq: Tasq;
@@ -16,7 +27,11 @@ interface Props {
   onStartButtonClick: () => void;
   onCompleteButtonClick: () => void;
   onApproveButtonClick: () => void;
-  onRejectButtonClick: () => void;
+  setFeedbackOpen: (value: boolean) => void;
+  feedbackOpen: boolean;
+  formikConfig: FormikConfig<{ feedbackMessage: string }>;
+  canBeAssigned: boolean;
+  assignHandler: (value: string | undefined) => void;
 }
 
 const TasqToolbar: React.FC<Props> = ({
@@ -27,7 +42,11 @@ const TasqToolbar: React.FC<Props> = ({
   onStartButtonClick,
   onCompleteButtonClick,
   onApproveButtonClick,
-  onRejectButtonClick,
+  setFeedbackOpen,
+  feedbackOpen,
+  formikConfig,
+  canBeAssigned,
+  assignHandler,
 }) => {
   return (
     <Box style={{ flex: 0.7 }}>
@@ -49,10 +68,16 @@ const TasqToolbar: React.FC<Props> = ({
           <Typography>{strings.assignee}</Typography>
         </Grid>
         <Grid item xs={10}>
-          <User
-            imageSrc={tasq.assignments[0]?.assignee.avatarUrl || ""}
-            name={tasq.assignments[0]?.assignee.name || strings.emptyName}
-          />
+          {canBeAssigned ? (
+            <div title="Нажмите, чтобы назначить">
+              <SelectAccountContainer onChange={assignHandler} />
+            </div>
+          ) : (
+            <User
+              imageSrc={tasq.assignments[0]?.assignee.avatarUrl || ""}
+              name={tasq.assignments[0]?.assignee.name || strings.emptyName}
+            />
+          )}
         </Grid>
         <Grid item xs={6}>
           <Typography>{strings.created}</Typography>
@@ -78,12 +103,57 @@ const TasqToolbar: React.FC<Props> = ({
             <Button sx={{ flex: 1 }} onClick={() => onApproveButtonClick()}>
               {strings.approve}
             </Button>
-            <Button sx={{ flex: 1 }} onClick={() => onRejectButtonClick()}>
+            <Button sx={{ flex: 1 }} onClick={() => setFeedbackOpen(true)}>
               {strings.reject}
             </Button>
           </>
         )}
       </Box>
+
+      <Dialog
+        dialogProps={{
+          fullWidth: true,
+          maxWidth: "md",
+          open: feedbackOpen,
+          onClose: () => setFeedbackOpen(false),
+        }}
+        dialogContent={
+          <>
+            <DialogTitle>
+              <SubTitle value={strings.feedback} />
+            </DialogTitle>
+            <DialogContent>
+              <Formik {...formikConfig}>
+                {(props: FormikProps<{ feedbackMessage: string }>) => {
+                  const { values, touched, errors, handleBlur, handleChange } =
+                    props;
+                  return (
+                    <Form noValidate>
+                      <Input
+                        label={strings.feedback}
+                        variant="standard"
+                        name="feedbackMessage"
+                        value={values.feedbackMessage}
+                        error={Boolean(
+                          errors.feedbackMessage && touched.feedbackMessage
+                        )}
+                        helperText={
+                          errors.feedbackMessage &&
+                          touched.feedbackMessage &&
+                          errors.feedbackMessage
+                        }
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <Button type="submit">{strings.submit}</Button>
+                    </Form>
+                  );
+                }}
+              </Formik>
+            </DialogContent>
+          </>
+        }
+      />
     </Box>
   );
 };

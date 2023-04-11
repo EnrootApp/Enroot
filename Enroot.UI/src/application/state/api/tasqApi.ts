@@ -64,6 +64,13 @@ export const tasqsApi = apiSlice.injectEndpoints({
         }),
       }
     ),
+    assignTasq: builder.mutation<Tasq, { tasqId: string; assigneeId: string }>({
+      query: ({ tasqId, assigneeId }) => ({
+        url: `/tasq/assign`,
+        method: "POST",
+        body: { tasqId, assigneeId },
+      }),
+    }),
   }),
 });
 
@@ -76,4 +83,5 @@ export const {
   useCompleteTasqMutation,
   useApproveTasqMutation,
   useRejectTasqMutation,
+  useAssignTasqMutation,
 } = tasqsApi;

@@ -6,10 +6,16 @@ import { AccountModel } from "../../../domain/account/AccountModel";
 
 interface Props {
   onChange: (value: string | undefined) => void;
+  initial?: AccountModel;
 }
 
-const SelectAccountContainer: React.FC<Props> = ({ onChange }) => {
+const SelectAccountContainer: React.FC<Props> = ({
+  onChange,
+  initial = null,
+}) => {
   const [search, setSearch] = useState<string>("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [account, selectAccount] = useState<AccountModel | null>(initial);
 
   const [getAccounts, accounts] = useLazyGetAccountsQuery({});
 
@@ -33,7 +39,9 @@ const SelectAccountContainer: React.FC<Props> = ({ onChange }) => {
   }, [search]);
 
   const onSelect = (value: AccountModel | null) => {
+    selectAccount(value);
     onChange(value?.id);
+    setIsEdit(false);
   };
 
   return (
@@ -42,6 +50,9 @@ const SelectAccountContainer: React.FC<Props> = ({ onChange }) => {
       isLoading={accounts.isLoading}
       onInputChange={onInputChange}
       onChange={onSelect}
+      isEdit={isEdit}
+      setIsEdit={setIsEdit}
+      account={account}
     />
   );
 };

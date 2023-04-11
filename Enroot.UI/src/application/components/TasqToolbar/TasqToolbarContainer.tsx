@@ -6,24 +6,31 @@ import { Permission } from "../../common/enums/permission";
 import { useGetMyAccountQuery } from "../../state/api/accountApi";
 import {
   useApproveTasqMutation,
+  useAssignTasqMutation,
   useCompleteTasqMutation,
   useRejectTasqMutation,
   useStartTasqMutation,
 } from "../../state/api/tasqApi";
+import { useState } from "react";
+import { FormikConfig } from "formik";
+import errorStrings from "../../../presentation/localization/errorMessages";
+import * as Yup from "yup";
 
 interface Props {
   tasq: Tasq;
 }
 
 const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const { data: me, isLoading } = useGetMyAccountQuery({});
   const [start] = useStartTasqMutation();
   const [complete] = useCompleteTasqMutation();
   const [reject] = useRejectTasqMutation();
   const [approve] = useApproveTasqMutation();
+  const [assign] = useAssignTasqMutation();
 
   const assignment = tasq.assignments[0];
-  const tasqStatus = assignment?.status || Status.ToDo;
+  const tasqStatus = assignment?.status;
 
   const notEndedAssignment =
     tasqStatus === Status.ToDo ||
@@ -66,8 +73,32 @@ const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
     approve({ id: assignment.id });
   };
 
-  const rejectHandler = () => {
-    reject({ id: assignment.id, feedbackMessage: "" });
+  const assignHandler = (assigneeId: string | undefined) => {
+    if (!assigneeId) {
+      return;
+    }
+
+    assign({ tasqId: tasq.id, assigneeId });
+  };
+
+  const canBeAssigned =
+    !notEndedAssignment &&
+    hasCreateTaskPermission &&
+    tasqStatus !== Status.Done;
+
+  const validationSchema = Yup.object().shape({
+    feedbackMessage: Yup.string().required(errorStrings.notEmpty).max(255),
+  });
+
+  const formikConfig: FormikConfig<{ feedbackMessage: string }> = {
+    validationSchema: validationSchema,
+    validateOnBlur: true,
+    validateOnMount: true,
+    initialValues: { feedbackMessage: "" },
+    onSubmit: async (values) => {
+      reject({ id: assignment.id, feedbackMessage: values.feedbackMessage });
+      setFeedbackOpen(false);
+    },
   };
 
   return isLoading ? null : (
@@ -80,7 +111,11 @@ const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
       onStartButtonClick={startAssignmentHandler}
       onCompleteButtonClick={sendForReviewHandler}
       onApproveButtonClick={approveHandler}
-      onRejectButtonClick={rejectHandler}
+      feedbackOpen={feedbackOpen}
+      setFeedbackOpen={setFeedbackOpen}
+      formikConfig={formikConfig}
+      canBeAssigned={canBeAssigned}
+      assignHandler={assignHandler}
     />
   );
 };

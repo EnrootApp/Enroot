@@ -2,7 +2,7 @@ import { boolean } from "yup";
 import strings from "../../localization/locales";
 import Button from "../../uikit/Button/Button";
 import Dialog from "../../uikit/Dialog/Dialog";
-import { DialogContent, DialogTitle } from "@mui/material";
+import { DialogContent, DialogTitle, Typography } from "@mui/material";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import Form from "../../uikit/Form/Form";
@@ -80,6 +80,7 @@ const AddTasq: React.FC<Props> = ({ open, formikConfig, setOpen }) => {
                         hidden
                         value={values.assigneeId}
                       />
+                      <Typography>Исполнитель: </Typography>
                       <SelectAccountContainer
                         onChange={(value) => {
                           setFieldTouched("assigneeId", true);

@@ -22,5 +22,9 @@ public class TasqConfig : IRegister
         config
            .NewConfig<AttachmentRead, AttachmentModel>()
            .Map(dest => dest.Url, src => src.BlobUrl);
+
+        config
+          .NewConfig<Domain.Tasq.Tasq, TasqResult>()
+          .MapWith((src) => new TasqResult(src.Id.Value, src.CreatedOn, null, src.Title, src.Description, null));
     }
 }
