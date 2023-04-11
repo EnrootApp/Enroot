@@ -7,7 +7,6 @@ using Enroot.Domain.Permission.Enums;
 using Enroot.Domain.User.Enums;
 using Enroot.Infrastructure.Authentication;
 using Enroot.Infrastructure.Authorization;
-using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +41,7 @@ namespace Enroot.Api.Controllers
             var result = await _mediator.Send(command);
 
             return result.Match(
-                value => Ok(value.Adapt<AccountResponse>()),
+                Ok,
                 Problem
             );
         }
@@ -64,9 +63,9 @@ namespace Enroot.Api.Controllers
 
         [HttpGet]
         [RequireTenantAccount]
-        public async Task<IActionResult> GetAsync([FromQuery] string name)
+        public async Task<IActionResult> GetAsync([FromQuery] GetAccountsRequest request)
         {
-            var query = new GetAccountsQuery(GetTenantId(), name);
+            var query = new GetAccountsQuery(GetTenantId(), request.Search, request.Skip, request.Take);
 
             var result = await _mediator.Send(query);
 

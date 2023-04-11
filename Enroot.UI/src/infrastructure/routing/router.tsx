@@ -13,6 +13,8 @@ import ProfilePageContainer from "../../application/pages/Profile/ProfilePageCon
 import TenantPageContainer from "../../application/pages/Tenant/TenantPageContainer";
 import TasqsPageContainer from "../../application/pages/Tasqs/TasksPageContainer";
 import TasqPageContainer from "../../application/pages/Tasq/TasqPageContainer";
+import AccountsPageContainer from "../../application/pages/Accounts/AccountsPageContainer";
+import { Permission } from "../../application/common/enums/permission";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +95,22 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <TasqPageContainer />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: routes.accounts,
+            element: (
+              <ProtectedRoute>
+                <AccountsPageContainer />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: routes.reports,
+            element: (
+              <ProtectedRoute>
+                <AccountsPageContainer />
               </ProtectedRoute>
             ),
           },

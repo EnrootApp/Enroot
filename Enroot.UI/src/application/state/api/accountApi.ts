@@ -1,14 +1,17 @@
 import { AccountModel } from "../../../domain/account/AccountModel";
 import { apiSlice } from "./apiSlice";
-import { Permission } from "../../common/enums/permission";
 import { Me } from "../../../domain/account/Me";
+import { AccountsFilters } from "../../pages/Accounts/AccountsPageContainer.types";
 
 export const accountsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAccounts: builder.query<AccountModel[], { name: string }>({
-      query: ({ name }) => ({
+    getAccounts: builder.query<
+      { accounts: AccountModel[]; totalAmount: number },
+      AccountsFilters
+    >({
+      query: (filters) => ({
         url: "/account",
-        params: { name },
+        params: filters,
       }),
     }),
     getMyAccount: builder.query<Me, {}>({
@@ -16,7 +19,21 @@ export const accountsApi = apiSlice.injectEndpoints({
         url: "/account/me",
       }),
     }),
+    setRole: builder.mutation<
+      AccountModel,
+      { accountId: string; roleId: string }
+    >({
+      query: (form) => ({
+        url: "/account/role",
+        method: "POST",
+        body: { ...form },
+      }),
+    }),
   }),
 });
 
-export const { useLazyGetAccountsQuery, useGetMyAccountQuery } = accountsApi;
+export const {
+  useLazyGetAccountsQuery,
+  useGetMyAccountQuery,
+  useSetRoleMutation,
+} = accountsApi;

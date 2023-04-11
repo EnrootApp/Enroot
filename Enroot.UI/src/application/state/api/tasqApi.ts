@@ -1,7 +1,7 @@
 import { Attachment } from "../../../domain/tasq/Attachment";
 import { Tasq } from "../../../domain/tasq/Tasq";
 import { AddTasqForm } from "../../components/AddTasq/AddTasqContainer.types";
-import { TasqsFilters } from "../../pages/Tasqs/TasksPage.Types";
+import { TasqsFilters } from "../../pages/Tasqs/TasksPage.types";
 import { apiSlice } from "./apiSlice";
 
 export const tasqsApi = apiSlice.injectEndpoints({

@@ -22,7 +22,7 @@ const SelectAccountContainer: React.FC<Props> = ({
   const debouncedSearch = useMemo(
     () =>
       debounce(() => {
-        getAccounts({ name: search });
+        getAccounts({ search, skip: 0, take: 20 });
       }, 500),
     [search]
   );
@@ -46,7 +46,7 @@ const SelectAccountContainer: React.FC<Props> = ({
 
   return (
     <SelectAccount
-      accounts={accounts.data || []}
+      accounts={accounts.data?.accounts || []}
       isLoading={accounts.isLoading}
       onInputChange={onInputChange}
       onChange={onSelect}

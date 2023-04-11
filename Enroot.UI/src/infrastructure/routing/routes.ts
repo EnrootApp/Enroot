@@ -8,6 +8,8 @@ export const routes = {
   tenant: "/tenant",
   tasqs: "tasqs",
   assignments: "assignments",
+  accounts: "accounts",
+  reports: "reports",
 };
 
 export const publicRoutes = [

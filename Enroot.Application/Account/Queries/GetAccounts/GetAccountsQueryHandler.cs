@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Enroot.Application.Account.Queries.GetAccounts;
 
-public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr<IEnumerable<AccountModel>>>
+public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr<GetTasqsResult>>
 {
     private readonly IReadRepository<AccountRead> _accountRepository;
 
@@ -17,21 +17,24 @@ public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr
         _accountRepository = accountRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<AccountModel>>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<GetTasqsResult>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
     {
         var accounts = _accountRepository.Filter(a => a.TenantId == request.TenantId);
 
         accounts = accounts.Include(a => a.User);
 
-        if (!string.IsNullOrWhiteSpace(request.Name))
+        if (!string.IsNullOrWhiteSpace(request.Search))
         {
             accounts = accounts
                 .Where(a => (a.User.Email + a.User.FirstName + a.User.LastName)
-                .Contains(request.Name));
+                .Contains(request.Search));
         }
+
+        var totalAmount = await accounts.CountAsync();
+        accounts = accounts.OrderBy(a => a.DbId).Skip(request.Skip).Take(request.Take);
 
         var result = await accounts.ToListAsync(cancellationToken);
 
-        return result.Adapt<List<AccountModel>>();
+        return new GetTasqsResult(result.Adapt<List<AccountModel>>(), totalAmount);
     }
 }

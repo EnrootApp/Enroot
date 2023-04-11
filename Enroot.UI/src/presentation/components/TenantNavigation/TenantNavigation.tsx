@@ -1,4 +1,9 @@
-import { Assignment, AssignmentInd } from "@mui/icons-material";
+import {
+  Assessment,
+  Assignment,
+  AssignmentInd,
+  Group,
+} from "@mui/icons-material";
 import {
   Divider,
   IconButton,
@@ -34,6 +39,26 @@ const TenantNavigation: React.FC<{}> = () => {
               <Assignment />
             </ListItemIcon>
             <ListItemText primary={strings.tasqs} />
+          </ListItemButton>
+        </Link>
+      </ListItem>
+      <ListItem disablePadding>
+        <Link to={routes.accounts} style={{ width: "100%" }}>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary={strings.employees} />
+          </ListItemButton>
+        </Link>
+      </ListItem>
+      <ListItem disablePadding>
+        <Link to={routes.reports} style={{ width: "100%" }}>
+          <ListItemButton>
+            <ListItemIcon>
+              <Assessment />
+            </ListItemIcon>
+            <ListItemText primary={strings.reports} />
           </ListItemButton>
         </Link>
       </ListItem>
