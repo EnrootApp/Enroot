@@ -6,7 +6,6 @@ using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
-using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Domain.Account;
 
@@ -47,6 +46,13 @@ public sealed class Account : AggregateRoot<AccountId>
         account.AddDomainEvent(new AccountCreatedDomainEvent(userId, tenantId, accountId));
 
         return account;
+    }
+
+    public override ErrorOr<Entity<AccountId>> Delete()
+    {
+        AddDomainEvent(new AccountDeletedDomainEvent(UserId, TenantId, Id));
+
+        return this;
     }
 
     public ErrorOr<Account> SetRole(RoleId role)

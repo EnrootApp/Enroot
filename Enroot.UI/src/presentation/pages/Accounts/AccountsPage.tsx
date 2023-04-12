@@ -3,18 +3,18 @@ import {
   DataGrid,
   GridCallbackDetails,
   GridColDef,
-  GridEventListener,
   GridFilterModel,
   GridPaginationModel,
   GridRowModel,
   enUS,
   ruRU,
 } from "@mui/x-data-grid";
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box, IconButton } from "@mui/material";
 import AccountsToolbar from "../../components/AccountsToolbar/AccountsToolbar";
 import strings from "../../localization/locales";
 import { AccountModel } from "../../../domain/account/AccountModel";
 import { Role } from "../../../application/common/enums/role";
+import { Delete } from "@mui/icons-material";
 
 interface Props {
   accounts: { accounts: AccountModel[]; totalAmount: number };
@@ -27,6 +27,7 @@ interface Props {
   paginationModel: GridPaginationModel;
   hasCreateAccountPermission: boolean;
   onRowEditCommit: (newRow: GridRowModel, oldRow: GridRowModel) => void;
+  deleteAccount: ({ id }: { id: string }) => void;
 }
 
 const AccountsPage: React.FC<Props> = ({
@@ -37,6 +38,7 @@ const AccountsPage: React.FC<Props> = ({
   paginationModel,
   hasCreateAccountPermission,
   onRowEditCommit,
+  deleteAccount,
 }) => {
   const roleNameMap = {
     [Role.Default]: strings.defaultRole,
@@ -102,6 +104,21 @@ const AccountsPage: React.FC<Props> = ({
       ],
     },
   ];
+
+  if (hasCreateAccountPermission) {
+    columns.push({
+      field: "actions",
+      headerName: strings.actions,
+      renderCell: (params) => (
+        <IconButton onClick={() => deleteAccount({ id: params.row.id })}>
+          <Delete />
+        </IconButton>
+      ),
+      width: 100,
+      sortable: false,
+      filterable: false,
+    });
+  }
 
   return (
     <Box sx={{ width: "100%" }}>

@@ -80,19 +80,25 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(3540),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(1500),
                             IsDeleted = false
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(3580),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(1520),
                             IsDeleted = false
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(3600),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(1540),
+                            IsDeleted = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(1550),
                             IsDeleted = false
                         });
                 });
@@ -190,9 +196,6 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     b.Property<string>("BlobUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -352,25 +355,19 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(5240),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(3270),
                             IsDeleted = false
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(5270),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(3300),
                             IsDeleted = false
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(5300),
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedOn = new DateTime(2023, 4, 11, 18, 39, 55, 775, DateTimeKind.Utc).AddTicks(5320),
+                            CreatedOn = new DateTime(2023, 4, 12, 12, 18, 18, 400, DateTimeKind.Utc).AddTicks(3330),
                             IsDeleted = false
                         });
                 });
@@ -638,6 +635,16 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                                 {
                                     Value = 3,
                                     RoleId = 1
+                                },
+                                new
+                                {
+                                    Value = 4,
+                                    RoleId = 1
+                                },
+                                new
+                                {
+                                    Value = 1,
+                                    RoleId = 3
                                 },
                                 new
                                 {

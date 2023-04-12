@@ -58,6 +58,23 @@ public sealed class Tenant : AggregateRoot<TenantId>
         return this;
     }
 
+    public ErrorOr<Tenant> DeleteAccountId(AccountId id)
+    {
+        if (id is null)
+        {
+            return Errors.Account.NotFound;
+        }
+
+        if (!_accountIds.Contains(id))
+        {
+            return Errors.Account.NotFound;
+        }
+
+        _accountIds.Remove(id);
+
+        return this;
+    }
+
     public ErrorOr<Tenant> AddTasqId(TasqId id)
     {
         if (id is null)

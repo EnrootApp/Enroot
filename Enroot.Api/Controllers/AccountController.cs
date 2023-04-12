@@ -1,3 +1,4 @@
+using Enroot.Application.Account.Commands.Delete;
 using Enroot.Application.Account.Commands.Invite;
 using Enroot.Application.Account.Commands.SetRole;
 using Enroot.Application.Account.Queries.GetAccounts;
@@ -31,36 +32,6 @@ namespace Enroot.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("role")]
-        [RequireTenantAccount]
-        [RequirePermission(PermissionEnum.CreateAccount)]
-        public async Task<IActionResult> SetRole([FromBody] SetRoleRequest request)
-        {
-            var command = _mapper.Map<SetRoleCommand>(request);
-
-            var result = await _mediator.Send(command);
-
-            return result.Match(
-                Ok,
-                Problem
-            );
-        }
-
-        [HttpPost("invite")]
-        [RequireTenantAccount]
-        [RequirePermission(PermissionEnum.CreateAccount)]
-        public async Task<IActionResult> InviteAsync([FromBody] InviteAccountRequest request)
-        {
-            var command = new InviteCommand(request.Email, GetTenantId());
-
-            var result = await _mediator.Send(command);
-
-            return result.Match(
-                Ok,
-                Problem
-            );
-        }
-
         [HttpGet]
         [RequireTenantAccount]
         public async Task<IActionResult> GetAsync([FromQuery] GetAccountsRequest request)
@@ -89,13 +60,44 @@ namespace Enroot.Api.Controllers
             );
         }
 
-        [HttpPost("inviteByAdmin")]
-        [Authorize(UserRoles.SystemAdmin)]
-        public async Task<IActionResult> InviteByAdminAsync([FromBody] InviteAccountRequest request)
+        [HttpPost("role")]
+        [RequireTenantAccount]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> SetRole([FromBody] SetRoleRequest request)
         {
-            var command = new InviteCommand(request.Email, GetTenantId());
+            var command = _mapper.Map<SetRoleCommand>(request);
 
             var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpPost("invite")]
+        [RequireTenantAccount]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> InviteAsync([FromBody] InviteAccountRequest request)
+        {
+            var command = new InviteCommand(request.Email, GetTenantId(), request.RoleId);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpDelete("{id}")]
+        [RequireTenantAccount]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var query = new DeleteAccountCommand(id, GetRequestAccountId());
+
+            var result = await _mediator.Send(query);
 
             return result.Match(
                 Ok,

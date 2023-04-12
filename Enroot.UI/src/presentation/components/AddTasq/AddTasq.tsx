@@ -80,7 +80,7 @@ const AddTasq: React.FC<Props> = ({ open, formikConfig, setOpen }) => {
                         hidden
                         value={values.assigneeId}
                       />
-                      <Typography>Исполнитель: </Typography>
+                      <Typography>{strings.assignee}: </Typography>
                       <SelectAccountContainer
                         onChange={(value) => {
                           setFieldTouched("assigneeId", true);

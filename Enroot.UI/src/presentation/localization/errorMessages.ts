@@ -9,6 +9,8 @@ const errorStrings = new LocalizedStrings({
     fileToBig: "Selected file is to big",
     tenantName:
       "Tenant Name can contain at least 3 numeric or latin alphabetic characters",
+    dateAfter: "The specified date must be after initial",
+    dateRange: "Date range must not exceed {0} days",
   },
   ruRU: {
     notEmpty: "Поле должно быть заполнено",
@@ -18,6 +20,8 @@ const errorStrings = new LocalizedStrings({
     fileToBig: "Выбранный файл слишком велик",
     tenantName:
       "Название организации может состоять только из цифр и латинских букв и должно включать не менее 3 символов",
+    dateAfter: "Указанная дата должна быть позже начальной",
+    dateRange: "Временной период не должен превышать {0} дней",
   },
 });
 

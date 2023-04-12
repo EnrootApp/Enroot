@@ -3,6 +3,7 @@ import { Tasq } from "../../../domain/tasq/Tasq";
 import { AddTasqForm } from "../../components/AddTasq/AddTasqContainer.types";
 import { TasqsFilters } from "../../pages/Tasqs/TasksPage.types";
 import { apiSlice } from "./apiSlice";
+import { Report } from "../../../domain/tasq/Report";
 
 export const tasqsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +16,15 @@ export const tasqsApi = apiSlice.injectEndpoints({
     getTasq: builder.query<Tasq, { id: string }>({
       query: ({ id }) => ({
         url: `/tasq/${id}`,
+      }),
+    }),
+    getReport: builder.query<Report, { from: string; to: string }>({
+      query: ({ from, to }) => ({
+        url: `/tasq/report`,
+        params: {
+          from,
+          to,
+        },
       }),
     }),
     createTasq: builder.mutation<Tasq, AddTasqForm>({
@@ -84,4 +94,5 @@ export const {
   useApproveTasqMutation,
   useRejectTasqMutation,
   useAssignTasqMutation,
+  useLazyGetReportQuery,
 } = tasqsApi;

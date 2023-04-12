@@ -19,5 +19,6 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<AttachmentRead>
 
         builder.Ignore(a => a.DbId);
         builder.Ignore(a => a.CreatedOn);
+        builder.Ignore(a => a.IsDeleted);
     }
 }

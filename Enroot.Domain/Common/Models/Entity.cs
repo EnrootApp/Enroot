@@ -1,3 +1,5 @@
+using ErrorOr;
+
 namespace Enroot.Domain.Common.Models;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
@@ -6,7 +8,7 @@ where TId : notnull
     public int DbId { get; private set; }
     public TId Id { get; protected set; }
     public DateTime CreatedOn { get; private set; }
-    public bool IsDeleted { get; private set; }
+    public bool IsDeleted { get; protected set; }
 
     protected Entity()
     {
@@ -41,5 +43,11 @@ where TId : notnull
     public override int GetHashCode()
     {
         return Id.GetHashCode();
+    }
+
+    public virtual ErrorOr<Entity<TId>> Delete()
+    {
+        IsDeleted = true;
+        return this;
     }
 }

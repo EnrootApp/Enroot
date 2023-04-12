@@ -23,7 +23,7 @@ const HomePage: React.FC<Props> = ({
   isLoading,
 }) => {
   return (
-    <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <HomeAppBarContainer />
       {isLoading ? (
         <CircularProgressCentered />

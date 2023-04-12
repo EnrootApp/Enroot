@@ -64,7 +64,7 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, ErrorOr<Accou
             emailBody = string.Format(_localizer["InviteNewUserBody"], tenant!.Name.Value, password);
         }
 
-        var createAccountCommand = new CreateAccountCommand(user.Id.Value, command.TenantId, (int)RoleEnum.Default);
+        var createAccountCommand = new CreateAccountCommand(user.Id.Value, command.TenantId, command.RoleId);
         var result = await _mediator.Send(createAccountCommand, cancellationToken: cancellationToken);
 
         if (result.IsError)

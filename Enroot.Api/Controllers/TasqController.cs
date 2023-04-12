@@ -16,6 +16,7 @@ using Mapster;
 using Enroot.Infrastructure.Authentication;
 using Enroot.Application.Tasq.Queries.GetTasq;
 using Enroot.Application.Tasq.Commands.Update;
+using Enroot.Application.Tasq.Queries.ReportByTenant;
 
 namespace Enroot.Api.Controllers
 {
@@ -64,6 +65,21 @@ namespace Enroot.Api.Controllers
             var tenantId = GetTenantId();
 
             var query = new GetTasqQuery(tenantId, id);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpGet("report")]
+        public async Task<IActionResult> GetReport([FromQuery] DateTime from, [FromQuery] DateTime to)
+        {
+            var tenantId = GetTenantId();
+
+            var query = new ReportByTenantQuery(tenantId, from, to);
 
             var result = await _mediator.Send(query);
 

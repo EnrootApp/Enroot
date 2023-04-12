@@ -9,6 +9,7 @@ import TenantTitle from "../../uikit/TenantTitle/TenantTitle";
 import AddTasqContainer from "../../../application/components/AddTasq/AddTasqContainer";
 import { Permission } from "../../../application/common/enums/permission";
 import { useGetMyAccountQuery } from "../../../application/state/api/accountApi";
+import InviteAccountContainer from "../../../application/components/InviteAccount/InviteAccountContainer";
 
 const AccountsToolbar = () => {
   const { data, isFetching } = useGetMyAccountQuery({});
@@ -23,7 +24,7 @@ const AccountsToolbar = () => {
       <GridToolbarQuickFilter debounceMs={800} />
       <GridToolbarColumnsButton />
       <GridToolbarDensitySelector />
-      {showAddAccountButton && <AddTasqContainer />}
+      {showAddAccountButton && <InviteAccountContainer />}
     </GridToolbarContainer>
   );
 };

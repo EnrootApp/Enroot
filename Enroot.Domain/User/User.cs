@@ -61,6 +61,23 @@ public sealed class User : AggregateRoot<UserId>
         return this;
     }
 
+    public ErrorOr<User> DeleteAccountId(AccountId id)
+    {
+        if (id is null)
+        {
+            return Errors.Account.NotFound;
+        }
+
+        if (!_accountIds.Contains(id))
+        {
+            return Errors.Account.NotFound;
+        }
+
+        _accountIds.Remove(id);
+
+        return this;
+    }
+
     public ErrorOr<User> UpdateInfo(Name firstName, Name lastName, string avatarUrl)
     {
         FirstName = firstName;

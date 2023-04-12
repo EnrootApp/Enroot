@@ -37,11 +37,6 @@ public class HasPermissionQueryHandler : IRequestHandler<HasPermissionQuery, Err
 
         var role = await _roleRepository.GetByIdAsync(account.RoleId, cancellationToken: cancellationToken);
 
-        if (role!.Id == RoleId.Create(RoleEnum.Deactivated))
-        {
-            return Errors.Permission.NotFound;
-        }
-
         return role!.Permissions.Contains(permission.Value);
     }
 }

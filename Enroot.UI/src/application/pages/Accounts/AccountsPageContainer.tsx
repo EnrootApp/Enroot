@@ -1,5 +1,4 @@
 import {
-  GridEventListener,
   GridFilterModel,
   GridPaginationModel,
   GridRowModel,
@@ -7,6 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import AccountsPage from "../../../presentation/pages/Accounts/AccountsPage";
 import {
+  useDeleteAccountMutation,
   useGetMyAccountQuery,
   useLazyGetAccountsQuery,
   useSetRoleMutation,
@@ -14,8 +14,10 @@ import {
 import { Permission } from "../../common/enums/permission";
 
 const AccountsPageContainer = () => {
-  const [getAccounts, accounts] = useLazyGetAccountsQuery();
   const [setRole] = useSetRoleMutation();
+  const [deleteAccount] = useDeleteAccountMutation();
+
+  const [getAccounts, accounts] = useLazyGetAccountsQuery();
   const { data, isFetching } = useGetMyAccountQuery({});
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
@@ -27,16 +29,6 @@ const AccountsPageContainer = () => {
     quickFilterValues: [],
   });
 
-  useEffect(() => {
-    if (accounts.isUninitialized) {
-      getAccounts({
-        search: "",
-        skip: paginationModel!.page * paginationModel!.pageSize,
-        take: paginationModel!.pageSize,
-      });
-    }
-  }, []);
-
   const updatePaginationModel = (model: GridPaginationModel) => {
     setPaginationModel(model);
     getAccounts({
@@ -47,6 +39,7 @@ const AccountsPageContainer = () => {
   };
 
   const onFilterModelChange = (model: GridFilterModel) => {
+    setFilterModel(model);
     getAccounts({
       search: model.quickFilterValues![0],
       skip: paginationModel!.page * paginationModel!.pageSize,
@@ -62,15 +55,26 @@ const AccountsPageContainer = () => {
   const hasCreateAccountPermission =
     data?.permissions.includes(Permission.CreateAccount) || false;
 
+  useEffect(() => {
+    if (accounts.isUninitialized) {
+      getAccounts({
+        search: "",
+        skip: paginationModel!.page * paginationModel!.pageSize,
+        take: paginationModel!.pageSize,
+      });
+    }
+  }, []);
+
   return (
     <AccountsPage
-      accounts={accounts.data}
+      accounts={accounts.data || { accounts: [], totalAmount: 0 }}
       isSuccess={accounts.isSuccess}
       setPaginationModel={updatePaginationModel}
       paginationModel={paginationModel}
       onFilterModelChange={onFilterModelChange}
       hasCreateAccountPermission={hasCreateAccountPermission}
       onRowEditCommit={onRowEditCommit}
+      deleteAccount={deleteAccount}
     />
   );
 };

@@ -10,6 +10,7 @@ export const StyledPaper = styled(Paper, {
   margin: "auto",
   display: "flex",
   padding: 0,
+  overflow: "auto",
 
   ...(!shrink && {
     height: "100%",

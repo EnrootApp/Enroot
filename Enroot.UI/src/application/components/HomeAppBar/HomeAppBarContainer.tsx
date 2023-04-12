@@ -1,8 +1,11 @@
 import * as React from "react";
 import HomeAppBar from "../../../presentation/components/HomeAppBar/HomeAppBar";
 import { HomeAppBarProps } from "./HomeAppBarContainer.types";
+import { useDispatch } from "react-redux";
+import { apiSlice } from "../../state/api/apiSlice";
 
 function HomeAppBarContainer() {
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -17,6 +20,7 @@ function HomeAppBarContainer() {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    dispatch(apiSlice.util.resetApiState());
     window.location.reload();
   };
 

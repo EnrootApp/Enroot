@@ -30,7 +30,8 @@ where TId : ValueObject
 
     public async Task<TAggregateRoot> DeleteAsync(TAggregateRoot aggregateRoot)
     {
-        var result = _context.Set<TAggregateRoot>().Remove(aggregateRoot);
+        aggregateRoot.Delete();
+        var result = _context.Set<TAggregateRoot>().Update(aggregateRoot);
         await SaveChangesAsync();
 
         return result.Entity;

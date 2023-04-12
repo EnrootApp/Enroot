@@ -1,9 +1,4 @@
-import {
-  Assessment,
-  Assignment,
-  AssignmentInd,
-  Group,
-} from "@mui/icons-material";
+import { Assessment, Assignment, Group } from "@mui/icons-material";
 import {
   Divider,
   IconButton,
@@ -20,7 +15,11 @@ import strings from "../../localization/locales";
 import { useState } from "react";
 import { StyledList } from "./TenantNavigation.styles";
 
-const TenantNavigation: React.FC<{}> = () => {
+interface Props {
+  hasGetReportPermission: boolean;
+}
+
+const TenantNavigation: React.FC<Props> = ({ hasGetReportPermission }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,16 +51,19 @@ const TenantNavigation: React.FC<{}> = () => {
           </ListItemButton>
         </Link>
       </ListItem>
-      <ListItem disablePadding>
-        <Link to={routes.reports} style={{ width: "100%" }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <Assessment />
-            </ListItemIcon>
-            <ListItemText primary={strings.reports} />
-          </ListItemButton>
-        </Link>
-      </ListItem>
+      {hasGetReportPermission && (
+        <ListItem disablePadding>
+          <Link to={routes.reports} style={{ width: "100%" }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <Assessment />
+              </ListItemIcon>
+              <ListItemText primary={strings.reports} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+      )}
+
       <Divider />
       <ListItem disablePadding>
         <Link to={routes.home} style={{ width: "100%" }}>

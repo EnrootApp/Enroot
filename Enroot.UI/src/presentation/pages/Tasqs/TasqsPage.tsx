@@ -89,7 +89,7 @@ const TasqsPage: React.FC<Props> = ({
   ];
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box style={{ flex: 1 }}>
       <DataGrid
         getRowId={(row) => row.key}
         rows={tasqs?.tasqs || []}

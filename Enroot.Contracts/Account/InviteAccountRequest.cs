@@ -1,3 +1,3 @@
 namespace Enroot.Contracts.Account;
 
-public record InviteAccountRequest(string Email);
+public record InviteAccountRequest(string Email, int RoleId);
