@@ -86,6 +86,14 @@ const strings = new LocalizedStrings({
     reportInProgress: "Assignments in progress",
     reportToDo: "Todo tasks amount",
     reportNotAssigned: "Not assigned tasks",
+    settings: "Settings",
+    tenantImage: "Tenant Logo",
+    deleteTenant: "Delete Tenant",
+    cancel: "Cancel",
+    deleteAccountConfirmation:
+      "Are you sure you want to delete this account? This action cannot be undone.",
+    deleteTenantConfirmation:
+      "Are you sure you want to delete the tenant? This action cannot be undone.",
   },
   ruRU: {
     signIn: "Вход",
@@ -172,6 +180,14 @@ const strings = new LocalizedStrings({
     reportInProgress: "Всего попыток в процессе",
     reportToDo: "Всего не начатых задач",
     reportNotAssigned: "Всего не назначенных задач",
+    settings: "Настройки",
+    tenantImage: "Логотип организации",
+    deleteTenant: "Удалить организацию",
+    cancel: "Отмена",
+    deleteAccountConfirmation:
+      "Вы уверены, что хотите удалить эту учетную запись? Это действие нельзя отменить.",
+    deleteTenantConfirmation:
+      "Вы уверены, что хотите удалить организацию? Это действие нельзя отменить.",
   },
 });
 

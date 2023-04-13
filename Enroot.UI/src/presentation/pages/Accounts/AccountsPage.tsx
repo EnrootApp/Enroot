@@ -15,6 +15,8 @@ import strings from "../../localization/locales";
 import { AccountModel } from "../../../domain/account/AccountModel";
 import { Role } from "../../../application/common/enums/role";
 import { Delete } from "@mui/icons-material";
+import ConfirmationDialog from "../../components/ConfirmationDialog/ConfirmationDialog";
+import { AccountIdModel } from "../../../application/pages/Accounts/AccountsPageContainer.types";
 
 interface Props {
   accounts: { accounts: AccountModel[]; totalAmount: number };
@@ -27,7 +29,9 @@ interface Props {
   paginationModel: GridPaginationModel;
   hasCreateAccountPermission: boolean;
   onRowEditCommit: (newRow: GridRowModel, oldRow: GridRowModel) => void;
-  deleteAccount: ({ id }: { id: string }) => void;
+  deleteAccount: (value: AccountIdModel) => void;
+  accountToDelete: AccountIdModel | null;
+  setAccountToDelete: (value: AccountIdModel | null) => void;
 }
 
 const AccountsPage: React.FC<Props> = ({
@@ -39,6 +43,8 @@ const AccountsPage: React.FC<Props> = ({
   hasCreateAccountPermission,
   onRowEditCommit,
   deleteAccount,
+  accountToDelete,
+  setAccountToDelete,
 }) => {
   const roleNameMap = {
     [Role.Default]: strings.defaultRole,
@@ -110,7 +116,7 @@ const AccountsPage: React.FC<Props> = ({
       field: "actions",
       headerName: strings.actions,
       renderCell: (params) => (
-        <IconButton onClick={() => deleteAccount({ id: params.row.id })}>
+        <IconButton onClick={() => setAccountToDelete({ id: params.row.id })}>
           <Delete />
         </IconButton>
       ),
@@ -149,6 +155,17 @@ const AccountsPage: React.FC<Props> = ({
         disableRowSelectionOnClick
         processRowUpdate={(newRow, oldRow) => onRowEditCommit(newRow, oldRow)}
         onProcessRowUpdateError={(error) => console.log(error)}
+      />
+      <ConfirmationDialog
+        open={accountToDelete !== null}
+        title={strings.deleteAccountConfirmation}
+        onAgree={() => {
+          deleteAccount(accountToDelete!);
+        }}
+        onDisagree={() => {}}
+        onClose={() => {
+          setAccountToDelete(null);
+        }}
       />
     </Box>
   );

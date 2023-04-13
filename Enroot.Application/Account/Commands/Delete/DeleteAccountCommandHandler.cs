@@ -31,14 +31,14 @@ public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand,
     {
         var remover = await _accountRepository.GetByIdAsync(AccountId.Create(command.RemoverId), cancellationToken: cancellationToken);
 
-        if (remover is null)
+        if (remover?.IsDeleted != false)
         {
             return Domain.Common.Errors.Errors.Account.NotFound;
         }
 
         var accountToDelete = await _accountRepository.GetByIdAsync(AccountId.Create(command.AccountId), cancellationToken: cancellationToken);
 
-        if (accountToDelete is null)
+        if (accountToDelete?.IsDeleted != false)
         {
             return Domain.Common.Errors.Errors.Account.NotFound;
         }

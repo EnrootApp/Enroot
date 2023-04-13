@@ -16,6 +16,7 @@ import TasqPageContainer from "../../application/pages/Tasq/TasqPageContainer";
 import AccountsPageContainer from "../../application/pages/Accounts/AccountsPageContainer";
 import ReportPageContainer from "../../application/pages/Report/ReportPageContainer";
 import { Permission } from "../../application/common/enums/permission";
+import TenantSettingsContainer from "../../application/pages/TenantSettings/TenantSettingsContainer";
 
 export const router = createBrowserRouter([
   {
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute permission={Permission.GetReport}>
                 <ReportPageContainer />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: routes.tenantSettings,
+            element: (
+              <ProtectedRoute permission={Permission.ModifyTenantSettings}>
+                <TenantSettingsContainer />
               </ProtectedRoute>
             ),
           },

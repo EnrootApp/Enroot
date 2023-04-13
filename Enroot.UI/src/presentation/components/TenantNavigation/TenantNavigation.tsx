@@ -1,4 +1,4 @@
-import { Assessment, Assignment, Group } from "@mui/icons-material";
+import { Assessment, Assignment, Group, Settings } from "@mui/icons-material";
 import {
   Divider,
   IconButton,
@@ -63,6 +63,16 @@ const TenantNavigation: React.FC<Props> = ({ hasGetReportPermission }) => {
           </Link>
         </ListItem>
       )}
+      <ListItem disablePadding>
+        <Link to={routes.tenantSettings} style={{ width: "100%" }}>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary={strings.settings} />
+          </ListItemButton>
+        </Link>
+      </ListItem>
 
       <Divider />
       <ListItem disablePadding>

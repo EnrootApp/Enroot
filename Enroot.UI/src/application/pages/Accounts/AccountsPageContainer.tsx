@@ -12,8 +12,12 @@ import {
   useSetRoleMutation,
 } from "../../state/api/accountApi";
 import { Permission } from "../../common/enums/permission";
+import { AccountIdModel } from "./AccountsPageContainer.types";
 
 const AccountsPageContainer = () => {
+  const [accountToDelete, setAccountToDelete] = useState<AccountIdModel | null>(
+    null
+  );
   const [setRole] = useSetRoleMutation();
   const [deleteAccount] = useDeleteAccountMutation();
 
@@ -75,6 +79,10 @@ const AccountsPageContainer = () => {
       hasCreateAccountPermission={hasCreateAccountPermission}
       onRowEditCommit={onRowEditCommit}
       deleteAccount={deleteAccount}
+      accountToDelete={accountToDelete}
+      setAccountToDelete={(value: AccountIdModel | null) =>
+        setAccountToDelete(value)
+      }
     />
   );
 };

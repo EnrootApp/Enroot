@@ -41,6 +41,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
                 new { Value=PermissionEnum.ReviewTasq, RoleId=tenantAdminRole },
                 new { Value=PermissionEnum.CreateAccount, RoleId=tenantAdminRole },
                 new { Value=PermissionEnum.GetReport, RoleId=tenantAdminRole },
+                new { Value=PermissionEnum.ModifyTenantSettings, RoleId=tenantAdminRole },
 
                 new { Value= PermissionEnum.CreateTasq, RoleId=moderatorRole },
                 new { Value=PermissionEnum.ReviewTasq, RoleId=moderatorRole },

@@ -21,7 +21,7 @@ const TenantCard: React.FC<Props> = ({ onClick, tenant }) => {
           component="img"
           height="200"
           alt={tenant.name}
-          src={tenant.logoUrl || "imagePlaceholder.svg"}
+          src={tenant.logoUrl || "/imagePlaceholder.svg"}
         />
         <CardContent
           sx={{

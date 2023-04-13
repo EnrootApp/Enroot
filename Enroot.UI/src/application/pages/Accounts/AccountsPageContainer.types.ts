@@ -3,3 +3,7 @@ export interface AccountsFilters {
   skip: number;
   take: number;
 }
+
+export interface AccountIdModel {
+  id: string;
+}

@@ -50,6 +50,8 @@ public sealed class Account : AggregateRoot<AccountId>
 
     public override ErrorOr<Entity<AccountId>> Delete()
     {
+        base.Delete();
+
         AddDomainEvent(new AccountDeletedDomainEvent(UserId, TenantId, Id));
 
         return this;

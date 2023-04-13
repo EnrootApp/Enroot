@@ -8,9 +8,10 @@ const AppWindowContainer: React.FC<AppWindowContainerProps> = ({}) => {
   const [shrink, setShrink] = useState(false);
 
   const location = useLocation();
+  const route = location.pathname.split("/").pop();
 
   useEffect(() => {
-    setShrink(shrinkRoutes.includes(location.pathname));
+    setShrink(shrinkRoutes.includes(route!));
   }, [location]);
 
   return <AppWindow shrink={shrink} />;

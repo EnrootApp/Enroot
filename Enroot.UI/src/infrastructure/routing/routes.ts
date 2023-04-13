@@ -10,6 +10,7 @@ export const routes = {
   assignments: "assignments",
   accounts: "accounts",
   reports: "reports",
+  tenantSettings: "settings",
 };
 
 export const publicRoutes = [
@@ -25,4 +26,5 @@ export const shrinkRoutes = [
   routes.forgotPassword,
   routes.resetPassword,
   routes.profile,
+  routes.tenantSettings,
 ];

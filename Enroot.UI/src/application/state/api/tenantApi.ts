@@ -17,6 +17,33 @@ export const tenantApi = apiSlice.injectEndpoints({
         params: { name },
       }),
     }),
+    getCurrentTenant: builder.query<Tenant, {}>({
+      query: () => {
+        const pathname = window.location.pathname;
+        const regex = /^\/tenant\/([^/]+)/;
+        const match = pathname.match(regex);
+        const tenantName = match?.[1] || "";
+
+        return {
+          url: "/tenant",
+          params: { name: tenantName },
+        };
+      },
+      transformResponse: (response: Tenant[], meta, arg) => response.shift()!,
+    }),
+    deleteTenant: builder.mutation<Tenant, {}>({
+      query: ({}) => ({
+        url: "/tenant",
+        method: "DELETE",
+      }),
+    }),
+    updateTenant: builder.mutation<Tenant, { logoUrl: string }>({
+      query: ({ logoUrl }) => ({
+        url: "/tenant",
+        body: { logoUrl },
+        method: "PUT",
+      }),
+    }),
   }),
 });
 
@@ -24,4 +51,7 @@ export const {
   useCreateTenantMutation,
   useLazyGetTenantsQuery,
   useGetTenantsQuery,
+  useUpdateTenantMutation,
+  useDeleteTenantMutation,
+  useGetCurrentTenantQuery,
 } = tenantApi;

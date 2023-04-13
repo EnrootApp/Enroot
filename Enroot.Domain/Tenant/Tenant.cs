@@ -41,6 +41,24 @@ public sealed class Tenant : AggregateRoot<TenantId>
         return new Tenant(id, name, logoUrl);
     }
 
+    public ErrorOr<Tenant> Update(TenantName name, string logoUrl)
+    {
+        if (logoUrl is null)
+        {
+            return Errors.Tenant.NotFound;
+        }
+
+        if (name is null)
+        {
+            return Errors.Tenant.NameInvalid;
+        }
+
+        Name = name;
+        LogoUrl = logoUrl;
+
+        return this;
+    }
+
     public ErrorOr<Tenant> AddAccountId(AccountId id)
     {
         if (id is null)

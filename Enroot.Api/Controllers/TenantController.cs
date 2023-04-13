@@ -9,6 +9,10 @@ using MediatR;
 using Enroot.Application.Tenant.Commands.Create;
 using Enroot.Application.User.Queries.GetById;
 using Mapster;
+using Enroot.Infrastructure.Authorization;
+using Enroot.Domain.Permission.Enums;
+using Enroot.Application.Tenant.Commands.Update;
+using Enroot.Application.Tenant.Commands.Delete;
 
 namespace Enroot.Api.Controllers;
 
@@ -44,7 +48,7 @@ public class TenantController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTenants([FromQuery] GetTenantsRequest request)
+    public async Task<IActionResult> GetTenantsAsync([FromQuery] GetTenantsRequest request)
     {
         var requestorUserId = GetRequestUserId();
 
@@ -59,6 +63,34 @@ public class TenantController : ApiController
         var query = new TenantsQuery(requestorUserId, request.Skip, request.Take, request.Name, onlyParticipatingTenants);
 
         var result = await _mediator.Send(query);
+
+        return result.Match(
+            value => Ok(value.Adapt<TenantResponse[]>()),
+            Problem
+        );
+    }
+
+    [HttpPut]
+    [RequirePermission(PermissionEnum.ModifyTenantSettings)]
+    public async Task<IActionResult> UpdateTenantAsync([FromBody] UpdateTenantRequest request)
+    {
+        var command = new UpdateTenantCommand(GetTenantId(), request.LogoUrl);
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            value => Ok(value.Adapt<TenantResponse[]>()),
+            Problem
+        );
+    }
+
+    [HttpDelete]
+    [RequirePermission(PermissionEnum.ModifyTenantSettings)]
+    public async Task<IActionResult> DeleteTenantAsync()
+    {
+        var command = new DeleteTenantCommand(GetTenantId());
+
+        var result = await _mediator.Send(command);
 
         return result.Match(
             value => Ok(value.Adapt<TenantResponse[]>()),

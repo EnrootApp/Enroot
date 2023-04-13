@@ -2,9 +2,9 @@ import { styled } from "@mui/material/styles";
 import { Button, ButtonProps } from "@mui/material";
 
 export const StyledButton = styled(Button)<ButtonProps>(
-  ({ theme, variant }) => ({
+  ({ theme, variant, color }) => ({
     color: theme.palette.background.default,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: color || theme.palette.secondary.main,
     textTransform: "none",
 
     "&:hover": {
