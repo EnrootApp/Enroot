@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
@@ -24,9 +24,14 @@ const TenantPage: React.FC<Props> = ({ isLoading }) => {
           overflow: "auto",
         }}
       >
-        <TenantNavigationContainer />
-
-        {isLoading ? <CircularProgressCentered /> : <Outlet />}
+        {isLoading ? (
+          <CircularProgressCentered />
+        ) : (
+          <>
+            <TenantNavigationContainer />
+            <Outlet />
+          </>
+        )}
       </Box>
     </div>
   );

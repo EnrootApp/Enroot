@@ -1,8 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Account;
 using Enroot.Domain.Account.ValueObjects;
+using Enroot.Domain.Tenant;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.User.ValueObjects;
 using Microsoft.AspNetCore.Authentication;
@@ -13,31 +13,38 @@ namespace Enroot.Infrastructure.Authentication;
 public class ClaimsTransformer : IClaimsTransformation
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
+    private readonly IRepository<Tenant, TenantId> _tenantRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ClaimsTransformer(IRepository<Account, AccountId> accountRepository, IHttpContextAccessor httpContextAccessor)
+    public ClaimsTransformer(
+        IRepository<Account, AccountId> accountRepository,
+        IHttpContextAccessor httpContextAccessor,
+        IRepository<Tenant, TenantId> tenantRepository)
     {
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;
+        _tenantRepository = tenantRepository;
     }
 
     public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
     {
+        var currentPrincipal = (ClaimsIdentity)principal.Identity!;
+
         if (_httpContextAccessor.HttpContext is null)
         {
             return principal;
         }
 
-        var tenantIdHeader = _httpContextAccessor.HttpContext.Request.Headers["TenantId"];
+        var tenantNameHeader = _httpContextAccessor.HttpContext.Request.Headers["Tenant"];
 
-        var parsed = Guid.TryParse(tenantIdHeader, out Guid tenantGuid);
+        var tenant = await _tenantRepository.FindAsync(t => t.Name.Value == tenantNameHeader.ToString());
 
-        if (!parsed)
+        if (tenant is null)
         {
             return principal;
         }
 
-        var tenantId = TenantId.Create(tenantGuid);
+        currentPrincipal.AddClaim(new Claim(EnrootClaimNames.TenantId, tenant.Id.Value.ToString()));
 
         var userIdClaimValue = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -48,14 +55,13 @@ public class ClaimsTransformer : IClaimsTransformation
 
         var userId = UserId.Create(Guid.Parse(userIdClaimValue));
 
-        var account = await _accountRepository.FindAsync(a => a.TenantId == tenantId && a.UserId == userId, cancellationToken: CancellationToken.None);
+        var account = await _accountRepository.FindAsync(a => a.TenantId == tenant.Id && a.UserId == userId, cancellationToken: CancellationToken.None);
 
         if (account is null)
         {
             return principal;
         }
 
-        var currentPrincipal = (ClaimsIdentity)principal.Identity!;
         currentPrincipal.AddClaim(new Claim(EnrootClaimNames.AccountId, account.Id.Value.ToString()));
 
         return principal;

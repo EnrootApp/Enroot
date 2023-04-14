@@ -75,6 +75,7 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet("report")]
+        [RequirePermission(PermissionEnum.GetReport)]
         public async Task<IActionResult> GetReport([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
             var tenantId = GetTenantId();

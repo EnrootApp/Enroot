@@ -10,7 +10,7 @@ const LanguagePicker: React.FC<Props> = ({ onChange }) => {
   return (
     <FormControl sx={{ width: "fit-content" }}>
       <NativeSelect
-        defaultValue={localStorage.getItem("lang") || "ruRU"}
+        defaultValue={localStorage.getItem("lang") || "enUS"}
         startAdornment={
           <InputAdornment position="start">
             <Language />

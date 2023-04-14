@@ -1,11 +1,11 @@
 using Enroot.Application.Account.Commands.Delete;
 using Enroot.Application.Account.Commands.Invite;
+using Enroot.Application.Account.Commands.Restore;
 using Enroot.Application.Account.Commands.SetRole;
 using Enroot.Application.Account.Queries.GetAccounts;
 using Enroot.Application.Account.Queries.GetMe;
 using Enroot.Contracts.Account;
 using Enroot.Domain.Permission.Enums;
-using Enroot.Domain.User.Enums;
 using Enroot.Infrastructure.Authentication;
 using Enroot.Infrastructure.Authorization;
 using MapsterMapper;
@@ -16,6 +16,8 @@ using Microsoft.Extensions.Localization;
 
 namespace Enroot.Api.Controllers
 {
+    [Authorize]
+    [RequireTenantAccount]
     [Route("[controller]")]
     public class AccountController : ApiController
     {
@@ -33,10 +35,9 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet]
-        [RequireTenantAccount]
         public async Task<IActionResult> GetAsync([FromQuery] GetAccountsRequest request)
         {
-            var query = new GetAccountsQuery(GetTenantId(), request.Search, request.Skip, request.Take);
+            var query = new GetAccountsQuery(GetTenantId(), request.Search, request.IncludeDeleted, request.Skip, request.Take);
 
             var result = await _mediator.Send(query);
 
@@ -47,7 +48,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpGet("me")]
-        [RequireTenantAccount]
         public async Task<IActionResult> GetPermissionsAsync()
         {
             var query = new GetMeQuery(GetRequestAccountId());
@@ -61,7 +61,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("role")]
-        [RequireTenantAccount]
         [RequirePermission(PermissionEnum.CreateAccount)]
         public async Task<IActionResult> SetRole([FromBody] SetRoleRequest request)
         {
@@ -76,7 +75,6 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpPost("invite")]
-        [RequireTenantAccount]
         [RequirePermission(PermissionEnum.CreateAccount)]
         public async Task<IActionResult> InviteAsync([FromBody] InviteAccountRequest request)
         {
@@ -91,11 +89,24 @@ namespace Enroot.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [RequireTenantAccount]
         [RequirePermission(PermissionEnum.CreateAccount)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var query = new DeleteAccountCommand(id, GetRequestAccountId());
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                Ok,
+                Problem
+            );
+        }
+
+        [HttpPost("{id}")]
+        [RequirePermission(PermissionEnum.CreateAccount)]
+        public async Task<IActionResult> RestoreAsync(Guid id)
+        {
+            var query = new RestoreAccountCommand(id);
 
             var result = await _mediator.Send(query);
 

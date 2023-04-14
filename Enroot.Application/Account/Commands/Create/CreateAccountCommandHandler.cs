@@ -26,11 +26,11 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand,
         var userId = UserId.Create(command.UserId);
         var tenantId = TenantId.Create(command.TenantId);
 
-        var account = await _accountRepository.FindAsync(a => a.UserId == userId && a.TenantId == tenantId, cancellationToken: cancellationToken);
+        var account = await _accountRepository.FindAsync(a => a.UserId == userId && a.TenantId == tenantId, true, cancellationToken: cancellationToken);
 
         if (account is not null)
         {
-            return Errors.User.AccountExists;
+            return Errors.Account.AlreadyExists;
         }
 
         var roleIdResult = RoleId.Create((RoleEnum)command.RoleId);

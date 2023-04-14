@@ -14,7 +14,7 @@ import AccountsToolbar from "../../components/AccountsToolbar/AccountsToolbar";
 import strings from "../../localization/locales";
 import { AccountModel } from "../../../domain/account/AccountModel";
 import { Role } from "../../../application/common/enums/role";
-import { Delete } from "@mui/icons-material";
+import { Cancel, Check, Delete, RestoreFromTrash } from "@mui/icons-material";
 import ConfirmationDialog from "../../components/ConfirmationDialog/ConfirmationDialog";
 import { AccountIdModel } from "../../../application/pages/Accounts/AccountsPageContainer.types";
 
@@ -30,8 +30,8 @@ interface Props {
   hasCreateAccountPermission: boolean;
   onRowEditCommit: (newRow: GridRowModel, oldRow: GridRowModel) => void;
   deleteAccount: (value: AccountIdModel) => void;
-  accountToDelete: AccountIdModel | null;
-  setAccountToDelete: (value: AccountIdModel | null) => void;
+  account: AccountIdModel | null;
+  selectAccount: (value: AccountIdModel | null) => void;
 }
 
 const AccountsPage: React.FC<Props> = ({
@@ -43,8 +43,8 @@ const AccountsPage: React.FC<Props> = ({
   hasCreateAccountPermission,
   onRowEditCommit,
   deleteAccount,
-  accountToDelete,
-  setAccountToDelete,
+  account,
+  selectAccount,
 }) => {
   const roleNameMap = {
     [Role.Default]: strings.defaultRole,
@@ -113,11 +113,27 @@ const AccountsPage: React.FC<Props> = ({
 
   if (hasCreateAccountPermission) {
     columns.push({
+      field: "includeDeleted",
+      headerName: strings.deleted,
+      renderCell: (params) => (params.value ? <Check /> : <Cancel />),
+      width: 100,
+      sortable: false,
+      type: "boolean",
+      valueGetter: (row) => row.row.isDeleted,
+    });
+    columns.push({
       field: "actions",
       headerName: strings.actions,
       renderCell: (params) => (
-        <IconButton onClick={() => setAccountToDelete({ id: params.row.id })}>
-          <Delete />
+        <IconButton
+          onClick={() =>
+            selectAccount({
+              id: params.row.id,
+              isDeleted: params.row.isDeleted,
+            })
+          }
+        >
+          {params.row.isDeleted ? <RestoreFromTrash /> : <Delete />}
         </IconButton>
       ),
       width: 100,
@@ -129,6 +145,7 @@ const AccountsPage: React.FC<Props> = ({
   return (
     <Box sx={{ width: "100%" }}>
       <DataGrid
+        isCellEditable={(params) => !params.row.isDeleted}
         getRowId={(row) => row.id}
         rows={rows}
         columns={columns}
@@ -147,9 +164,9 @@ const AccountsPage: React.FC<Props> = ({
         paginationModel={paginationModel}
         rowCount={accounts?.totalAmount || 0}
         localeText={
-          localStorage.getItem("lang") === "enUS"
-            ? enUS.components.MuiDataGrid.defaultProps.localeText
-            : ruRU.components.MuiDataGrid.defaultProps.localeText
+          localStorage.getItem("lang") === "ruRU"
+            ? ruRU.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
         }
         slots={{ toolbar: AccountsToolbar }}
         disableRowSelectionOnClick
@@ -157,14 +174,18 @@ const AccountsPage: React.FC<Props> = ({
         onProcessRowUpdateError={(error) => console.log(error)}
       />
       <ConfirmationDialog
-        open={accountToDelete !== null}
-        title={strings.deleteAccountConfirmation}
+        open={account !== null}
+        title={
+          account?.isDeleted
+            ? strings.restoreAccountConfirmation
+            : strings.deleteAccountConfirmation
+        }
         onAgree={() => {
-          deleteAccount(accountToDelete!);
+          deleteAccount(account!);
         }}
         onDisagree={() => {}}
         onClose={() => {
-          setAccountToDelete(null);
+          selectAccount(null);
         }}
       />
     </Box>

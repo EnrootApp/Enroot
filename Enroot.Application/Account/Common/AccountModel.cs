@@ -6,4 +6,5 @@ public record AccountModel(
     string Name,
     DateTime CreatedOn,
     string Email,
-    int Role);
+    int Role,
+    bool IsDeleted);

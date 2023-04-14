@@ -53,7 +53,7 @@ public sealed class User : AggregateRoot<UserId>
 
         if (_accountIds.Contains(id))
         {
-            return Errors.User.AccountExists;
+            return Errors.Account.AlreadyExists;
         }
 
         _accountIds.Add(id);

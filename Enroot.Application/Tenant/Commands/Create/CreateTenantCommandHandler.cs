@@ -29,6 +29,7 @@ public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, E
 
         var tenant = await _tenantRepository.FindAsync(
             t => t.Name.Value.ToUpper() == commandTenantName.Value.Value.ToUpper(),
+            true,
             cancellationToken: cancellationToken);
 
         if (tenant is not null)

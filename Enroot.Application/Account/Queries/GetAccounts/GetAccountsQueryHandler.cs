@@ -19,7 +19,7 @@ public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr
 
     public async Task<ErrorOr<GetTasqsResult>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
     {
-        var accounts = _accountRepository.Filter(a => a.TenantId == request.TenantId);
+        var accounts = _accountRepository.Filter(a => a.TenantId == request.TenantId, includeDeleted: request.IncludeDeleted);
 
         accounts = accounts.Include(a => a.User);
 
@@ -30,7 +30,8 @@ public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, ErrorOr
                 .Contains(request.Search));
         }
 
-        var totalAmount = await accounts.CountAsync();
+
+        var totalAmount = await accounts.CountAsync(cancellationToken);
         accounts = accounts.OrderBy(a => a.DbId).Skip(request.Skip).Take(request.Take);
 
         var result = await accounts.ToListAsync(cancellationToken: cancellationToken);

@@ -13,6 +13,8 @@ using Enroot.Infrastructure.Authorization;
 using Enroot.Domain.Permission.Enums;
 using Enroot.Application.Tenant.Commands.Update;
 using Enroot.Application.Tenant.Commands.Delete;
+using Enroot.Application.Account.Commands.Create;
+using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Api.Controllers;
 
@@ -41,8 +43,14 @@ public class TenantController : ApiController
 
         var result = await _mediator.Send(command);
 
+        if (!result.IsError)
+        {
+            var createAccountCommand = new CreateAccountCommand(GetRequestUserId(), result.Value.Id, (int)RoleEnum.TenantAdmin);
+            await _mediator.Send(createAccountCommand);
+        }
+
         return result.Match(
-            value => Ok(_mapper.Map<TenantResponse>(value)),
+            Ok,
             Problem
         );
     }
@@ -65,7 +73,7 @@ public class TenantController : ApiController
         var result = await _mediator.Send(query);
 
         return result.Match(
-            value => Ok(value.Adapt<TenantResponse[]>()),
+            Ok,
             Problem
         );
     }
@@ -79,7 +87,7 @@ public class TenantController : ApiController
         var result = await _mediator.Send(command);
 
         return result.Match(
-            value => Ok(value.Adapt<TenantResponse[]>()),
+            Ok,
             Problem
         );
     }
@@ -93,7 +101,7 @@ public class TenantController : ApiController
         var result = await _mediator.Send(command);
 
         return result.Match(
-            value => Ok(value.Adapt<TenantResponse[]>()),
+            Ok,
             Problem
         );
     }

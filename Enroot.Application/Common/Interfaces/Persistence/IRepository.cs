@@ -23,5 +23,6 @@ where TId : notnull
 
     Task<TAggregateRoot> CreateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken);
     Task<TAggregateRoot> DeleteAsync(TAggregateRoot aggregateRoot);
+    Task<TAggregateRoot> RestoreAsync(TAggregateRoot aggregateRoot);
     Task<TAggregateRoot> UpdateAsync(TAggregateRoot aggregateRoot);
 }

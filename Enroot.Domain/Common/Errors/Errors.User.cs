@@ -22,8 +22,6 @@ public static partial class Errors
             Error.Validation(_code, "PasswordInvalid");
         public static Error ResetPasswordCodeInvalid =>
             Error.Validation(_code, "ResetPasswordCodeInvalid");
-        public static Error AccountExists =>
-            Error.Conflict(_code, "AccountExists");
         public static Error NameInvalid =>
             Error.Validation(_code, "NameInvalid");
     }

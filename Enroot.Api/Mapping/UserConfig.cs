@@ -23,6 +23,5 @@ public class UserConfig : IRegister
             .Map(dest => dest.AccountIds, src => src.AccountIds.Adapt<IEnumerable<Guid>>())
             .Map(dest => dest.FirstName, src => src.FirstName.Value)
             .Map(dest => dest.LastName, src => src.LastName.Value);
-
     }
 }

@@ -57,6 +57,15 @@ public sealed class Account : AggregateRoot<AccountId>
         return this;
     }
 
+    public override ErrorOr<Entity<AccountId>> Restore()
+    {
+        base.Restore();
+
+        AddDomainEvent(new AccountCreatedDomainEvent(UserId, TenantId, Id));
+
+        return this;
+    }
+
     public ErrorOr<Account> SetRole(RoleId role)
     {
         RoleId = role;

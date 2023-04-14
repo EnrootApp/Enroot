@@ -56,7 +56,6 @@ const useS3FileUpload = (): [
       const resultUrl = await uploadFileToS3(file);
       return resultUrl;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   };

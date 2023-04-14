@@ -14,6 +14,7 @@ public class AccountConfig : IRegister
             .Map(dest => dest.Email, src => src.User.Email)
             .Map(dest => dest.CreatedOn, src => src.CreatedOn)
             .Map(dest => dest.Role, src => (int)src.RoleId)
-            .Map(dest => dest.Name, src => src.User.DisplayName);
+            .Map(dest => dest.Name, src => src.User.DisplayName)
+            .Map(dest => dest.IsDeleted, src => src.IsDeleted);
     }
 }

@@ -9,17 +9,17 @@ import {
   useDeleteAccountMutation,
   useGetMyAccountQuery,
   useLazyGetAccountsQuery,
+  useRestoreAccountMutation,
   useSetRoleMutation,
 } from "../../state/api/accountApi";
 import { Permission } from "../../common/enums/permission";
 import { AccountIdModel } from "./AccountsPageContainer.types";
 
 const AccountsPageContainer = () => {
-  const [accountToDelete, setAccountToDelete] = useState<AccountIdModel | null>(
-    null
-  );
+  const [account, selectAccount] = useState<AccountIdModel | null>(null);
   const [setRole] = useSetRoleMutation();
   const [deleteAccount] = useDeleteAccountMutation();
+  const [restoreAccount] = useRestoreAccountMutation();
 
   const [getAccounts, accounts] = useLazyGetAccountsQuery();
   const { data, isFetching } = useGetMyAccountQuery({});
@@ -37,6 +37,9 @@ const AccountsPageContainer = () => {
     setPaginationModel(model);
     getAccounts({
       search: filterModel.quickFilterValues![0],
+      includeDeleted:
+        filterModel.items.find((i) => i.field === "includeDeleted")?.value ||
+        false,
       skip: model.page * model.pageSize,
       take: model.pageSize,
     });
@@ -44,8 +47,11 @@ const AccountsPageContainer = () => {
 
   const onFilterModelChange = (model: GridFilterModel) => {
     setFilterModel(model);
+
     getAccounts({
       search: model.quickFilterValues![0],
+      includeDeleted:
+        model.items.find((i) => i.field === "includeDeleted")?.value || false,
       skip: paginationModel!.page * paginationModel!.pageSize,
       take: paginationModel!.pageSize,
     });
@@ -63,6 +69,9 @@ const AccountsPageContainer = () => {
     if (accounts.isUninitialized) {
       getAccounts({
         search: "",
+        includeDeleted:
+          filterModel.items.find((i) => i.field === "includeDeleted")?.value ||
+          false,
         skip: paginationModel!.page * paginationModel!.pageSize,
         take: paginationModel!.pageSize,
       });
@@ -78,11 +87,9 @@ const AccountsPageContainer = () => {
       onFilterModelChange={onFilterModelChange}
       hasCreateAccountPermission={hasCreateAccountPermission}
       onRowEditCommit={onRowEditCommit}
-      deleteAccount={deleteAccount}
-      accountToDelete={accountToDelete}
-      setAccountToDelete={(value: AccountIdModel | null) =>
-        setAccountToDelete(value)
-      }
+      deleteAccount={account?.isDeleted ? restoreAccount : deleteAccount}
+      account={account}
+      selectAccount={(value: AccountIdModel | null) => selectAccount(value)}
     />
   );
 };

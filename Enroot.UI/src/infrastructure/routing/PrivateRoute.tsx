@@ -14,14 +14,21 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   permission,
 }) => {
   const params = useParams();
-  const { data: me, isLoading } = useGetMyAccountQuery({});
+  const skip = !Boolean(permission);
+
+  const { data, isLoading } = useGetMyAccountQuery(
+    {},
+    {
+      skip: skip,
+    }
+  );
   const authenticated = Boolean(localStorage.getItem("accessToken"));
 
   if (!authenticated) {
     return <Navigate to={routes.login} replace />;
   }
 
-  if (permission && !me?.permissions.includes(permission)) {
+  if (permission && !isLoading && !data?.permissions.includes(permission)) {
     return <Navigate to={`${routes.tenant}/${params.name}`} replace />;
   }
 

@@ -20,8 +20,9 @@ function HomeAppBarContainer() {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+
     dispatch(apiSlice.util.resetApiState());
-    window.location.reload();
+    window.location.href = "/login";
   };
 
   const props: HomeAppBarProps = {

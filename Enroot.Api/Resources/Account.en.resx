@@ -126,4 +126,8 @@
     <value>Account not found</value>
     <comment/>
   </data>
+  <data name="AlreadyExists" xml:space="preserve">
+    <value>Account is is already exists</value>
+    <comment/>
+  </data>
 </root>

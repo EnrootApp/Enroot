@@ -9,9 +9,11 @@ interface Errors {
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
-      console.warn(action);
+      const errors = action.payload?.data?.errors as Errors;
 
-      const errors = action.payload.data.errors as Errors;
+      if (!errors) {
+        return;
+      }
 
       Object.entries(errors).forEach(
         ([key, descriptions]: [string, string[]]) => {

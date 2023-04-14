@@ -50,4 +50,10 @@ where TId : notnull
         IsDeleted = true;
         return this;
     }
+
+    public virtual ErrorOr<Entity<TId>> Restore()
+    {
+        IsDeleted = false;
+        return this;
+    }
 }

@@ -1,13 +1,9 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using Enroot.Application.Account.Commands.Create;
 using Enroot.Application.Common.Interfaces.Persistence;
 using Enroot.Domain.Account.ValueObjects;
-using Enroot.Domain.Role.Enums;
 using Enroot.Domain.Tenant.ValueObjects;
-using MediatR;
 
 namespace Enroot.Infrastructure.Authentication;
 
@@ -16,41 +12,23 @@ public class RequireTenantAccountAttribute : Attribute, IAsyncAuthorizationFilte
 {
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        var isSystemAdmin = CheckIfUserIsSystemAdmin(context);
-
         var accountIdClaim = context.HttpContext.User.FindFirst(EnrootClaimNames.AccountId);
 
-        if (accountIdClaim is null && !isSystemAdmin)
+        if (accountIdClaim is null)
         {
             context.Result = new ForbidResult();
             return;
         }
 
-        var tenantIdHeader = context.HttpContext.Request.Headers["TenantId"];
+        var tenantIdClaim = context.HttpContext.User.FindFirst(EnrootClaimNames.TenantId);
 
-        if (string.IsNullOrWhiteSpace(tenantIdHeader))
+        if (tenantIdClaim is null)
         {
             context.Result = new ForbidResult();
             return;
         }
 
-        var parsed = Guid.TryParse(tenantIdHeader, out Guid tenantIdGuid);
-        if (!parsed)
-        {
-            context.Result = new ForbidResult();
-            return;
-        }
-
-        if (accountIdClaim is null && isSystemAdmin)
-        {
-            var mediator = context.HttpContext.RequestServices.GetService<IMediator>();
-            var userIdClaim = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userGuid = Guid.Parse(userIdClaim.Value);
-            var createAccountCommand = new CreateAccountCommand(userGuid, tenantIdGuid, (int)RoleEnum.TenantAdmin);
-
-            var account = await mediator!.Send(createAccountCommand);
-            accountIdClaim = new Claim(EnrootClaimNames.AccountId, account.Value.Id.ToString());
-        }
+        var tenantIdGuid = Guid.Parse(tenantIdClaim.Value);
 
         var tenantId = TenantId.Create(tenantIdGuid);
         var repository = context.HttpContext.RequestServices.GetService<IRepository<Domain.Tenant.Tenant, TenantId>>();
@@ -65,17 +43,5 @@ public class RequireTenantAccountAttribute : Attribute, IAsyncAuthorizationFilte
         }
 
         return;
-    }
-
-    private bool CheckIfUserIsSystemAdmin(AuthorizationFilterContext context)
-    {
-        var roleClaim = context.HttpContext.User.FindFirst(ClaimTypes.Role);
-
-        if (roleClaim is null)
-        {
-            return false;
-        }
-
-        return roleClaim.Value == "SystemAdmin";
     }
 }

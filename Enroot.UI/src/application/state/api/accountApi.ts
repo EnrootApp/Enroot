@@ -19,11 +19,18 @@ export const accountsApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/account/me",
       }),
+      providesTags: ["Account"],
     }),
     deleteAccount: builder.mutation<{}, { id: string }>({
       query: ({ id }) => ({
         url: `/account/${id}`,
         method: "DELETE",
+      }),
+    }),
+    restoreAccount: builder.mutation<{}, { id: string }>({
+      query: ({ id }) => ({
+        url: `/account/${id}`,
+        method: "POST",
       }),
     }),
     setRole: builder.mutation<
@@ -52,4 +59,6 @@ export const {
   useSetRoleMutation,
   useDeleteAccountMutation,
   useInviteAccountMutation,
+  useLazyGetMyAccountQuery,
+  useRestoreAccountMutation,
 } = accountsApi;

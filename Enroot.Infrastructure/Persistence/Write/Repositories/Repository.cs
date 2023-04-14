@@ -37,6 +37,15 @@ where TId : ValueObject
         return result.Entity;
     }
 
+    public async Task<TAggregateRoot> RestoreAsync(TAggregateRoot aggregateRoot)
+    {
+        aggregateRoot.Restore();
+        var result = _context.Set<TAggregateRoot>().Update(aggregateRoot);
+        await SaveChangesAsync();
+
+        return result.Entity;
+    }
+
     public async Task<TAggregateRoot?> FindAsync(Expression<Func<TAggregateRoot, bool>> predicate, bool includeDeleted = false, CancellationToken cancellationToken = default)
     {
         return await GetAll(includeDeleted).FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);

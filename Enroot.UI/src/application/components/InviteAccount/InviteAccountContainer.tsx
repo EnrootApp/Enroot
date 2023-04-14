@@ -18,14 +18,14 @@ const InviteAccountContainer = () => {
         errorStrings.invalidEmail
       )
       .required(errorStrings.notEmpty),
-    description: Yup.string().max(1000),
+    roleId: Yup.mixed<Role>().required(),
   });
 
   const formikConfig: FormikConfig<InviteAccountForm> = {
     validationSchema: validationSchema,
     validateOnBlur: true,
     validateOnMount: true,
-    initialValues: { email: "", role: Role.Default },
+    initialValues: { email: "", roleId: Role.Default },
     onSubmit: async (values) => {
       invite(values);
       setOpen(false);

@@ -126,4 +126,8 @@
     <value>Учетная запись не найдена</value>
     <comment/>
   </data>
+  <data name="AlreadyExists" xml:space="preserve">
+    <value>Учетная запись с заданными параметрами уже существует</value>
+    <comment/>
+  </data>
 </root>

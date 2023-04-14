@@ -38,9 +38,7 @@ public abstract class ApiController : ControllerBase
 
     protected Guid GetTenantId()
     {
-        var tenantIdHeader = _httpContextAccessor.HttpContext!.Request.Headers["TenantId"];
-
-        return Guid.Parse(tenantIdHeader!);
+        return GetIdClaim(EnrootClaimNames.TenantId)!.Value;
     }
 
     protected Guid? GetIdClaim(string claim)

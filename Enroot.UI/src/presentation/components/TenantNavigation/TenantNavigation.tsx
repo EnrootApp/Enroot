@@ -17,9 +17,13 @@ import { StyledList } from "./TenantNavigation.styles";
 
 interface Props {
   hasGetReportPermission: boolean;
+  hasModifyTenantSettingsPermission: boolean;
 }
 
-const TenantNavigation: React.FC<Props> = ({ hasGetReportPermission }) => {
+const TenantNavigation: React.FC<Props> = ({
+  hasGetReportPermission,
+  hasModifyTenantSettingsPermission,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -63,16 +67,18 @@ const TenantNavigation: React.FC<Props> = ({ hasGetReportPermission }) => {
           </Link>
         </ListItem>
       )}
-      <ListItem disablePadding>
-        <Link to={routes.tenantSettings} style={{ width: "100%" }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary={strings.settings} />
-          </ListItemButton>
-        </Link>
-      </ListItem>
+      {hasModifyTenantSettingsPermission && (
+        <ListItem disablePadding>
+          <Link to={routes.tenantSettings} style={{ width: "100%" }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <ListItemText primary={strings.settings} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+      )}
 
       <Divider />
       <ListItem disablePadding>

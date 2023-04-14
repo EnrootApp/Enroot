@@ -76,6 +76,7 @@ const strings = new LocalizedStrings({
     avatar: "Avatar",
     edit: "Edit",
     actions: "Actions",
+    deleted: "Deleted",
     invite: "Invite",
     from: "Initial Date",
     to: "End Date",
@@ -90,8 +91,9 @@ const strings = new LocalizedStrings({
     tenantImage: "Tenant Logo",
     deleteTenant: "Delete Tenant",
     cancel: "Cancel",
-    deleteAccountConfirmation:
-      "Are you sure you want to delete this account? This action cannot be undone.",
+    deleteAccountConfirmation: "Are you sure you want to delete this account?",
+    restoreAccountConfirmation:
+      "Are you sure you want to restore this account?",
     deleteTenantConfirmation:
       "Are you sure you want to delete the tenant? This action cannot be undone.",
   },
@@ -170,6 +172,7 @@ const strings = new LocalizedStrings({
     avatar: "Фото",
     edit: "Изменить",
     actions: "Действия",
+    deleted: "Удален(а)",
     invite: "Пригласить",
     from: "Начальная дата",
     to: "Конечная дата",
@@ -185,7 +188,9 @@ const strings = new LocalizedStrings({
     deleteTenant: "Удалить организацию",
     cancel: "Отмена",
     deleteAccountConfirmation:
-      "Вы уверены, что хотите удалить эту учетную запись? Это действие нельзя отменить.",
+      "Вы уверены, что хотите удалить эту учетную запись?",
+    restoreAccountConfirmation:
+      "Вы уверены, что хотите восстановить эту учетную запись?",
     deleteTenantConfirmation:
       "Вы уверены, что хотите удалить организацию? Это действие нельзя отменить.",
   },

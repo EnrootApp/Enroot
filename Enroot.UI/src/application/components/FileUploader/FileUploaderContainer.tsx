@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FileUploader from "../../../presentation/components/FileUploader/FileUploader";
-import { Attachment } from "../../../domain/tasq/Attachment";
 import { useDispatch, useSelector } from "react-redux";
 import { addAttachment, reset } from "../../state/components/fileUploaderSlice";
 

@@ -16,9 +16,6 @@ public class TenantConfig : IRegister
 
         config.NewConfig<CreateTenantRequest, CreateTenantCommand>();
 
-        config.NewConfig<TenantResult, TenantResponse>()
-        .Map(dest => dest.AccountIds, src => src.AccountIds.Select(id => id.ToString()));
-
         config.NewConfig<Tenant, TenantResult>()
         .Map(dest => dest.Name, src => src.Name.Value);
 
