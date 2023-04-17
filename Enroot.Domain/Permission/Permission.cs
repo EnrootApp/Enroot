@@ -11,8 +11,9 @@ public sealed class Permission : AggregateRoot<PermissionId>
 
     private Permission() { }
 
-    private Permission(PermissionId id, string description) : base(id)
+    private Permission(PermissionId id, string description)
     {
+        Id = id;
         Description = description;
     }
 

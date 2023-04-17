@@ -6,7 +6,7 @@ import { CardActionArea, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, FormikConfig, FormikProps } from "formik";
 
 import { CreateTenantForm } from "../../../application/components/CreateTenant/CreateTenantContainer.types";
-import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
+import ImageUploadContainer from "../../../application/components/FileUpload/FileUploadContainer";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
 import Dialog from "../../uikit/Dialog/Dialog";
 import strings from "../../localization/locales";

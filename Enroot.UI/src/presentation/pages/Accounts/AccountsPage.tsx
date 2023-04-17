@@ -87,6 +87,7 @@ const AccountsPage: React.FC<Props> = ({
     {
       field: "createdOn",
       headerName: strings.added,
+      renderCell: (params) => new Date(params.value).toLocaleString(),
       flex: 1,
       minWidth: 250,
       sortable: false,

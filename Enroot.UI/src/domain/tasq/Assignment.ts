@@ -7,6 +7,8 @@ export interface Assignment {
   createdOn: Date;
   assignee: AccountModel;
   assigner: AccountModel;
+  approver: AccountModel;
+  feedbackMessage: string;
   status: number;
   attachments: Attachment[];
 }

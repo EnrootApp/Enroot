@@ -20,6 +20,10 @@ public class TasqConfig : IRegister
                 src => src.Assignments.First().Assignee.Adapt<AccountModel>(), src => src.Assignments.Any());
 
         config
+            .NewConfig<AssignmentRead, AssignmentResult>()
+            .Map(dest => dest.CreatedOn, src => src.CreatedOn);
+
+        config
            .NewConfig<AttachmentRead, AttachmentModel>()
            .Map(dest => dest.Url, src => src.BlobUrl);
 

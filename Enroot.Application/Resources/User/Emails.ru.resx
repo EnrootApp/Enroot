@@ -135,7 +135,7 @@
     <comment/>
   </data>
     <data name="InviteBody" xml:space="preserve">
-    <value>Новое приглашение</value>
+    <value>Вы были приглашены в организацию {0}.</value>
     <comment/>
   </data>
     <data name="InviteNewUserBody" xml:space="preserve">

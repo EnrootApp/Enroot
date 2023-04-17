@@ -60,5 +60,5 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithErrorHandlers,
   endpoints: () => ({}),
-  tagTypes: ["Account"],
+  tagTypes: ["Tasq", "Tasqs"],
 });

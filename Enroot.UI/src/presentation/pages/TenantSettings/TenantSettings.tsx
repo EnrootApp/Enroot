@@ -3,7 +3,7 @@ import TenantTitle from "../../uikit/TenantTitle/TenantTitle";
 import strings from "../../localization/locales";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import SubTitle from "../../uikit/SubTitle/SubTitle";
-import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
+import ImageUploadContainer from "../../../application/components/FileUpload/FileUploadContainer";
 import Form from "../../uikit/Form/Form";
 import Button from "../../uikit/Button/Button";
 import { Delete } from "@mui/icons-material";

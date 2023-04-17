@@ -12,11 +12,13 @@ export const tasqsApi = apiSlice.injectEndpoints({
         url: "/tasq",
         params: { title, creatorId, isAssigned, isCompleted, skip, take },
       }),
+      providesTags: ["Tasqs"],
     }),
     getTasq: builder.query<Tasq, { id: string }>({
       query: ({ id }) => ({
         url: `/tasq/${id}`,
       }),
+      providesTags: ["Tasq"],
     }),
     getReport: builder.query<Report, { from: string; to: string }>({
       query: ({ from, to }) => ({
@@ -33,6 +35,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...form },
       }),
+      invalidatesTags: ["Tasqs"],
     }),
     updateTasq: builder.mutation<Tasq, { description: string; id: string }>({
       query: ({ description, id }) => ({
@@ -40,6 +43,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: { description },
       }),
+      invalidatesTags: ["Tasq"],
     }),
     startTasq: builder.mutation<Tasq, { id: string }>({
       query: ({ id }) => ({
@@ -47,6 +51,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { assignmentId: id },
       }),
+      invalidatesTags: ["Tasq"],
     }),
     completeTasq: builder.mutation<
       Tasq,
@@ -57,6 +62,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { assignmentId: id, attachments },
       }),
+      invalidatesTags: ["Tasq"],
     }),
     approveTasq: builder.mutation<Tasq, { id: string }>({
       query: ({ id }) => ({
@@ -64,6 +70,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { assignmentId: id },
       }),
+      invalidatesTags: ["Tasq"],
     }),
     rejectTasq: builder.mutation<Tasq, { feedbackMessage: string; id: string }>(
       {
@@ -72,6 +79,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
           method: "POST",
           body: { assignmentId: id, feedbackMessage },
         }),
+        invalidatesTags: ["Tasq"],
       }
     ),
     assignTasq: builder.mutation<Tasq, { tasqId: string; assigneeId: string }>({
@@ -80,6 +88,7 @@ export const tasqsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { tasqId, assigneeId },
       }),
+      invalidatesTags: ["Tasq"],
     }),
   }),
 });

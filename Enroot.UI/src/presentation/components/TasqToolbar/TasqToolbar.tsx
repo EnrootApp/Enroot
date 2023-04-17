@@ -83,7 +83,7 @@ const TasqToolbar: React.FC<Props> = ({
           <Typography>{strings.created}</Typography>
         </Grid>
         <Grid item xs={10}>
-          <Typography>{tasq.createdOn.toLocaleString()}</Typography>
+          <Typography>{new Date(tasq.createdOn).toLocaleString()}</Typography>
         </Grid>
       </Grid>
 

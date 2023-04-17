@@ -19,7 +19,6 @@ export const accountsApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/account/me",
       }),
-      providesTags: ["Account"],
     }),
     deleteAccount: builder.mutation<{}, { id: string }>({
       query: ({ id }) => ({

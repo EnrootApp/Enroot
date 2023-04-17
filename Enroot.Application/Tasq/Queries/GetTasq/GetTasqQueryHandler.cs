@@ -30,7 +30,7 @@ public class GetTasqQueryHandler : IRequestHandler<GetTasqQuery, ErrorOr<TasqRes
         result = result
             .Include(t => t.Creator)
             .ThenInclude(a => a.User)
-            .Include(t => t.Assignments.OrderBy(a => a.Status))
+            .Include(t => t.Assignments.OrderBy(a => a.Status).ThenByDescending(a => a.CreatedOn))
             .ThenInclude(a => a.Attachments)
             .Include(t => t.Assignments)
             .ThenInclude(a => a.Assignee)

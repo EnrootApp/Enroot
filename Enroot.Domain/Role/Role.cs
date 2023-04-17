@@ -16,8 +16,9 @@ public sealed class Role : AggregateRoot<RoleId>
 
     private Role() { }
 
-    private Role(RoleId id, string name) : base(id)
+    private Role(RoleId id, string name)
     {
+        Id = id;
         Name = name;
     }
 

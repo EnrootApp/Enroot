@@ -64,7 +64,7 @@ const strings = new LocalizedStrings({
     complete: "Send for review",
     approve: "Approve",
     reject: "Reject",
-    feedback: "Feedback message",
+    feedback: "Feedback",
     noOptions: "Type to search users...",
     employees: "Employees",
     employee: "Employee",
@@ -96,6 +96,7 @@ const strings = new LocalizedStrings({
       "Are you sure you want to restore this account?",
     deleteTenantConfirmation:
       "Are you sure you want to delete the tenant? This action cannot be undone.",
+    rejectedMessage: "has rejected assignment with message:",
   },
   ruRU: {
     signIn: "Вход",
@@ -166,7 +167,7 @@ const strings = new LocalizedStrings({
     employee: "Сотрудник",
     added: "Добавлен(а)",
     role: "Роль",
-    defaultRole: "Рядовой работник",
+    defaultRole: "Исполнитель",
     moderatorRole: "Модератор",
     tenantAdminRole: "Руководитель",
     avatar: "Фото",
@@ -193,6 +194,7 @@ const strings = new LocalizedStrings({
       "Вы уверены, что хотите восстановить эту учетную запись?",
     deleteTenantConfirmation:
       "Вы уверены, что хотите удалить организацию? Это действие нельзя отменить.",
+    rejectedMessage: "отклонил попытку с сообщением:",
   },
 });
 

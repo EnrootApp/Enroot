@@ -19,9 +19,8 @@ public sealed class Assignment : Entity<AssignmentId>
     public IReadOnlyList<Attachment> Attachments => _attachments.AsReadOnly();
 
     private Assignment() { }
-    private Assignment(AssignmentId id, AccountId assignerId, AccountId assigneeId, StatusBase status)
+    private Assignment(AssignmentId id, AccountId assignerId, AccountId assigneeId, StatusBase status) : base(id)
     {
-        Id = id;
         AssignerId = assignerId;
         AssigneeId = assigneeId;
         Status = status;

@@ -1,7 +1,7 @@
 import { TabPanel } from "@mui/lab";
 import { Formik, FormikConfig, FormikProps } from "formik";
 import { GeneralSettingsForm } from "../../../application/components/GeneralSettings/GeneralSettingsContainer.types";
-import ImageUploadContainer from "../../../application/components/ImageUpload/ImageUploadContainer";
+import ImageUploadContainer from "../../../application/components/FileUpload/FileUploadContainer";
 import strings from "../../../presentation/localization/locales";
 import Button from "../../uikit/Button/Button";
 import Form from "../../uikit/Form/Form";

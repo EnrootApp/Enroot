@@ -17,6 +17,7 @@ public class TasqConfig : IRegister
         config.NewConfig<TasqResult, TasqResponse>();
 
         config.NewConfig<Assignment, AssignmentResult>()
+            .Map(dest => dest.CreatedOn, src => src.CreatedOn)
             .Map(dest => dest.Status, src => (int)src.Status.Value);
 
         config.NewConfig<Tasq, TasqResult>()
