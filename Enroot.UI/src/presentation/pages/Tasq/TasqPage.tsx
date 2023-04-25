@@ -24,6 +24,13 @@ const TasqPage: React.FC<Props> = ({
   const currentAssignment = tasq.assignments[0];
   const currentAssignmentStatus = currentAssignment?.statuses[0].status;
 
+  const isEditingDisabled = !(
+    hasPermissionToChange &&
+    (!currentAssignment ||
+      currentAssignmentStatus === StatusEnum.ToDo ||
+      currentAssignmentStatus === StatusEnum.Rejected)
+  );
+
   return (
     <Box style={{ width: "100%" }}>
       <TenantTitle title={tasq.title} />
@@ -47,7 +54,7 @@ const TasqPage: React.FC<Props> = ({
               onEditEnd={(value) =>
                 updateTasq({ description: value || "", id: tasq.id })
               }
-              disabled={!hasPermissionToChange}
+              disabled={isEditingDisabled}
             />
             {currentAssignmentStatus === StatusEnum.InProgress && (
               <>
@@ -84,6 +91,7 @@ const TasqPage: React.FC<Props> = ({
             {tasq.assignments.map((a) =>
               a.statuses.map((s) => (
                 <TasqActivity
+                  key={s.createdOn}
                   assignee={a.assignee}
                   reviewer={s.approver}
                   message={s.feedbackMessage}

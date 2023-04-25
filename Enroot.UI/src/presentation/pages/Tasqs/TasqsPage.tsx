@@ -9,7 +9,7 @@ import {
   enUS,
   ruRU,
 } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TasqsToolbar from "../../components/TasqsToolbar/TasqsToolbar";
 import User from "../../uikit/User/User";
 import { Check, Clear } from "@mui/icons-material";
@@ -72,6 +72,17 @@ const TasqsPage: React.FC<Props> = ({
           imageSrc={params.value?.avatarUrl}
           name={params.value?.name || strings.emptyName}
         />
+      ),
+      flex: 1,
+      minWidth: 200,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: "createdOn",
+      headerName: strings.created,
+      renderCell: (params) => (
+        <Typography>{new Date(params.value).toLocaleString()}</Typography>
       ),
       flex: 1,
       minWidth: 200,

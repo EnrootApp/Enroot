@@ -25,7 +25,9 @@ const InlineEditContainer: React.FC<Props> = ({
       onChange={(e) => setEditText(e.target.value)}
       onBlur={(e) => {
         setIsEdit(false);
-        onEditEnd(editText);
+        if (editText !== text) {
+          onEditEnd(editText);
+        }
       }}
       multiline={multiline}
       fullWidth
