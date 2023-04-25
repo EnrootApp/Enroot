@@ -6,32 +6,32 @@ import {
   Rule,
   Schedule,
 } from "@mui/icons-material";
-import { Status } from "../../../domain/tasq/Status";
+import { StatusEnum } from "../../../domain/tasq/StatusEnum";
 import strings from "../../localization/locales";
 import { TasqStatusContainer } from "./TasqStatus.styles";
 import { Typography } from "@mui/material";
 
 interface Props {
-  value: Status;
+  value: StatusEnum;
 }
 
 const TasqStatus: React.FC<Props> = ({ value }) => {
   const iconsMap = {
-    [Status.ToDo]: <Schedule />,
-    [Status.InProgress]: <EmojiObjects />,
-    [Status.AwaitingReview]: <Rule />,
-    [Status.Done]: <Done />,
-    [Status.Rejected]: <Close />,
-    [Status.Cancelled]: <NotInterested />,
+    [StatusEnum.ToDo]: <Schedule />,
+    [StatusEnum.InProgress]: <EmojiObjects />,
+    [StatusEnum.AwaitingReview]: <Rule />,
+    [StatusEnum.Done]: <Done />,
+    [StatusEnum.Rejected]: <Close />,
+    [StatusEnum.Cancelled]: <NotInterested />,
   };
 
   const textMap = {
-    [Status.ToDo]: strings.toDo,
-    [Status.InProgress]: strings.inProgress,
-    [Status.AwaitingReview]: strings.awaitingReview,
-    [Status.Done]: strings.done,
-    [Status.Rejected]: strings.rejected,
-    [Status.Cancelled]: strings.cancelled,
+    [StatusEnum.ToDo]: strings.toDo,
+    [StatusEnum.InProgress]: strings.inProgress,
+    [StatusEnum.AwaitingReview]: strings.awaitingReview,
+    [StatusEnum.Done]: strings.done,
+    [StatusEnum.Rejected]: strings.rejected,
+    [StatusEnum.Cancelled]: strings.cancelled,
   };
 
   return (

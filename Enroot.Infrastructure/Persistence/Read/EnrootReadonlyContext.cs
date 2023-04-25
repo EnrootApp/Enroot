@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Enroot.Domain.ReadEntities;
-using Enroot.Infrastructure.Persistence.Read.Configurations;
 
 namespace Enroot.Infrastructure.Persistence.Read;
 
@@ -15,8 +14,9 @@ public class EnrootReadonlyContext : DbContext
     public DbSet<TasqRead> Tasqs { get; set; } = null!;
     public DbSet<AssignmentRead> Assignments { get; set; } = null!;
     public DbSet<AttachmentRead> Attachments { get; set; } = null!;
-    public DbSet<RoleRead> Courses { get; set; }
-    public DbSet<PermissionRead> Students { get; set; }
+    public DbSet<RoleRead> Roles { get; set; }
+    public DbSet<PermissionRead> Permissions { get; set; }
+    public DbSet<StatusRead> Statuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

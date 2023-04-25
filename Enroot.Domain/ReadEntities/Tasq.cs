@@ -2,7 +2,7 @@ using Enroot.Domain.Common.Models;
 
 namespace Enroot.Domain.ReadEntities;
 
-public class TasqRead : ReadEntity
+public class TasqRead : ReadEntity<Guid>
 {
     public string? Description { get; private set; }
     public string Title { get; private set; } = default!;

@@ -44,6 +44,7 @@ export const userApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/user",
       }),
+      providesTags: ["User"],
     }),
     updateInfo: builder.mutation({
       query: ({ firstName, lastName, avatarUrl }) => ({
@@ -51,6 +52,7 @@ export const userApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: { firstName, lastName, avatarUrl },
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

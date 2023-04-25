@@ -1,7 +1,6 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import UserAmount from "../../uikit/UserAmount/UserAmount";
 import { MouseEventHandler } from "react";
@@ -21,7 +20,7 @@ const TenantCard: React.FC<Props> = ({ onClick, tenant }) => {
           component="img"
           height="200"
           alt={tenant.name}
-          src={tenant.logoUrl || "/imagePlaceholder.svg"}
+          src={tenant.logoUrl || "/imagePlaceholder.jpg"}
         />
         <CardContent
           sx={{

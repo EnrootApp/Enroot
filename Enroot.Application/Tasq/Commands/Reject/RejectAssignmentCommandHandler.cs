@@ -48,7 +48,7 @@ public class RejectAssignmentCommandHandler : IRequestHandler<RejectAssignmentCo
 
         var assignment = tasq.Assignments.First(a => a.Id == assignmentId);
 
-        if (assignment.Status is not AwaitingReviewStatus)
+        if (assignment.CurrentStatus.Id is not AwaitingReviewStatus)
         {
             return Errors.Assignment.NotOnReview;
         }

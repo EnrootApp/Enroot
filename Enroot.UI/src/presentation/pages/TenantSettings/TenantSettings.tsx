@@ -40,6 +40,8 @@ const TenantSettings: React.FC<Props> = ({
                       setFieldTouched("imageSrc", true);
                     }}
                     imageSrc={values.imageSrc}
+                    radius={250}
+                    accept="image/*"
                   />
                 </div>
                 <Button

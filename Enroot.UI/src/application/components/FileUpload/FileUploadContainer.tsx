@@ -2,14 +2,21 @@ import { enqueueSnackbar } from "notistack";
 import { ChangeEventHandler, useRef } from "react";
 import useS3FileUpload from "../../../infrastructure/storage/uploadToS3";
 import errorStrings from "../../../presentation/localization/errorMessages";
-import ImageUpload from "../../../presentation/components/ImageUpload/ImageUpload";
+import ImageUpload from "../../../presentation/components/FileUpload/FileUpload";
 
 interface Props {
   imageSrc: string;
   setImageSrc: (imageSrc: string) => void;
+  accept: string;
+  radius: number;
 }
 
-const ImageUploadContainer: React.FC<Props> = ({ imageSrc, setImageSrc }) => {
+const FileUploadContainer: React.FC<Props> = ({
+  imageSrc,
+  setImageSrc,
+  accept,
+  radius,
+}) => {
   const [handleFileUpload, progress] = useS3FileUpload();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -25,7 +32,7 @@ const ImageUploadContainer: React.FC<Props> = ({ imageSrc, setImageSrc }) => {
 
     const fileSize = uploadedFile.size / 1024 / 1024;
 
-    if (fileSize > 10) {
+    if (fileSize > 100) {
       enqueueSnackbar(errorStrings.fileToBig, { variant: "error" });
       return;
     }
@@ -45,8 +52,10 @@ const ImageUploadContainer: React.FC<Props> = ({ imageSrc, setImageSrc }) => {
       handleFileChange={handleFileChange}
       progress={progress}
       imageSrc={imageSrc}
+      accept={accept}
+      radius={radius}
     />
   );
 };
 
-export default ImageUploadContainer;
+export default FileUploadContainer;

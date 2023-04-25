@@ -9,7 +9,7 @@ import SubTitle from "../../uikit/SubTitle/SubTitle";
 import strings from "../../localization/locales";
 import User from "../../uikit/User/User";
 import TasqStatus from "../../uikit/Status/TasqStatus";
-import { Status } from "../../../domain/tasq/Status";
+import { StatusEnum } from "../../../domain/tasq/StatusEnum";
 import { Tasq } from "../../../domain/tasq/Tasq";
 import Button from "../../uikit/Button/Button";
 import Dialog from "../../uikit/Dialog/Dialog";
@@ -56,7 +56,9 @@ const TasqToolbar: React.FC<Props> = ({
           <Typography>{strings.status}</Typography>
         </Grid>
         <Grid item xs={10}>
-          <TasqStatus value={tasq.assignments[0]?.status || Status.ToDo} />
+          <TasqStatus
+            value={tasq.assignments[0]?.statuses[0].status || StatusEnum.ToDo}
+          />
         </Grid>
         <Grid item xs={6}>
           <Typography>{strings.creator}</Typography>

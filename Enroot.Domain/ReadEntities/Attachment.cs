@@ -2,7 +2,7 @@ using Enroot.Domain.Common.Models;
 
 namespace Enroot.Domain.ReadEntities;
 
-public class AttachmentRead : ReadEntity
+public class AttachmentRead : ReadEntity<Guid>
 {
     public new int Id { get; private set; }
     public Guid AssignmentId { get; private set; }

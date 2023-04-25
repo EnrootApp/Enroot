@@ -44,7 +44,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             issuer: issuer,
             audience: audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(expiryHours),
+            expires: DateTime.Now.AddHours(expiryHours),
             signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(securityToken);

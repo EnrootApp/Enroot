@@ -6,10 +6,7 @@ namespace Enroot.Domain.Tasq.ValueObjects.Statuses;
 
 public sealed class DoneStatus : StatusBase
 {
-    public DoneStatus()
-    {
-        Value = Status.Done;
-    }
+    public DoneStatus() : base(StatusEnum.Done) { }
 
     public override ErrorOr<StatusBase> Complete()
     {

@@ -1,6 +1,6 @@
 namespace Enroot.Domain.Tasq.Enums;
 
-public enum Status
+public enum StatusEnum
 {
     ToDo = 1,
     InProgress = 2,

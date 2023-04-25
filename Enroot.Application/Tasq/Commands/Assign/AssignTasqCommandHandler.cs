@@ -54,7 +54,12 @@ public class AssignTasqCommandHandler : IRequestHandler<AssignTasqCommand, Error
             return assignment.Errors;
         }
 
-        tasq.AddAssignment(assignment.Value);
+        var result = tasq.AddAssignment(assignment.Value);
+
+        if (result.IsError)
+        {
+            return result.Errors;
+        }
 
         await _tasqRepository.UpdateAsync(tasq);
 

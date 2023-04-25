@@ -6,10 +6,7 @@ namespace Enroot.Domain.Tasq.ValueObjects.Statuses;
 
 public sealed class CancelledStatus : StatusBase
 {
-    public CancelledStatus()
-    {
-        Value = Status.Cancelled;
-    }
+    public CancelledStatus() : base(StatusEnum.Cancelled) { }
 
     public override ErrorOr<StatusBase> Complete()
     {

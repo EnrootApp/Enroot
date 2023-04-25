@@ -47,21 +47,19 @@ public class StartAssignmentCommandHandler : IRequestHandler<StartAssignmentComm
             return Errors.Account.NotFound;
         }
 
-        var assignments = tasq.Assignments.Where(a => a.AssigneeId == assignee.Id);
+        var assignment = tasq.Assignments.Where(a => a.AssigneeId == assignee.Id).OrderByDescending(a => a.CreatedOn).FirstOrDefault();
 
-        if (!assignments.Any())
+        if (assignment is null)
         {
             return Errors.Assignment.NotFound;
         }
 
-        var assignment = assignments.FirstOrDefault(a => a.Status is ToDoStatus);
-
-        if (assignment is null)
+        if (assignment.CurrentStatus.Id is not ToDoStatus)
         {
-            return Errors.Assignment.HasStarted;
+            return Errors.Assignment.HasCompleted;
         }
 
-        var stageResult = assignment.CompleteStage(assigneeId);
+        var stageResult = assignment.CompleteStage(assigneeId, null);
         if (stageResult.IsError)
         {
             return ErrorOr<TasqResult>.From(stageResult.Errors);

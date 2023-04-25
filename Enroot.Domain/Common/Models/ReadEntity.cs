@@ -1,8 +1,8 @@
 namespace Enroot.Domain.Common.Models;
 
-public abstract class ReadEntity
+public abstract class ReadEntity<T> where T : struct
 {
-    public Guid Id { get; private set; }
+    public T Id { get; private set; }
     public int DbId { get; private set; }
     public DateTime CreatedOn { get; private set; }
     public bool IsDeleted { get; private set; }

@@ -2,7 +2,7 @@ using Enroot.Domain.Common.Models;
 
 namespace Enroot.Domain.ReadEntities;
 
-public class UserRead : ReadEntity
+public class UserRead : ReadEntity<Guid>
 {
     public string Email { get; private set; } = default!;
     public string PasswordHash { get; private set; } = default!;

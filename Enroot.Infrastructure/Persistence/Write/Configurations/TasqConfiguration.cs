@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Enroot.Domain.Tasq.ValueObjects;
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Tasq.Entities;
-using Enroot.Domain.Tasq.ValueObjects.Statuses;
 using Enroot.Domain.Tenant.ValueObjects;
 using Enroot.Domain.Tenant;
 using Enroot.Domain.Account;
 using Enroot.Domain.Tasq;
-using Enroot.Domain.ReadEntities;
+using Enroot.Domain.Tasq.ValueObjects.Statuses;
 
 namespace Enroot.Infrastructure.Persistence.Write.Configurations;
 
@@ -108,18 +107,6 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
 
             assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssigneeId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
             assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.AssignerId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
-            assignmentsBuilder.HasOne<Account>().WithMany().HasForeignKey(a => a.ApproverId).HasPrincipalKey(a => a.Id).OnDelete(DeleteBehavior.NoAction);
-
-            assignmentsBuilder
-               .Property(a => a.Status)
-               .HasConversion(
-                   ai => ai!.Value,
-                   value => StatusBase.Create(value)
-               );
-
-            assignmentsBuilder
-              .Property(a => a.FeedbackMessage)
-              .HasMaxLength(255);
 
             assignmentsBuilder.OwnsMany(a => a.Attachments, attachmentBuilder =>
             {
@@ -134,6 +121,28 @@ public class TasqConfiguration : IEntityTypeConfiguration<Tasq>
                 attachmentBuilder.Property(at => at.BlobUrl).IsRequired();
             });
 
+            assignmentsBuilder.OwnsMany(a => a.Statuses, statusBuilder =>
+            {
+                statusBuilder.ToTable("Statuses");
+
+                statusBuilder.WithOwner().HasPrincipalKey(a => a.Id);
+                statusBuilder.HasKey("Id", nameof(AssignmentId));
+
+                statusBuilder
+                    .Property(s => s.Id)
+                    .HasConversion(s => s!.Value, value => StatusBase.Create(value));
+
+                statusBuilder
+                    .Property(s => s.Feedback)
+                    .HasConversion(s => s!.Value, value => FeedbackMessage.Create(value).Value)
+                    .HasMaxLength(255);
+
+                statusBuilder
+                    .Property(s => s.CreatorId)
+                    .HasConversion(s => s!.Value, value => AccountId.Create(value));
+            });
+
+            assignmentsBuilder.Navigation(nameof(Assignment.Statuses)).UsePropertyAccessMode(PropertyAccessMode.Field);
             assignmentsBuilder.Navigation(nameof(Assignment.Attachments)).UsePropertyAccessMode(PropertyAccessMode.Field);
         });
 

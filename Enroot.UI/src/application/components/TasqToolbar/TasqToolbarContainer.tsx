@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Status } from "../../../domain/tasq/Status";
+import { StatusEnum } from "../../../domain/tasq/StatusEnum";
 import { Tasq } from "../../../domain/tasq/Tasq";
 import TasqToolbar from "../../../presentation/components/TasqToolbar/TasqToolbar";
 import { Permission } from "../../common/enums/permission";
@@ -30,12 +30,12 @@ const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
   const [assign] = useAssignTasqMutation();
 
   const assignment = tasq.assignments[0];
-  const tasqStatus = assignment?.status;
+  const tasqStatus = assignment?.statuses[0].status;
 
   const notEndedAssignment =
-    tasqStatus === Status.ToDo ||
-    tasqStatus === Status.InProgress ||
-    tasqStatus === Status.AwaitingReview;
+    tasqStatus === StatusEnum.ToDo ||
+    tasqStatus === StatusEnum.InProgress ||
+    tasqStatus === StatusEnum.AwaitingReview;
 
   const hasCreateTaskPermission =
     me?.permissions.includes(Permission.CreateTasq) || false;
@@ -46,16 +46,16 @@ const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
   const amIAssignee = assignment && assignment.assignee.id === me?.id;
 
   const showStartButton =
-    assignment && amIAssignee && tasqStatus === Status.ToDo;
+    assignment && amIAssignee && tasqStatus === StatusEnum.ToDo;
 
   const showSendForReviewButton =
-    tasqStatus === Status.InProgress && amIAssignee;
+    tasqStatus === StatusEnum.InProgress && amIAssignee;
 
   const showCancelButton =
     false && assignment && notEndedAssignment && hasCreateTaskPermission;
 
   const showReviewButtons =
-    tasqStatus === Status.AwaitingReview && hasReviewTaskPermission;
+    tasqStatus === StatusEnum.AwaitingReview && hasReviewTaskPermission;
 
   const startAssignmentHandler = () => {
     start({ id: assignment.id });
@@ -84,7 +84,7 @@ const TasqToolbarContainer: React.FC<Props> = ({ tasq }) => {
   const canBeAssigned =
     !notEndedAssignment &&
     hasCreateTaskPermission &&
-    tasqStatus !== Status.Done;
+    tasqStatus !== StatusEnum.Done;
 
   const validationSchema = Yup.object().shape({
     feedbackMessage: Yup.string().required(errorStrings.notEmpty).max(255),

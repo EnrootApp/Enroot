@@ -3,7 +3,7 @@ using Enroot.Domain.Role.Enums;
 
 namespace Enroot.Domain.ReadEntities;
 
-public class AccountRead : ReadEntity
+public class AccountRead : ReadEntity<Guid>
 {
     public Guid TenantId { get; private set; }
     public Guid UserId { get; private set; }

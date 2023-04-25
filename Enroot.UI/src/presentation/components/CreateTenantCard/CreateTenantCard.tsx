@@ -78,6 +78,8 @@ const CreateTenantCard: React.FC<Props> = ({
                             setFieldValue("logoUrl", imageSrc);
                             setFieldTouched("logoUrl", true);
                           }}
+                          radius={300}
+                          accept="image/*"
                         />
                       </div>
                       <Input

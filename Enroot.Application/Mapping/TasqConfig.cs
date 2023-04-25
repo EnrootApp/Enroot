@@ -15,13 +15,21 @@ public class TasqConfig : IRegister
             .Map(dest => dest.Creator, src => src.Creator.Adapt<AccountModel>())
             .Map(dest => dest.Key, src => src.DbId)
             .Map(dest => dest.Title, src => src.Title)
-            .Map(dest => dest.IsCompleted, src => src.Assignments.Any(a => a.Status == Status.Done))
+            .Map(dest => dest.IsCompleted, src => src.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.Done)))
             .Map(dest => dest.Assignee,
                 src => src.Assignments.First().Assignee.Adapt<AccountModel>(), src => src.Assignments.Any());
 
         config
             .NewConfig<AssignmentRead, AssignmentResult>()
             .Map(dest => dest.CreatedOn, src => src.CreatedOn);
+
+        config
+           .NewConfig<StatusRead, StatusModel>()
+           .Map(dest => dest.Approver, src => src.Creator.Adapt<AccountModel>())
+           .Map(dest => dest.FeedbackMessage, src => src.Feedback)
+           .Map(dest => dest.Status, src => (int)src.Id)
+           .Map(dest => dest.CreatedOn, src => src.CreatedOn)
+           .IgnoreNonMapped(true);
 
         config
            .NewConfig<AttachmentRead, AttachmentModel>()

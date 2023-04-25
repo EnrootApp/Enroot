@@ -1,5 +1,6 @@
 import { AccountModel } from "../account/AccountModel";
 import { Attachment } from "./Attachment";
+import { Status } from "./Status";
 
 export interface Assignment {
   id: string;
@@ -7,8 +8,6 @@ export interface Assignment {
   createdOn: Date;
   assignee: AccountModel;
   assigner: AccountModel;
-  approver: AccountModel;
-  feedbackMessage: string;
-  status: number;
+  statuses: Status[];
   attachments: Attachment[];
 }

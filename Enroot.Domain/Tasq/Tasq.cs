@@ -5,8 +5,8 @@ using Enroot.Domain.Tasq.ValueObjects;
 using Enroot.Domain.Tenant.ValueObjects;
 using ErrorOr;
 using Enroot.Domain.Common.Errors;
-using Enroot.Domain.Tasq.ValueObjects.Statuses;
 using Enroot.Domain.Tasq.Events;
+using Enroot.Domain.Tasq.ValueObjects.Statuses;
 
 namespace Enroot.Domain.Tasq;
 
@@ -19,7 +19,7 @@ public sealed class Tasq : AggregateRoot<TasqId>
     public AccountId CreatorId { get; private set; }
     public string Title { get; private set; }
     public string? Description { get; private set; }
-    public bool IsCompleted => _assignments.Any(a => a.Status is DoneStatus);
+    public bool IsCompleted => _assignments.Any(a => a.Statuses.Any(s => s is DoneStatus));
 
     private Tasq() { }
     private Tasq(TasqId id, TenantId tenantId, AccountId creatorId, string? description, string title) : base(id)
@@ -66,7 +66,7 @@ public sealed class Tasq : AggregateRoot<TasqId>
             return Errors.Tasq.AlreadyCompleted;
         }
 
-        if (_assignments.Any(a => a.Status is INotCompletedStatus))
+        if (_assignments.Any(a => a.CurrentStatus.Id is INotCompletedStatus))
         {
             return Errors.Tasq.AlreadyAssigned;
         }

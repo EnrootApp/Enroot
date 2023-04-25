@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Enroot.Infrastructure.Persistence.Read.Repositories;
 
 public class ReadRepository<TReadEntity> : IReadRepository<TReadEntity>
-where TReadEntity : ReadEntity
+where TReadEntity : ReadEntity<Guid>
 {
     private readonly EnrootReadonlyContext _context;
 

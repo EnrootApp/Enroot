@@ -2,7 +2,7 @@ import { Cancel, Edit } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import { ChangeEventHandler, RefObject } from "react";
 import CircularProgressCentered from "../../uikit/CircularProgressCentered/CircularProgressCentered";
-import { AvatarDiv, ButtonDiv, StyledIconButton } from "./ImageUpload.styles";
+import { AvatarDiv, ButtonDiv, StyledIconButton } from "./FileUpload.styles";
 
 interface Props {
   fileInputRef: RefObject<HTMLInputElement>;
@@ -10,21 +10,25 @@ interface Props {
   handleDeleteImage: () => void;
   progress: number;
   imageSrc: string;
+  accept: string;
+  radius: number;
 }
 
-const ImageUpload: React.FC<Props> = ({
+const FileUpload: React.FC<Props> = ({
   fileInputRef,
   handleFileChange,
   handleDeleteImage,
   progress,
   imageSrc,
+  accept,
+  radius,
 }) => {
   const isInProgress = progress !== 0 && progress !== 100;
 
   return (
     <div style={{ display: "flex" }}>
       <input
-        accept="image/*"
+        accept={accept}
         type="file"
         hidden
         ref={fileInputRef}
@@ -32,10 +36,10 @@ const ImageUpload: React.FC<Props> = ({
       />
       <AvatarDiv>
         <Avatar
-          src={imageSrc || "/imagePlaceholder.svg"}
+          src={imageSrc || "/imagePlaceholder.jpg"}
           sx={{
-            width: 240,
-            height: 240,
+            width: radius,
+            height: radius,
             opacity: isInProgress ? 0.4 : 1,
             transition: "0.2s",
           }}
@@ -70,4 +74,4 @@ const ImageUpload: React.FC<Props> = ({
   );
 };
 
-export default ImageUpload;
+export default FileUpload;

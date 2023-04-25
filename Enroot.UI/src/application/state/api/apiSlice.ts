@@ -50,7 +50,7 @@ const baseQueryWithErrorHandlers: BaseQueryFn<
     result.error?.status === "FETCH_ERROR"
   ) {
     localStorage.removeItem("accessToken");
-    window.location.reload();
+    //window.location.reload();
   }
 
   return result;
@@ -60,5 +60,5 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithErrorHandlers,
   endpoints: () => ({}),
-  tagTypes: ["Tasq", "Tasqs"],
+  tagTypes: ["Tasq", "Tasqs", "User"],
 });

@@ -10,5 +10,5 @@ public record AssignmentResult(
     AccountModel Assigner,
     AccountModel? Approver,
     string? FeedbackMessage,
-    int Status,
+    IEnumerable<StatusModel> Statuses,
     IEnumerable<AttachmentModel> Attachments);

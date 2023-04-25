@@ -38,7 +38,7 @@ public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<GetTa
 
         if (request.IsCompleted.HasValue)
         {
-            result = result.Where(tasq => request.IsCompleted.Value == tasq.Assignments.Any(a => a.Status == Status.Done));
+            result = result.Where(tasq => request.IsCompleted.Value == tasq.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.Done)));
         }
 
         var totalAmount = await result.CountAsync(cancellationToken: cancellationToken);
@@ -50,7 +50,9 @@ public class GetTasqsQueryHandler : IRequestHandler<GetTasqsQuery, ErrorOr<GetTa
             .ThenInclude(a => a.Assignee)
             .ThenInclude(a => a.User)
             .Include(t => t.Creator)
-            .ThenInclude(a => a.User);
+            .ThenInclude(a => a.User)
+            .Include(t => t.Assignments)
+            .ThenInclude(a => a.Statuses);
 
         var tasqs = await result.ToListAsync(cancellationToken: cancellationToken);
 

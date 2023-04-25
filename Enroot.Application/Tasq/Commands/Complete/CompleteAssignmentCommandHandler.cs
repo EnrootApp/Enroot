@@ -1,6 +1,4 @@
-using System.Globalization;
 using Enroot.Application.Common.Interfaces.Persistence;
-using Enroot.Application.Services;
 using Enroot.Application.Tasq.Common;
 using Enroot.Domain.Account.ValueObjects;
 using Enroot.Domain.Common.Errors;
@@ -48,16 +46,14 @@ public class CompleteAssignmentCommandHandler : IRequestHandler<CompleteAssignme
             return Errors.Account.NotFound;
         }
 
-        var assignments = tasq.Assignments.Where(a => a.AssigneeId == assignee.Id);
+        var assignment = tasq.Assignments.Where(a => a.AssigneeId == assignee.Id).OrderByDescending(a => a.CreatedOn).FirstOrDefault();
 
-        if (!assignments.Any())
+        if (assignment is null)
         {
             return Errors.Assignment.NotFound;
         }
 
-        var assignment = assignments.FirstOrDefault(a => a.Status is InProgressStatus);
-
-        if (assignment is null)
+        if (assignment.CurrentStatus.Id is not InProgressStatus)
         {
             return Errors.Assignment.HasCompleted;
         }
@@ -74,7 +70,7 @@ public class CompleteAssignmentCommandHandler : IRequestHandler<CompleteAssignme
             assignment.AddAttachment(uploadedAttachment.Value);
         }
 
-        var stageResult = assignment.CompleteStage(assigneeId);
+        var stageResult = assignment.CompleteStage(assigneeId, request.FeedbackMessage);
         if (stageResult.IsError)
         {
             return ErrorOr<TasqResult>.From(stageResult.Errors);

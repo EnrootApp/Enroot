@@ -145,6 +145,7 @@ namespace Enroot.Api.Controllers
             var command = new CompleteAssignmentCommand(
                 assigneeId,
                 request.AssignmentId,
+                request.FeedbackMessage,
                 request.Attachments.Adapt<IEnumerable<CreateAttachmentModel>>());
 
             var result = await _mediator.Send(command);
@@ -177,7 +178,7 @@ namespace Enroot.Api.Controllers
         {
             var reviewerId = GetRequestAccountId();
 
-            var command = new ApproveAssignmentCommand(reviewerId, request.AssignmentId);
+            var command = new ApproveAssignmentCommand(reviewerId, request.AssignmentId, request.FeedbackMessage);
 
             var result = await _mediator.Send(command);
 

@@ -7,8 +7,8 @@ import strings from "../../localization/locales";
 import InlineEditContainer from "../../../application/components/InlineEdit/InlineEditContainer";
 import TasqToolbarContainer from "../../../application/components/TasqToolbar/TasqToolbarContainer";
 import FileUploaderContainer from "../../../application/components/FileUploader/FileUploaderContainer";
-import { Status } from "../../../domain/tasq/Status";
-import ReviewFeedback from "../../components/ReviewFeedback/ReviewFeedback";
+import { StatusEnum } from "../../../domain/tasq/StatusEnum";
+import TasqActivity from "../../components/TasqActivity/TasqActivity";
 
 interface Props {
   tasq: Tasq;
@@ -21,9 +21,8 @@ const TasqPage: React.FC<Props> = ({
   updateTasq,
   hasPermissionToChange,
 }) => {
-  const rejectedAssignments = tasq.assignments.filter(
-    (a) => a.status === Status.Rejected
-  );
+  const currentAssignment = tasq.assignments[0];
+  const currentAssignmentStatus = currentAssignment?.statuses[0].status;
 
   return (
     <Box style={{ width: "100%" }}>
@@ -48,22 +47,19 @@ const TasqPage: React.FC<Props> = ({
               onEditEnd={(value) =>
                 updateTasq({ description: value || "", id: tasq.id })
               }
-              disabled={
-                !hasPermissionToChange &&
-                !(tasq.assignments[0]?.status === Status.ToDo)
-              }
+              disabled={!hasPermissionToChange}
             />
-            {tasq.assignments[0]?.status === Status.InProgress && (
+            {currentAssignmentStatus === StatusEnum.InProgress && (
               <>
                 <SubTitle value={strings.attachments}></SubTitle>
                 <FileUploaderContainer />
               </>
             )}
-            {tasq.assignments[0]?.status === Status.AwaitingReview && (
+            {currentAssignmentStatus === StatusEnum.AwaitingReview && (
               <>
                 <SubTitle value={strings.attachments}></SubTitle>
                 <Box style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
-                  {tasq.assignments[0]?.attachments.map((attachment) => (
+                  {currentAssignment?.attachments.map((attachment) => (
                     <a
                       href={attachment.url}
                       target="_blank"
@@ -84,17 +80,18 @@ const TasqPage: React.FC<Props> = ({
               </>
             )}
 
-            {rejectedAssignments.length > 0 && (
-              <SubTitle value={strings.feedback} />
-            )}
-            {rejectedAssignments.length > 0 &&
-              rejectedAssignments.map((a) => (
-                <ReviewFeedback
+            <SubTitle value={strings.activity} />
+            {tasq.assignments.map((a) =>
+              a.statuses.map((s) => (
+                <TasqActivity
                   assignee={a.assignee}
-                  reviewer={a.approver}
-                  message={a.feedbackMessage}
+                  reviewer={s.approver}
+                  message={s.feedbackMessage}
+                  createdOn={s.createdOn}
+                  status={s.status}
                 />
-              ))}
+              ))
+            )}
           </Box>
 
           <TasqToolbarContainer tasq={tasq} />

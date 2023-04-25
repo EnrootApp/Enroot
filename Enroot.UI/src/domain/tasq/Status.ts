@@ -1,8 +1,9 @@
-export enum Status {
-  ToDo = 1,
-  InProgress = 2,
-  AwaitingReview = 3,
-  Done = 4,
-  Rejected = 5,
-  Cancelled = 6,
+import { AccountModel } from "../account/AccountModel";
+import { StatusEnum } from "./StatusEnum";
+
+export interface Status {
+  createdOn: string;
+  approver: AccountModel;
+  feedbackMessage: string;
+  status: StatusEnum;
 }

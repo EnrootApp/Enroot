@@ -96,7 +96,12 @@ const strings = new LocalizedStrings({
       "Are you sure you want to restore this account?",
     deleteTenantConfirmation:
       "Are you sure you want to delete the tenant? This action cannot be undone.",
-    rejectedMessage: "has rejected assignment with message:",
+    rejectedMessage: "has rejected assignment",
+    todoMessage: "has created a new assignment",
+    inProgressMessage: "has started the assignment",
+    awaitingReviewMessage: "has send the assignment to review",
+    doneMessage: "has approved assignment",
+    activity: "Activity",
   },
   ruRU: {
     signIn: "Вход",
@@ -194,7 +199,12 @@ const strings = new LocalizedStrings({
       "Вы уверены, что хотите восстановить эту учетную запись?",
     deleteTenantConfirmation:
       "Вы уверены, что хотите удалить организацию? Это действие нельзя отменить.",
-    rejectedMessage: "отклонил попытку с сообщением:",
+    rejectedMessage: "отклонил попытку",
+    todoMessage: "назначил задачу",
+    inProgressMessage: "начал попытку",
+    awaitingReviewMessage: "отправил попытку на проверку",
+    doneMessage: "подтвердил выполнение задачи",
+    activity: "История событий",
   },
 });
 

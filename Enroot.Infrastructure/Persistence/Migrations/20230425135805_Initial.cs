@@ -17,7 +17,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 name: "Permissions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +30,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,7 +47,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(62)", maxLength: 62, nullable: false),
                     LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,10 +66,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,6 +117,26 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TenantTasqIds",
+                columns: table => new
+                {
+                    DbId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TasqId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantTasqIds", x => x.DbId);
+                    table.ForeignKey(
+                        name: "FK_TenantTasqIds_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -117,7 +145,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,7 +203,9 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,12 +229,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 {
                     DbId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeedbackMessage = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AssignerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssigneeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
                     TasqId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,25 +279,49 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Statuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    AssignmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Feedback = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DbId = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Statuses", x => new { x.Id, x.AssignmentId });
+                    table.ForeignKey(
+                        name: "FK_Statuses_Assignments_AssignmentId",
+                        column: x => x.AssignmentId,
+                        principalTable: "Assignments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Permissions",
-                column: "Id",
-                values: new object[]
+                columns: new[] { "Id", "CreatedOn", "IsDeleted" },
+                values: new object[,]
                 {
-                    1,
-                    2,
-                    3
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false }
                 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                column: "Id",
-                values: new object[]
+                columns: new[] { "Id", "CreatedOn", "IsDeleted" },
+                values: new object[,]
                 {
-                    1,
-                    2,
-                    3,
-                    4
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false }
                 });
 
             migrationBuilder.InsertData(
@@ -274,9 +330,12 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
+                    { 3, 1 },
                     { 1, 2 },
                     { 3, 2 },
-                    { 1, 3 }
+                    { 1, 3 },
+                    { 1, 4 },
+                    { 1, 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -321,6 +380,11 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Statuses_AssignmentId",
+                table: "Statuses",
+                column: "AssignmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tasqs_CreatorId",
                 table: "Tasqs",
                 column: "CreatorId");
@@ -333,6 +397,11 @@ namespace Enroot.Infrastructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TenantAccountIds_TenantId",
                 table: "TenantAccountIds",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantTasqIds_TenantId",
+                table: "TenantTasqIds",
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
@@ -354,7 +423,13 @@ namespace Enroot.Infrastructure.Persistence.Migrations
                 name: "RolePermissions");
 
             migrationBuilder.DropTable(
+                name: "Statuses");
+
+            migrationBuilder.DropTable(
                 name: "TenantAccountIds");
+
+            migrationBuilder.DropTable(
+                name: "TenantTasqIds");
 
             migrationBuilder.DropTable(
                 name: "UserAccountIds");

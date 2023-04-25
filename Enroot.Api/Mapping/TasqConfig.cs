@@ -1,3 +1,4 @@
+using Enroot.Application.Account.Common;
 using Enroot.Application.Tasq.Commands.Complete;
 using Enroot.Application.Tasq.Common;
 using Enroot.Contracts.Tasq;
@@ -18,12 +19,15 @@ public class TasqConfig : IRegister
 
         config.NewConfig<Assignment, AssignmentResult>()
             .Map(dest => dest.CreatedOn, src => src.CreatedOn)
-            .Map(dest => dest.Status, src => (int)src.Status.Value);
+            .Map(dest => dest.Statuses, src => src.Statuses.Adapt<StatusModel>());
 
         config.NewConfig<Tasq, TasqResult>()
             .Map(dest => dest.Assignments, src => src.Assignments);
 
         config.NewConfig<CompleteAssignmentRequest, CompleteAssignmentCommand>();
         config.NewConfig<AttachmentRequest, CreateAttachmentModel>();
+        config.NewConfig<Status, StatusModel>()
+            .Map(dest => dest.FeedbackMessage, src => src.Feedback)
+            .Map(dest => dest.Approver, src => new AccountModel(src.CreatorId.Value, null, null, DateTime.MinValue, null, 0, false));
     }
 }

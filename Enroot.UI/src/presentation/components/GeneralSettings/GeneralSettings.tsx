@@ -47,6 +47,8 @@ const GeneralSettings: React.FC<Props> = ({ formikConfig, email }) => {
                       setFieldTouched("avatarUrl", true);
                     }}
                     imageSrc={values.avatarUrl}
+                    accept="image/*"
+                    radius={240}
                   />
                 </div>
 

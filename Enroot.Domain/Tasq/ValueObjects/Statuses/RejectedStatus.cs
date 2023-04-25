@@ -1,15 +1,14 @@
 using Enroot.Domain.Tasq.Enums;
 using Enroot.Domain.Common.Errors;
 using ErrorOr;
+using Enroot.Domain.Tasq.ValueObjects;
+using Enroot.Domain.Account.ValueObjects;
 
 namespace Enroot.Domain.Tasq.ValueObjects.Statuses;
 
 public sealed class RejectedStatus : StatusBase
 {
-    public RejectedStatus()
-    {
-        Value = Status.Rejected;
-    }
+    public RejectedStatus() : base(StatusEnum.Rejected) { }
 
     public override ErrorOr<StatusBase> Complete()
     {

@@ -24,11 +24,11 @@ public class ReportByTenantQueryHandler : IRequestHandler<ReportByTenantQuery, E
             && tasq.CreatedOn > request.From);
 
         var totalAmount = await result.CountAsync(cancellationToken);
-        var doneAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Status == Status.Done), cancellationToken);
-        var rejectedAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Status == Status.Rejected), cancellationToken);
-        var awaitingReview = await result.CountAsync(t => t.Assignments.Any(a => a.Status == Status.AwaitingReview), cancellationToken);
-        var inProgressAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Status == Status.InProgress), cancellationToken);
-        var todoAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Status == Status.ToDo), cancellationToken);
+        var doneAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.Done)), cancellationToken);
+        var rejectedAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.Rejected)), cancellationToken);
+        var awaitingReview = await result.CountAsync(t => t.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.AwaitingReview)), cancellationToken);
+        var inProgressAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.InProgress)), cancellationToken);
+        var todoAmount = await result.CountAsync(t => t.Assignments.Any(a => a.Statuses.Any(s => s.Id == StatusEnum.ToDo)), cancellationToken);
         var notAssignedAmount = await result.CountAsync(t => !t.Assignments.Any(), cancellationToken);
 
         return new TasqReport(totalAmount, doneAmount, rejectedAmount, awaitingReview, inProgressAmount, todoAmount, notAssignedAmount);
