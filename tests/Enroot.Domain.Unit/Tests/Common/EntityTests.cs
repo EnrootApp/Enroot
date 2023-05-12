@@ -8,14 +8,12 @@ public class EntityTests
     [Fact]
     public void EqualityTest()
     {
-        var tenantId = TenantId.CreateUnique();
-
-        var tenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
-        var sameTenant = Tenant.Tenant.Create(TenantId.CreateUnique(), TenantName.Create("great").Value, string.Empty);
+        var tenant = Tenant.Tenant.Create(TenantName.Create("great").Value, string.Empty);
+        var sameTenant = Tenant.Tenant.Create(TenantName.Create("great123").Value, string.Empty);
 
         Assert.False(tenant.IsError);
         Assert.False(sameTenant.IsError);
 
-        Assert.Equal(tenant.Value, sameTenant.Value);
+        Assert.NotEqual(tenant.Value, sameTenant.Value);
     }
 }

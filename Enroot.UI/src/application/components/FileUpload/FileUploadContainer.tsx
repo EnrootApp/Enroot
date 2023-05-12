@@ -7,6 +7,7 @@ import ImageUpload from "../../../presentation/components/FileUpload/FileUpload"
 interface Props {
   imageSrc: string;
   setImageSrc: (imageSrc: string) => void;
+  onUploadStart?: () => void;
   accept: string;
   radius: number;
 }
@@ -14,6 +15,7 @@ interface Props {
 const FileUploadContainer: React.FC<Props> = ({
   imageSrc,
   setImageSrc,
+  onUploadStart,
   accept,
   radius,
 }) => {
@@ -37,6 +39,7 @@ const FileUploadContainer: React.FC<Props> = ({
       return;
     }
 
+    onUploadStart && onUploadStart();
     var result = await handleFileUpload(uploadedFile);
     setImageSrc(result.url);
   };

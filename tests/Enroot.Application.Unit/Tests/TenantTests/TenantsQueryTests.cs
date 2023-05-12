@@ -22,11 +22,11 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
+        var tenant1 = TenantEntity.Create(TenantName.Create("name").Value, null).Value;
+        var tenant2 = TenantEntity.Create(TenantName.Create("name2").Value, null).Value;
+        var tenant3 = TenantEntity.Create(TenantName.Create("name3").Value, null).Value;
+        var tenant4 = TenantEntity.Create(TenantName.Create("name4").Value, null).Value;
+        var tenant5 = TenantEntity.Create(TenantName.Create("name5").Value, null).Value;
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
@@ -42,10 +42,10 @@ public class TenantsQueryHandlerTests
         var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
         var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account5 });
 
-        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
-            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>(), false))
+            .Returns((Expression<Func<AccountEntity, bool>> arg, bool include) => accounts.AsQueryable().Where(arg));
 
-        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+        tenantRepository.Setup(tr => tr.GetAll(false)).Returns(tenants.AsQueryable());
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 
@@ -65,11 +65,11 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
+        var tenant1 = TenantEntity.Create(TenantName.Create("name").Value, null).Value;
+        var tenant2 = TenantEntity.Create(TenantName.Create("name2").Value, null).Value;
+        var tenant3 = TenantEntity.Create(TenantName.Create("name3").Value, null).Value;
+        var tenant4 = TenantEntity.Create(TenantName.Create("name4").Value, null).Value;
+        var tenant5 = TenantEntity.Create(TenantName.Create("name5").Value, null).Value;
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
@@ -91,10 +91,10 @@ public class TenantsQueryHandlerTests
         var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
         var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account2, account3, account4, account5 });
 
-        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
-            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>(), false))
+            .Returns((Expression<Func<AccountEntity, bool>> arg, bool include) => accounts.AsQueryable().Where(arg));
 
-        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+        tenantRepository.Setup(tr => tr.GetAll(false)).Returns(tenants.AsQueryable());
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 
@@ -111,11 +111,11 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
+        var tenant1 = TenantEntity.Create(TenantName.Create("name").Value, null).Value;
+        var tenant2 = TenantEntity.Create(TenantName.Create("name2").Value, null).Value;
+        var tenant3 = TenantEntity.Create(TenantName.Create("name3").Value, null).Value;
+        var tenant4 = TenantEntity.Create(TenantName.Create("name4").Value, null).Value;
+        var tenant5 = TenantEntity.Create(TenantName.Create("name5").Value, null).Value;
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
@@ -131,10 +131,10 @@ public class TenantsQueryHandlerTests
         var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
         var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account5 });
 
-        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
-            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>(), false))
+            .Returns((Expression<Func<AccountEntity, bool>> arg, bool include) => accounts.AsQueryable().Where(arg));
 
-        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+        tenantRepository.Setup(tr => tr.GetAll(false)).Returns(tenants.AsQueryable());
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 
@@ -154,11 +154,11 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
+        var tenant1 = TenantEntity.Create(TenantName.Create("name").Value, null).Value;
+        var tenant2 = TenantEntity.Create(TenantName.Create("name2").Value, null).Value;
+        var tenant3 = TenantEntity.Create(TenantName.Create("name3").Value, null).Value;
+        var tenant4 = TenantEntity.Create(TenantName.Create("name4").Value, null).Value;
+        var tenant5 = TenantEntity.Create(TenantName.Create("name5").Value, null).Value;
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
@@ -180,10 +180,10 @@ public class TenantsQueryHandlerTests
         var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
         var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account2, account3, account4, account5 });
 
-        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
-            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>(), false))
+            .Returns((Expression<Func<AccountEntity, bool>> arg, bool include) => accounts.AsQueryable().Where(arg));
 
-        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+        tenantRepository.Setup(tr => tr.GetAll(false)).Returns(tenants.AsQueryable());
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 
@@ -198,11 +198,11 @@ public class TenantsQueryHandlerTests
         var tenantRepository = new Mock<IRepository<TenantEntity, TenantId>>();
         var accountRepository = new Mock<IRepository<AccountEntity, AccountId>>();
 
-        var tenant1 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name").Value).Value;
-        var tenant2 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name2").Value).Value;
-        var tenant3 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name3").Value).Value;
-        var tenant4 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name4").Value).Value;
-        var tenant5 = TenantEntity.Create(TenantId.CreateUnique(), TenantName.Create("name5").Value).Value;
+        var tenant1 = TenantEntity.Create(TenantName.Create("name").Value, null).Value;
+        var tenant2 = TenantEntity.Create(TenantName.Create("name2").Value, null).Value;
+        var tenant3 = TenantEntity.Create(TenantName.Create("name3").Value, null).Value;
+        var tenant4 = TenantEntity.Create(TenantName.Create("name4").Value, null).Value;
+        var tenant5 = TenantEntity.Create(TenantName.Create("name5").Value, null).Value;
 
         var user = UserEntity.CreateByEmail(Email.Create("test@mail.ru").Value, "abc").Value;
 
@@ -224,10 +224,10 @@ public class TenantsQueryHandlerTests
         var tenants = new TestAsyncEnumerable<TenantEntity>(new List<TenantEntity>() { tenant1, tenant2, tenant3, tenant4, tenant5 });
         var accounts = new TestAsyncEnumerable<AccountEntity>(new List<AccountEntity>() { account1, account2, account3, account4, account5 });
 
-        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>()))
-            .Returns((Expression<Func<AccountEntity, bool>> arg) => accounts.AsQueryable().Where(arg));
+        accountRepository.Setup(ar => ar.Filter(It.IsAny<Expression<Func<AccountEntity, bool>>>(), false))
+            .Returns((Expression<Func<AccountEntity, bool>> arg, bool include) => accounts.AsQueryable().Where(arg));
 
-        tenantRepository.Setup(tr => tr.GetAll()).Returns(tenants.AsQueryable());
+        tenantRepository.Setup(tr => tr.GetAll(false)).Returns(tenants.AsQueryable());
 
         var tenantQueryCommandHandler = new TenantsQueryHandler(tenantRepository.Object, accountRepository.Object);
 

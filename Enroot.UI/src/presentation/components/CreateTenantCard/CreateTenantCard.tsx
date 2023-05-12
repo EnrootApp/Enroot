@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -27,6 +27,8 @@ const CreateTenantCard: React.FC<Props> = ({
   onClose,
   formikConfig,
 }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
   return (
     <>
       <Card>
@@ -74,9 +76,11 @@ const CreateTenantCard: React.FC<Props> = ({
                       >
                         <ImageUploadContainer
                           imageSrc={values.logoUrl}
+                          onUploadStart={() => setIsDisabled(true)}
                           setImageSrc={(imageSrc) => {
                             setFieldValue("logoUrl", imageSrc);
                             setFieldTouched("logoUrl", true);
+                            setIsDisabled(false);
                           }}
                           radius={300}
                           accept="image/*"
@@ -92,7 +96,9 @@ const CreateTenantCard: React.FC<Props> = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      <Button type="submit">{strings.submit}</Button>
+                      <Button type="submit" disabled={isDisabled}>
+                        {strings.submit}
+                      </Button>
                     </Form>
                   );
                 }}

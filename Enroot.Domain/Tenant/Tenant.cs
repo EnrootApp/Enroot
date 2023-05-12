@@ -26,19 +26,14 @@ public sealed class Tenant : AggregateRoot<TenantId>
         LogoUrl = logoUrl;
     }
 
-    public static ErrorOr<Tenant> Create(TenantId id, TenantName name, string? logoUrl)
+    public static ErrorOr<Tenant> Create(TenantName name, string? logoUrl)
     {
-        if (id is null)
-        {
-            return Errors.Tenant.NotFound;
-        }
-
         if (name is null)
         {
             return Errors.Tenant.NameInvalid;
         }
 
-        return new Tenant(id, name, logoUrl);
+        return new Tenant(TenantId.CreateUnique(), name, logoUrl);
     }
 
     public ErrorOr<Tenant> Update(TenantName name, string logoUrl)
